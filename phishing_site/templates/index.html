@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login UI Mock</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 350px;
+            padding: 30px 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-field {
+            padding: 12px 14px;
+            font-size: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: #1a73e8;
+        }
+
+        .forgot-link {
+            color: #1a73e8;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            font-size: 15px;
+            font-weight: 600;
+            padding: 12px 0;
+            border-radius: 30px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn.primary {
+            background-color: #0057d8;
+            color: #fff;
+            border: 2px solid transparent;
+        }
+
+        .btn.primary:hover {
+            background-color: #0047b3;
+        }
+
+        .btn.secondary {
+            background-color: #fff;
+            border: 2px solid #000;
+            color: #000;
+        }
+
+        .btn.secondary:hover {
+            background-color: #f1f1f1;
+        }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .country {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="login-container">
+        <img src="Screenshot 2024-06-19 235659.png" alt="Logo" style="width: 300px; margin: 0 auto 20px; display: block;" />
+        <form class="login-box">
+            <input type="text" placeholder="Email or mobile number" class="input-field" required />
+
+            <a href="#" class="forgot-link">Forgotten your email?</a>
+
+            <button type="submit" class="btn primary">Next</button>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <button type="button" class="btn secondary">Sign Up</button>
+
+            <div class="country">
+                <img src="https://flagcdn.com/w20/in.png" alt="India Flag" />
+                <span>▼</span>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
