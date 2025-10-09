@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Phishing Counter Extension",
+  "description": "Counts the number of phishing websites visited and allows toggling protection.",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs", "activeTab", "downloads"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dashboard.html",
+        "index (1).html",
+        "chart.min.js",
+        "style.css",
+        "app.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self'"
+  }
+}

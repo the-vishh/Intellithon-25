@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phishing Protector</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="site-header">
+        <img src="icon48.png" alt="Site Icon" class="site-icon" />
+        <div class="site-info">
+          <h1 class="site-title">Phishing Protector</h1>
+          <p class="site-subtitle">Protection active for this site</p>
+        </div>
+      </header>
+
+      <div class="main-toggle">
+        <div class="toggle-header">
+          <div class="toggle-title">
+            Protection is <span id="toggle-status">ON</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-switch" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="toggle-description">
+          Note: this may reduce browsing privacy protections.
+        </p>
+      </div>
+
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-header">
+            <span class="stat-title">Phishing Sites Blocked</span>
+            <span class="stat-count" id="phishing-count">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-section">
+        <div class="control-group">
+          <button class="control-button" id="advanced-toggle">
+            <span class="button-title">Advanced Controls</span>
+            <span class="button-icon" id="toggle-icon">▼</span>
+          </button>
+          <div class="advanced-content" id="advanced-content">
+            <div class="advanced-item">
+              <div class="advanced-description">
+                <span class="advanced-label">Check Current URL</span>
+                <span class="advanced-subtitle"
+                  >Send URL to AI for phishing detection</span
+                >
+              </div>
+              <button class="action-button" id="send-url-btn">
+                <span>Send URL</span>
+              </button>
+            </div>
+            <div class="advanced-item">
+              <div class="advanced-description">
+                <span class="advanced-label">View Dashboard</span>
+                <span class="advanced-subtitle"
+                  >See all phishing data and analytics</span
+                >
+              </div>
+              <button class="action-button" id="more-data-btn">
+                <span>More Data</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+    <script src="popup.js"></script>
+  </body>
+</html>
