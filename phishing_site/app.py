@@ -31,7 +31,7 @@ def login():
         return render_template('google.html', error=error_message)
     
     # If it's a GET request, just show the login page
-    return render_template('google.html')
+    return render_template('index.html')
 
 if __name__ == "__main__":
     # Start the web server
