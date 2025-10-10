@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple FAQ Test</title>
+    <style>
+      body {
+        background: #1e1e2e;
+        color: white;
+        font-family: Arial;
+        padding: 50px;
+      }
+
+      .faq-item {
+        background: rgba(255, 255, 255, 0.1);
+        margin: 20px 0;
+        border-radius: 8px;
+      }
+
+      .faq-question {
+        padding: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .faq-question:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .faq-toggle {
+        background: #1fb8cd;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        pointer-events: none; /* THE KEY FIX */
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0 20px;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 500px;
+        padding: 20px;
+      }
+
+      .faq-item.active .faq-toggle {
+        transform: rotate(45deg);
+      }
+
+      .status {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4ade80;
+        color: black;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        display: none;
+      }
+
+      .status.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎯 Simple FAQ Test - Click the + Button!</h1>
+    <p>
+      If the FAQ opens when you click the <strong>+ button</strong>, the fix is
+      working! ✅
+    </p>
+
+    <div class="status" id="status">✅ It's Working! FAQ was toggled!</div>
+
+    <div class="faq-item" id="faq1">
+      <div class="faq-question" onclick="toggleFAQ('faq1')">
+        <h3>Click Me! (Click the + button specifically)</h3>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>
+          🎉 SUCCESS! The + button click worked! The pointer-events: none CSS
+          fix is working correctly.
+        </p>
+        <p>
+          You can click anywhere on the question row - the text, the button, or
+          the empty space - and it all works!
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item" id="faq2">
+      <div class="faq-question" onclick="toggleFAQ('faq2')">
+        <h3>Now Try This One!</h3>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>
+          Excellent! When you opened this one, the first one closed
+          automatically. ✨
+        </p>
+        <p>This proves the entire FAQ system is working perfectly!</p>
+      </div>
+    </div>
+
+    <div class="faq-item" id="faq3">
+      <div class="faq-question" onclick="toggleFAQ('faq3')">
+        <h3>One More Time!</h3>
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">
+        <p>Perfect! All FAQs are working. The fix was successful! 🚀</p>
+        <ul>
+          <li>✅ Clicking + button works</li>
+          <li>✅ Animation is smooth</li>
+          <li>✅ Only one opens at a time</li>
+          <li>✅ Button rotates when active</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      function toggleFAQ(id) {
+        const item = document.getElementById(id);
+        const toggle = item.querySelector(".faq-toggle");
+        const status = document.getElementById("status");
+
+        // Show success message
+        status.classList.add("show");
+        setTimeout(() => status.classList.remove("show"), 2000);
+
+        // Close all FAQs first
+        document.querySelectorAll(".faq-item").forEach((faq) => {
+          faq.classList.remove("active");
+          faq.querySelector(".faq-toggle").textContent = "+";
+        });
+
+        // If this one wasn't active, open it
+        if (!item.classList.contains("active")) {
+          item.classList.add("active");
+          toggle.textContent = "−";
+        }
+
+        console.log("FAQ toggled:", id);
+      }
+
+      console.log("✅ Page loaded - click any + button to test!");
+    </script>
+  </body>
+</html>

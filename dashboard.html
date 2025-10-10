@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Phishing Detector Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css" />
+    <script src="chart.min.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <header class="dashboard-header">
+        <h1>AI Phishing Detector Dashboard</h1>
+      </header>
+
+      <div class="dashboard-grid">
+        <!-- Daily Phishing Attempts Card -->
+        <div class="card card-large">
+          <div class="card-header">
+            <h2>Daily Phishing Attempts:</h2>
+          </div>
+          <div class="card-content">
+            <div class="stat-number" id="daily-attempts">1,234</div>
+            <canvas id="miniTrendChart" class="mini-chart"></canvas>
+            <div class="shield-icon">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2L4 5V11C4 16.55 7.84 21.74 12 23C16.16 21.74 20 16.55 20 11V5L12 2Z"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                />
+                <path
+                  d="M9 12L11 14L15 10"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Threat Sources Card -->
+        <div class="card card-large">
+          <div class="card-header">
+            <h2>Top Threat Sources:</h2>
+            <p class="card-subtitle" id="top-source">Social Media</p>
+          </div>
+          <div class="card-content chart-container">
+            <canvas id="threatPieChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Blocked Attacks Card -->
+        <div class="card card-small">
+          <div class="card-header">
+            <h2>Blocked Attacks:</h2>
+          </div>
+          <div class="card-content">
+            <div class="stat-number" id="blocked-percentage">89%</div>
+            <div class="shield-icon">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2L4 5V11C4 16.55 7.84 21.74 12 23C16.16 21.74 20 16.55 20 11V5L12 2Z"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                />
+                <path
+                  d="M9 12L11 14L15 10"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Attack Variants Card -->
+        <div class="card card-small">
+          <div class="card-header">
+            <h2>New Attack Variants:</h2>
+          </div>
+          <div class="card-content">
+            <div class="stat-number" id="new-variants">12</div>
+            <div class="warning-icon">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2L2 20H22L12 2Z"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  fill="none"
+                />
+                <path
+                  d="M12 9V13M12 17H12.01"
+                  stroke="#4ade80"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phishing Trend Card -->
+        <div class="card card-large">
+          <div class="card-header">
+            <h2>Phishing Trend</h2>
+            <p class="card-subtitle">(Last 7 Days)</p>
+          </div>
+          <div class="card-content chart-container">
+            <canvas id="trendLineChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Attack Distribution Card -->
+        <div class="card card-large">
+          <div class="card-header">
+            <h2>Attack Distribution by Type</h2>
+          </div>
+          <div class="card-content chart-container">
+            <canvas id="distributionBarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

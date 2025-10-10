@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ Test</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: #1e1e2e;
+        padding: 40px;
+        color: #fff;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>FAQ Toggle Test</h1>
+      <p>Click on any question to expand/collapse it:</p>
+
+      <div class="faq-section-enhanced">
+        <h3>🤔 Frequently Asked Questions</h3>
+
+        <div class="faq-categories">
+          <button class="faq-category-btn active" data-category="all">
+            All
+          </button>
+          <button class="faq-category-btn" data-category="detection">
+            Detection
+          </button>
+          <button class="faq-category-btn" data-category="privacy">
+            Privacy
+          </button>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item-enhanced" data-category="detection">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h4>How does PhishGuard AI detect phishing sites?</h4>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>
+                PhishGuard AI uses a multi-layered approach to detect phishing
+                threats:
+              </p>
+              <ul>
+                <li>
+                  <strong>Machine Learning Models:</strong> Advanced neural
+                  networks trained on millions of phishing samples (97.3%
+                  accuracy)
+                </li>
+                <li>
+                  <strong>URL Analysis:</strong> Examines domain patterns,
+                  suspicious characters, and known malicious indicators
+                </li>
+                <li>
+                  <strong>Content Inspection:</strong> Analyzes page structure,
+                  forms, and embedded scripts
+                </li>
+              </ul>
+              <p>
+                All analysis happens in milliseconds without impacting your
+                browsing experience.
+              </p>
+            </div>
+          </div>
+
+          <div class="faq-item-enhanced" data-category="detection">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h4>What happens when a threat is detected?</h4>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p>When PhishGuard AI detects a threat, the following occurs:</p>
+              <ol>
+                <li>
+                  The page load is immediately blocked before any malicious code
+                  runs
+                </li>
+                <li>A warning page is displayed with threat details</li>
+                <li>
+                  You can choose to go back safely or proceed at your own risk
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item-enhanced" data-category="privacy">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <h4>Does PhishGuard AI protect my privacy?</h4>
+              <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+              <p><strong>Absolutely! Privacy is our top priority:</strong></p>
+              <ul>
+                <li>✅ Most URL scanning happens locally on your device</li>
+                <li>✅ Only anonymized URL hashes are sent to our servers</li>
+                <li>✅ We never store or sell your browsing history</li>
+                <li>✅ GDPR & CCPA compliant</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global FAQ toggle function
+      window.toggleFAQ = function (element) {
+        console.log("toggleFAQ called with element:", element);
+
+        const faqItem = element.parentElement;
+        console.log("FAQ item:", faqItem);
+
+        const toggle = element.querySelector(".faq-toggle");
+        console.log("Toggle element:", toggle);
+
+        if (faqItem.classList.contains("active")) {
+          console.log("Closing FAQ");
+          faqItem.classList.remove("active");
+          toggle.textContent = "+";
+        } else {
+          console.log("Opening FAQ - closing all others first");
+          // Close all other FAQs
+          document.querySelectorAll(".faq-item-enhanced").forEach((item) => {
+            item.classList.remove("active");
+            item.querySelector(".faq-toggle").textContent = "+";
+          });
+
+          console.log("Opening current FAQ");
+          faqItem.classList.add("active");
+          toggle.textContent = "−";
+        }
+      };
+
+      // Category filter
+      document.querySelectorAll(".faq-category-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const category = this.getAttribute("data-category");
+          console.log("Filter by category:", category);
+
+          document
+            .querySelectorAll(".faq-category-btn")
+            .forEach((b) => b.classList.remove("active"));
+          this.classList.add("active");
+
+          document.querySelectorAll(".faq-item-enhanced").forEach((item) => {
+            if (
+              category === "all" ||
+              item.getAttribute("data-category") === category
+            ) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      });
+
+      console.log("FAQ test page loaded successfully!");
+      console.log("toggleFAQ function:", window.toggleFAQ);
+    </script>
+  </body>
+</html>

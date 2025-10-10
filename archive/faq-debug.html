@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ Debug Test</title>
+    <style>
+      body {
+        background: #1e1e2e;
+        padding: 40px;
+        color: #fff;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      /* FAQ Item */
+      .faq-item-enhanced {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* FAQ Question */
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        cursor: pointer;
+        gap: 20px;
+        transition: all 0.2s ease;
+      }
+
+      .faq-question:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .faq-question h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        margin: 0;
+        flex: 1;
+        line-height: 1.5;
+      }
+
+      .faq-toggle {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(31, 184, 205, 0.15);
+        border: 2px solid rgba(31, 184, 205, 0.3);
+        border-radius: 50%;
+        font-size: 24px;
+        font-weight: 400;
+        color: #1fb8cd;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+        line-height: 1;
+        pointer-events: none; /* IMPORTANT: Prevent click on toggle from stopping propagation */
+      }
+
+      .faq-item-enhanced.active .faq-toggle {
+        background: #1fb8cd;
+        border-color: #1fb8cd;
+        color: white;
+        transform: rotate(45deg);
+      }
+
+      /* FAQ Answer */
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        padding: 0 24px;
+      }
+
+      .faq-item-enhanced.active .faq-answer {
+        max-height: 1000px;
+        padding: 0 24px 24px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .faq-answer p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.7;
+        margin: 16px 0 12px 0;
+      }
+
+      .debug-info {
+        background: rgba(255, 0, 0, 0.1);
+        border: 1px solid rgba(255, 0, 0, 0.3);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+      }
+
+      .debug-info h3 {
+        margin-top: 0;
+        color: #ff6b6b;
+      }
+
+      .debug-output {
+        background: #000;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-family: monospace;
+        font-size: 12px;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      .log-entry {
+        margin: 5px 0;
+        color: #4ade80;
+      }
+
+      .log-error {
+        color: #ff6b6b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🐛 FAQ Debug Test</h1>
+      <p>This is a minimal test to debug the FAQ toggle issue.</p>
+
+      <div class="debug-info">
+        <h3>Debug Console</h3>
+        <p>Watch this area for click events and function calls:</p>
+        <div class="debug-output" id="debugOutput"></div>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item-enhanced" data-category="test">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h4>Test Question 1 - Click me!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              This is the answer to question 1. If you can see this, the toggle
+              is working!
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item-enhanced" data-category="test">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h4>Test Question 2 - Click me too!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              This is the answer to question 2. The first one should close when
+              you open this!
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item-enhanced" data-category="test">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h4>Test Question 3 - One more!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>This is the answer to question 3. All working perfectly now!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const debugOutput = document.getElementById("debugOutput");
+
+      function addLog(message, isError = false) {
+        const logEntry = document.createElement("div");
+        logEntry.className = isError ? "log-entry log-error" : "log-entry";
+        logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+        debugOutput.appendChild(logEntry);
+        debugOutput.scrollTop = debugOutput.scrollHeight;
+
+        // Also log to browser console
+        console.log(message);
+      }
+
+      // Global FAQ toggle function
+      window.toggleFAQ = function (element) {
+        addLog("✅ toggleFAQ() called!");
+        addLog(
+          "Element clicked: " +
+            element.tagName +
+            " (class: " +
+            element.className +
+            ")"
+        );
+
+        try {
+          const faqItem = element.parentElement;
+          addLog("Parent element: " + faqItem.className);
+
+          const toggle = element.querySelector(".faq-toggle");
+          addLog("Toggle element found: " + (toggle ? "YES" : "NO"));
+
+          const isActive = faqItem.classList.contains("active");
+          addLog("Current state: " + (isActive ? "OPEN" : "CLOSED"));
+
+          if (isActive) {
+            addLog("⬇️ Closing FAQ...");
+            faqItem.classList.remove("active");
+            toggle.textContent = "+";
+          } else {
+            addLog("⬆️ Opening FAQ - first closing all others...");
+
+            // Close all other FAQs
+            let closedCount = 0;
+            document.querySelectorAll(".faq-item-enhanced").forEach((item) => {
+              if (item.classList.contains("active")) {
+                closedCount++;
+                item.classList.remove("active");
+                item.querySelector(".faq-toggle").textContent = "+";
+              }
+            });
+            addLog(`Closed ${closedCount} other FAQ(s)`);
+
+            addLog("Opening clicked FAQ...");
+            faqItem.classList.add("active");
+            toggle.textContent = "−";
+          }
+
+          addLog(
+            "✅ Toggle complete! New state: " +
+              (faqItem.classList.contains("active") ? "OPEN" : "CLOSED")
+          );
+          addLog("---");
+        } catch (error) {
+          addLog("❌ ERROR: " + error.message, true);
+          console.error("Full error:", error);
+        }
+      };
+
+      // Log page load
+      addLog("🚀 Page loaded successfully!");
+      addLog(
+        "toggleFAQ function defined: " +
+          (typeof window.toggleFAQ === "function" ? "YES" : "NO")
+      );
+      addLog("Click any FAQ question above to test...");
+      addLog("---");
+
+      // Add click listener to detect ANY clicks
+      document.addEventListener("click", function (event) {
+        if (!event.target.closest(".faq-question")) {
+          return; // Not a FAQ click
+        }
+
+        addLog(
+          "🖱️ CLICK detected on: " +
+            event.target.tagName +
+            " (class: " +
+            event.target.className +
+            ")"
+        );
+      });
+    </script>
+  </body>
+</html>

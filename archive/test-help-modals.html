@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Help Modal Test</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        background: #1e1e2e;
+        padding: 40px;
+        color: #fff;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .test-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+      .test-btn {
+        background: rgba(31, 184, 205, 0.2);
+        border: 2px solid #1fb8cd;
+        color: #1fb8cd;
+        padding: 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .test-btn:hover {
+        background: #1fb8cd;
+        color: white;
+        transform: translateY(-2px);
+      }
+      .status {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🧪 Help Modal Functionality Test</h1>
+      <div class="status">
+        <h3>Status: <span id="status">Ready</span></h3>
+        <p>Click any button below to test the modal functionality</p>
+      </div>
+
+    <script src="app.js"></script>
+    <script>
+      function updateStatus(message, isError = false) {
+        const status = document.getElementById("status");
+        status.textContent = message;
+        status.style.color = isError ? "#ef4444" : "#4ade80";
+        console.log(message);
+      }
+
+      function testGettingStarted() {
+        updateStatus("Testing Getting Started...");
+        if (typeof window.showGettingStarted === "function") {
+          window.showGettingStarted();
+          updateStatus("✅ Getting Started Modal Opened!");
+        } else {
+          updateStatus("❌ showGettingStarted is not defined!", true);
+          console.error(
+            "Function not found. Need to call initializeHelpPage() first."
+          );
+          // Try to initialize
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      function testVideoTutorials() {
+        updateStatus("Testing Video Tutorials...");
+        if (typeof window.showVideoTutorials === "function") {
+          window.showVideoTutorials();
+          updateStatus("✅ Video Tutorials Modal Opened!");
+        } else {
+          updateStatus("❌ showVideoTutorials is not defined!", true);
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      function testUserManual() {
+        updateStatus("Testing User Manual...");
+        if (typeof window.showUserManual === "function") {
+          window.showUserManual();
+          updateStatus("✅ User Manual Modal Opened!");
+        } else {
+          updateStatus("❌ showUserManual is not defined!", true);
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      function testTroubleshooting() {
+        updateStatus("Testing Troubleshooting...");
+        if (typeof window.showTroubleshooting === "function") {
+          window.showTroubleshooting();
+          updateStatus("✅ Troubleshooting Modal Opened!");
+        } else {
+          updateStatus("❌ showTroubleshooting is not defined!", true);
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      function testBestPractices() {
+        updateStatus("Testing Best Practices...");
+        if (typeof window.showBestPractices === "function") {
+          window.showBestPractices();
+          updateStatus("✅ Best Practices Modal Opened!");
+        } else {
+          updateStatus("❌ showBestPractices is not defined!", true);
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      function testSecurityGuide() {
+        updateStatus("Testing Security Guide...");
+        if (typeof window.showSecurityGuide === "function") {
+          window.showSecurityGuide();
+          updateStatus("✅ Security Guide Modal Opened!");
+        } else {
+          updateStatus("❌ showSecurityGuide is not defined!", true);
+          if (typeof initializeHelpPage === "function") {
+            initializeHelpPage();
+            updateStatus("Initialized. Try again...");
+          }
+        }
+      }
+
+      // Check initial state
+      window.addEventListener("load", function () {
+        console.log("=== Function Availability Check ===");
+        console.log("showGettingStarted:", typeof window.showGettingStarted);
+        console.log("showVideoTutorials:", typeof window.showVideoTutorials);
+        console.log("showUserManual:", typeof window.showUserManual);
+        console.log("showTroubleshooting:", typeof window.showTroubleshooting);
+        console.log("showBestPractices:", typeof window.showBestPractices);
+        console.log("showSecurityGuide:", typeof window.showSecurityGuide);
+        console.log("initializeHelpPage:", typeof initializeHelpPage);
+        console.log("showHelpModal:", typeof showHelpModal);
+
+        updateStatus("Ready to test!");
+      });
+    </script>
+  </body>
+</html>

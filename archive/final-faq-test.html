@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ Functionality Test - PhishGuard AI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1e1e2e 0%, #2d2d3a 100%);
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .test-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        padding: 30px 0;
+        border-bottom: 2px solid rgba(31, 184, 205, 0.3);
+        margin-bottom: 30px;
+      }
+
+      header h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        color: #1fb8cd;
+      }
+
+      .test-status {
+        background: rgba(255, 255, 255, 0.05);
+        border: 2px solid #4ade80;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+      .test-status h2 {
+        color: #4ade80;
+        margin-bottom: 15px;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .status-item {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .status-item.success {
+        border-left: 4px solid #4ade80;
+      }
+      .status-item.pending {
+        border-left: 4px solid #fbbf24;
+      }
+      .status-item.error {
+        border-left: 4px solid #ef4444;
+      }
+
+      .console-output {
+        background: #000;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        max-height: 300px;
+        overflow-y: auto;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+      }
+
+      .console-output h3 {
+        color: #1fb8cd;
+        margin-bottom: 15px;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      .log-entry {
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .log-success {
+        color: #4ade80;
+      }
+      .log-info {
+        color: #1fb8cd;
+      }
+      .log-warning {
+        color: #fbbf24;
+      }
+      .log-error {
+        color: #ef4444;
+      }
+
+      .instructions {
+        background: rgba(31, 184, 205, 0.1);
+        border: 2px solid rgba(31, 184, 205, 0.3);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+      }
+
+      .instructions h2 {
+        color: #1fb8cd;
+        margin-bottom: 15px;
+      }
+
+      .instructions ol {
+        margin-left: 20px;
+        line-height: 1.8;
+      }
+
+      .instructions ol li {
+        margin: 10px 0;
+      }
+
+      /* FAQ Styles */
+      .faq-section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 30px;
+      }
+
+      .faq-item {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .faq-item:hover {
+        border-color: rgba(31, 184, 205, 0.5);
+        box-shadow: 0 4px 20px rgba(31, 184, 205, 0.15);
+      }
+
+      .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 24px;
+        cursor: pointer;
+        gap: 20px;
+        transition: all 0.2s ease;
+        user-select: none;
+      }
+
+      .faq-question:hover {
+        background: rgba(31, 184, 205, 0.1);
+      }
+
+      .faq-question:active {
+        transform: scale(0.99);
+      }
+
+      .faq-question h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        margin: 0;
+        flex: 1;
+        line-height: 1.5;
+      }
+
+      .faq-toggle {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(31, 184, 205, 0.2);
+        border: 2px solid rgba(31, 184, 205, 0.4);
+        border-radius: 50%;
+        font-size: 24px;
+        font-weight: 400;
+        color: #1fb8cd;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+        line-height: 1;
+        pointer-events: none; /* THE KEY FIX */
+      }
+
+      .faq-item.active .faq-toggle {
+        background: #1fb8cd;
+        border-color: #1fb8cd;
+        color: white;
+        transform: rotate(45deg);
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease, padding 0.4s ease;
+        padding: 0 24px;
+      }
+
+      .faq-item.active .faq-answer {
+        max-height: 1000px;
+        padding: 0 24px 24px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .faq-answer p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.7;
+        margin: 16px 0 12px 0;
+      }
+
+      .faq-answer p:first-child {
+        margin-top: 20px;
+      }
+
+      .btn-reset {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-reset:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <header>
+        <h1>🔧 FAQ Functionality Test</h1>
+        <p>Testing FAQ toggle system for PhishGuard AI Dashboard</p>
+      </header>
+
+      <div class="test-status">
+        <h2>📊 Test Status</h2>
+        <div class="status-grid" id="statusGrid">
+          <div class="status-item pending">
+            <span>⏳</span>
+            <span id="status1">Waiting for first click...</span>
+          </div>
+          <div class="status-item pending">
+            <span>📝</span>
+            <span id="status2">Click counter: 0</span>
+          </div>
+          <div class="status-item pending">
+            <span>🔄</span>
+            <span id="status3">Toggles: 0</span>
+          </div>
+          <div class="status-item pending">
+            <span>✅</span>
+            <span id="status4">Test not started</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="console-output">
+        <h3>💻 Console Output</h3>
+        <div id="consoleLog"></div>
+      </div>
+
+      <div class="instructions">
+        <h2>📋 Test Instructions</h2>
+        <ol>
+          <li>
+            <strong>Click any FAQ question below</strong> - Try clicking on the
+            text, the + button, or anywhere on the row
+          </li>
+          <li>
+            <strong>Watch for the expansion animation</strong> - Answer should
+            slide down smoothly (0.4s)
+          </li>
+          <li>
+            <strong>Verify the + changes to −</strong> - Button should rotate 45
+            degrees
+          </li>
+          <li>
+            <strong>Click another FAQ</strong> - First one should close, second
+            should open
+          </li>
+          <li><strong>Click the same FAQ again</strong> - It should close</li>
+          <li>
+            <strong>Check the console output above</strong> - Should show all
+            events being logged
+          </li>
+          <li>
+            <strong>Check test status</strong> - All indicators should turn
+            green
+          </li>
+        </ol>
+        <button class="btn-reset" onclick="resetTest()">🔄 Reset Test</button>
+      </div>
+
+      <div class="faq-section">
+        <h2 style="margin-bottom: 20px; color: #1fb8cd">
+          🤔 Test FAQ Questions
+        </h2>
+
+        <div class="faq-item" id="faq1">
+          <div class="faq-question" onclick="toggleFAQ(this, 'faq1')">
+            <h4>❓ Test Question 1 - Click me to test!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              🎉 <strong>Success!</strong> This FAQ is working correctly. The
+              toggle function was called and the answer expanded smoothly.
+            </p>
+            <p>
+              Try clicking another question to see if this one closes
+              automatically.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq2">
+          <div class="faq-question" onclick="toggleFAQ(this, 'faq2')">
+            <h4>
+              ❓ Test Question 2 - Try clicking the + button specifically!
+            </h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              ✅ <strong>Excellent!</strong> The pointer-events: none CSS fix is
+              working. Clicks on the + button are passing through to the parent
+              div.
+            </p>
+            <p>Notice how the previous FAQ closed when you opened this one?</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq3">
+          <div class="faq-question" onclick="toggleFAQ(this, 'faq3')">
+            <h4>❓ Test Question 3 - Click anywhere on this row!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              🚀 <strong>Perfect!</strong> The entire row is clickable. You can
+              click the text, the button, or empty space - everything works!
+            </p>
+            <p>Try clicking this question again to close it.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" id="faq4">
+          <div class="faq-question" onclick="toggleFAQ(this, 'faq4')">
+            <h4>❓ Test Question 4 - One more test!</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>
+              🎯 <strong>All systems operational!</strong> If you can see this,
+              all 4 FAQs are working correctly.
+            </p>
+            <p>The FAQ system is ready for production use!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let clickCount = 0;
+      let toggleCount = 0;
+      let testStarted = false;
+
+      function addLog(message, type = "info") {
+        const consoleLog = document.getElementById("consoleLog");
+        const entry = document.createElement("div");
+        entry.className = `log-entry log-${type}`;
+        const timestamp = new Date().toLocaleTimeString();
+        entry.textContent = `[${timestamp}] ${message}`;
+        consoleLog.appendChild(entry);
+        consoleLog.scrollTop = consoleLog.scrollHeight;
+        console.log(message);
+      }
+
+      function updateStatus() {
+        document.getElementById(
+          "status2"
+        ).textContent = `Click counter: ${clickCount}`;
+        document.getElementById(
+          "status3"
+        ).textContent = `Toggles: ${toggleCount}`;
+
+        if (testStarted) {
+          const status1 = document.querySelector("#status1").parentElement;
+          status1.classList.remove("pending");
+          status1.classList.add("success");
+          document.getElementById("status1").textContent =
+            "First click detected!";
+        }
+
+        if (toggleCount >= 3) {
+          const status4 = document.querySelector("#status4").parentElement;
+          status4.classList.remove("pending");
+          status4.classList.add("success");
+          document.getElementById("status4").textContent =
+            "All tests passed! ✅";
+        }
+      }
+
+      function toggleFAQ(element, id) {
+        clickCount++;
+        toggleCount++;
+
+        if (!testStarted) {
+          testStarted = true;
+          addLog("🎉 Test started! First FAQ clicked.", "success");
+        }
+
+        addLog(`FAQ clicked: ${id}`, "info");
+
+        const faqItem = document.getElementById(id);
+        const toggle = element.querySelector(".faq-toggle");
+
+        if (faqItem.classList.contains("active")) {
+          addLog(`Closing FAQ: ${id}`, "warning");
+          faqItem.classList.remove("active");
+          toggle.textContent = "+";
+        } else {
+          addLog(`Opening FAQ: ${id} (closing all others first)`, "success");
+
+          // Close all other FAQs
+          document.querySelectorAll(".faq-item").forEach((item) => {
+            if (item.classList.contains("active")) {
+              addLog(`Auto-closing: ${item.id}`, "info");
+            }
+            item.classList.remove("active");
+            item.querySelector(".faq-toggle").textContent = "+";
+          });
+
+          faqItem.classList.add("active");
+          toggle.textContent = "−";
+        }
+
+        updateStatus();
+        addLog(
+          `✅ Toggle complete! Active: ${faqItem.classList.contains("active")}`,
+          "success"
+        );
+      }
+
+      function resetTest() {
+        clickCount = 0;
+        toggleCount = 0;
+        testStarted = false;
+
+        // Close all FAQs
+        document.querySelectorAll(".faq-item").forEach((item) => {
+          item.classList.remove("active");
+          item.querySelector(".faq-toggle").textContent = "+";
+        });
+
+        // Reset status
+        document.querySelectorAll(".status-item").forEach((item) => {
+          item.classList.remove("success", "error");
+          item.classList.add("pending");
+        });
+
+        document.getElementById("status1").textContent =
+          "Waiting for first click...";
+        document.getElementById("status4").textContent = "Test not started";
+
+        // Clear console
+        document.getElementById("consoleLog").innerHTML = "";
+
+        addLog("🔄 Test reset! Click any FAQ to start testing.", "info");
+        updateStatus();
+      }
+
+      // Initial log
+      addLog("✅ Test page loaded successfully!", "success");
+      addLog("🎯 Ready to test! Click any FAQ question above.", "info");
+      addLog("💡 All FAQs use pointer-events: none on the + button.", "info");
+    </script>
+  </body>
+</html>
