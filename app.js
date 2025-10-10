@@ -1632,7 +1632,7 @@ function showSection(sectionName) {
                 <p>Get help from our expert team</p>
                 <p><strong>support@phishguard.ai</strong></p>
                 <p class="support-response-time">⏱️ Response time: 2-4 hours</p>
-                <button class="btn-primary">Send Email</button>
+                <button class="btn-primary"onclick="window.location.href='mailto:info@uniteaminterior.com'">Send Email</button>
               </div>
 
               <div class="support-card">
@@ -1641,7 +1641,7 @@ function showSection(sectionName) {
                 <p>Chat with support agent</p>
                 <p><strong>Available 24/7</strong></p>
                 <p class="support-response-time">⏱️ Avg wait time: 2 minutes</p>
-                <button class="btn-primary">Start Chat</button>
+                <button class="btn-primary" onclick="https://02e60282ebf80c5a3a5435aff52029c5.n8n.selfmade.codes/webhook/71ec70cf-c637-477d-8a3b-8a168887bf4b/chat">Start Chat</button>
               </div>
 
               <div class="support-card">
