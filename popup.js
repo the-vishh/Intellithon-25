@@ -37,6 +37,7 @@ advancedToggle.addEventListener("click", function () {
   toggleIcon.classList.toggle("rotated");
 });
 
+<<<<<<< HEAD
 // Explanation display functions
 function showExplanation(explanation) {
   const explanationSection = document.getElementById("explanation-section");
@@ -137,6 +138,8 @@ function hideExplanation() {
   document.getElementById("explanation-section").style.display = "none";
 }
 
+=======
+>>>>>>> 3e500a0fc59a6573bc0c9f70c223cdec43227d70
 // Send URL Button Handler
 const sendUrlBtn = document.getElementById("send-url-btn");
 sendUrlBtn.addEventListener("click", async function () {
@@ -148,6 +151,7 @@ sendUrlBtn.addEventListener("click", async function () {
     });
     const currentUrl = tab.url;
 
+<<<<<<< HEAD
     console.log("Checking URL:", currentUrl);
 
     // Show loading state
@@ -233,6 +237,23 @@ sendUrlBtn.addEventListener("click", async function () {
     console.error("Error getting current tab:", error);
     sendUrlBtn.innerHTML = "<span>Send URL</span>";
     sendUrlBtn.disabled = false;
+=======
+    // TODO: Send URL to backend API for phishing detection
+    console.log("Checking URL:", currentUrl);
+
+    // Placeholder: Show alert (replace with actual API call)
+    alert(`Checking URL: ${currentUrl}\n\n(Backend integration pending)`);
+
+    // Example API call structure:
+    // const response = await fetch('YOUR_BACKEND_API/check-url', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ url: currentUrl })
+    // });
+    // const result = await response.json();
+  } catch (error) {
+    console.error("Error getting current tab:", error);
+>>>>>>> 3e500a0fc59a6573bc0c9f70c223cdec43227d70
     alert("Error: Unable to get current URL");
   }
 });
