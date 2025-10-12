@@ -1,6 +1,5 @@
 # 🛡️ PhishGuard AI - Advanced Phishing Detection System
 
-> **Winner Project - Intellithon 2025 Hackathon**
 > A production-grade, AI-powered phishing detection Chrome extension with real-time threat intelligence
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
