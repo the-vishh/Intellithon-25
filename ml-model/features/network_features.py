@@ -1,5 +1,5 @@
 """
-🌐 NETWORK FEATURE EXTRACTOR
+ NETWORK FEATURE EXTRACTOR
 ============================
 
 Extract 20+ network and infrastructure features with HIGHEST quality
@@ -289,7 +289,7 @@ class NetworkFeatureExtractor:
 def demo_network_features():
     """Demonstrate network feature extraction"""
     print("=" * 80)
-    print("🌐 NETWORK FEATURE EXTRACTOR DEMO")
+    print(" NETWORK FEATURE EXTRACTOR DEMO")
     print("=" * 80)
 
     extractor = NetworkFeatureExtractor()
@@ -300,29 +300,29 @@ def demo_network_features():
         "https://github.com",
     ]
 
-    print(f"\n📊 Extracting {extractor.get_feature_count()} network features...\n")
+    print(f"\n Extracting {extractor.get_feature_count()} network features...\n")
 
     for url in test_urls:
-        print(f"🔗 URL: {url}")
+        print(f" URL: {url}")
         print("-" * 80)
 
         features = extractor.extract_features(url)
 
         # Print key features
-        print(f"   DNS Resolves: {'✅ Yes' if features['dns_resolves'] else '❌ No'}")
+        print(f"   DNS Resolves: {' Yes' if features['dns_resolves'] else ' No'}")
         print(f"   DNS Time: {features['dns_resolution_time']:.2f} ms")
         print(f"   HTTP Response Time: {features['http_response_time']:.2f} ms")
         print(f"   Status Code: {features['http_status_code']}")
         print(f"   Redirects: {features['http_redirects']}")
         print(f"   Security Headers: {features['has_security_headers']}")
-        print(f"   HSTS: {'✅ Yes' if features['has_hsts'] else '❌ No'}")
+        print(f"   HSTS: {' Yes' if features['has_hsts'] else ' No'}")
         print(
-            f"   Known Server: {'✅ Yes' if features['server_is_known'] else '❌ No'}"
+            f"   Known Server: {' Yes' if features['server_is_known'] else ' No'}"
         )
         print()
 
     print("=" * 80)
-    print(f"✅ NETWORK FEATURE EXTRACTION COMPLETE")
+    print(f" NETWORK FEATURE EXTRACTION COMPLETE")
     print(f"   Total Features: {extractor.get_feature_count()}")
     print("=" * 80)
 

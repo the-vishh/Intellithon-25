@@ -1,5 +1,5 @@
 """
-🚀 COMPLETE ML MODEL TRAINING - LEVEL 1: 100%
+ COMPLETE ML MODEL TRAINING - LEVEL 1: 100%
 ================================================
 
 Full production training with:
@@ -60,7 +60,7 @@ class ProductionTrainer:
 
     def __init__(self):
         print("\n" + "=" * 80)
-        print("🚀 PRODUCTION ML TRAINING - LEVEL 1: 100%")
+        print(" PRODUCTION ML TRAINING - LEVEL 1: 100%")
         print("=" * 80)
 
         self.url_extractor = URLFeatureExtractor()
@@ -70,7 +70,7 @@ class ProductionTrainer:
 
     def generate_comprehensive_data(self, n_samples=2000):
         """Generate comprehensive training data with varied patterns"""
-        print("\n📊 Generating comprehensive training data...")
+        print("\n Generating comprehensive training data...")
 
         # Enhanced phishing URLs with realistic patterns
         phishing_patterns = [
@@ -160,14 +160,14 @@ class ProductionTrainer:
             url = pattern.format(i=i)
             all_legitimate.append(url)
 
-        print(f"   ✅ Generated {len(all_phishing)} phishing URLs")
-        print(f"   ✅ Generated {len(all_legitimate)} legitimate URLs")
+        print(f"    Generated {len(all_phishing)} phishing URLs")
+        print(f"    Generated {len(all_legitimate)} legitimate URLs")
 
         return all_phishing, all_legitimate
 
     def extract_features(self, urls, labels):
         """Extract comprehensive features from URLs"""
-        print("\n🔍 Extracting comprehensive features...")
+        print("\n Extracting comprehensive features...")
 
         features_list = []
         valid_urls = []
@@ -186,7 +186,7 @@ class ProductionTrainer:
             except Exception as e:
                 continue
 
-        print(f"\n   ✅ Extracted features from {len(features_list)} URLs")
+        print(f"\n    Extracted features from {len(features_list)} URLs")
 
         return np.array(features_list), np.array(valid_labels), valid_urls
 
@@ -255,11 +255,11 @@ class ProductionTrainer:
 
     def train_models(self, X_train, y_train, X_test, y_test):
         """Train ensemble of ML models"""
-        print("\n🧠 Training ensemble ML models...")
+        print("\n Training ensemble ML models...")
         print("=" * 80)
 
         # 1. Random Forest with optimized hyperparameters
-        print("\n📊 Training Random Forest (Production Config)...")
+        print("\n Training Random Forest (Production Config)...")
         rf_model = RandomForestClassifier(
             n_estimators=200,
             max_depth=15,
@@ -282,13 +282,13 @@ class ProductionTrainer:
         # Feature importance
         if len(self.feature_names) == X_train.shape[1]:
             top_features = self._get_top_features(rf_model, n=10)
-            print(f"\n   🔝 Top 10 Important Features:")
+            print(f"\n    Top 10 Important Features:")
             for feat, imp in top_features:
                 print(f"      {feat}: {imp:.4f}")
 
         # 2. XGBoost with optimized parameters
         if XGBOOST_AVAILABLE:
-            print("\n📊 Training XGBoost (Production Config)...")
+            print("\n Training XGBoost (Production Config)...")
             xgb_model = xgb.XGBClassifier(
                 n_estimators=200,
                 max_depth=8,
@@ -310,7 +310,7 @@ class ProductionTrainer:
 
         # 3. LightGBM with optimized parameters
         if LIGHTGBM_AVAILABLE:
-            print("\n📊 Training LightGBM (Production Config)...")
+            print("\n Training LightGBM (Production Config)...")
             lgb_model = lgb.LGBMClassifier(
                 n_estimators=200,
                 max_depth=8,
@@ -334,7 +334,7 @@ class ProductionTrainer:
 
         # 4. Ensemble Model (Voting)
         if len(self.models) >= 2:
-            print("\n📊 Creating Ensemble Model (Voting)...")
+            print("\n Creating Ensemble Model (Voting)...")
             ensemble_proba = np.mean(
                 [self.results[m]["probabilities"] for m in self.models.keys()], axis=0
             )
@@ -345,7 +345,7 @@ class ProductionTrainer:
             )
 
         print("\n" + "=" * 80)
-        print("✅ All models trained successfully!")
+        print(" All models trained successfully!")
 
     def _get_top_features(self, model, n=10):
         """Get top N important features"""
@@ -369,11 +369,11 @@ class ProductionTrainer:
         fnr = fn / (fn + tp) if (fn + tp) > 0 else 0
 
         print(f"\n   {name} Results:")
-        print(f"   ✅ Accuracy:  {accuracy:.4f} ({accuracy*100:.2f}%)")
-        print(f"   ✅ Precision: {precision:.4f} (FPR: {fpr*100:.2f}%)")
-        print(f"   ✅ Recall:    {recall:.4f} (FNR: {fnr*100:.2f}%)")
-        print(f"   ✅ F1 Score:  {f1:.4f}")
-        print(f"   ✅ AUC-ROC:   {auc:.4f}")
+        print(f"    Accuracy:  {accuracy:.4f} ({accuracy*100:.2f}%)")
+        print(f"    Precision: {precision:.4f} (FPR: {fpr*100:.2f}%)")
+        print(f"    Recall:    {recall:.4f} (FNR: {fnr*100:.2f}%)")
+        print(f"    F1 Score:  {f1:.4f}")
+        print(f"    AUC-ROC:   {auc:.4f}")
 
         return {
             "accuracy": float(accuracy),
@@ -391,17 +391,17 @@ class ProductionTrainer:
         """Save trained models for production"""
         os.makedirs(output_dir, exist_ok=True)
 
-        print(f"\n💾 Saving models to {output_dir}/...")
+        print(f"\n Saving models to {output_dir}/...")
 
         for name, model in self.models.items():
             if name != "ensemble":  # Don't save ensemble as it's computed
                 model_path = os.path.join(output_dir, f"{name}_model.pkl")
                 joblib.dump(model, model_path)
                 file_size = os.path.getsize(model_path) / 1024  # KB
-                print(f"   ✅ Saved {name} ({file_size:.1f} KB)")
+                print(f"    Saved {name} ({file_size:.1f} KB)")
 
         print(
-            f"   ✅ Total models saved: {len(self.models) - ('ensemble' in self.models)}"
+            f"    Total models saved: {len(self.models) - ('ensemble' in self.models)}"
         )
 
     def generate_report(self, output_dir="reports"):
@@ -445,14 +445,14 @@ class ProductionTrainer:
         with open(report_path, "w") as f:
             json.dump(report, f, indent=2)
 
-        print(f"\n📄 Production report saved: {report_path}")
+        print(f"\n Production report saved: {report_path}")
         return report
 
 
 def main():
     """Main production training pipeline"""
     print("\n" + "=" * 80)
-    print("🎯 LEVEL 1: ML MODEL TRAINING - 100% COMPLETION")
+    print(" LEVEL 1: ML MODEL TRAINING - 100% COMPLETION")
     print("=" * 80)
 
     trainer = ProductionTrainer()
@@ -472,7 +472,7 @@ def main():
     # Extract features
     X, y, valid_urls = trainer.extract_features(all_urls, all_labels)
 
-    print(f"\n📊 Dataset Statistics:")
+    print(f"\n Dataset Statistics:")
     print(f"   Total URLs: {len(valid_urls)}")
     print(f"   Phishing: {sum(y)} ({sum(y)/len(y)*100:.1f}%)")
     print(f"   Legitimate: {len(y)-sum(y)} ({(len(y)-sum(y))/len(y)*100:.1f}%)")
@@ -483,7 +483,7 @@ def main():
         X, y, test_size=0.25, random_state=42, stratify=y
     )
 
-    print(f"\n📊 Train/Test Split:")
+    print(f"\n Train/Test Split:")
     print(f"   Training samples: {len(X_train)} ({len(X_train)/len(X)*100:.1f}%)")
     print(f"   Testing samples:  {len(X_test)} ({len(X_test)/len(X)*100:.1f}%)")
 
@@ -498,20 +498,20 @@ def main():
 
     # Print final summary
     print("\n" + "=" * 80)
-    print("🎉 LEVEL 1: 100% COMPLETE!")
+    print(" LEVEL 1: 100% COMPLETE!")
     print("=" * 80)
-    print(f"\n🏆 Best Model: {report['summary']['best_model_accuracy']}")
-    print(f"📈 Best Accuracy: {report['summary']['best_accuracy']*100:.2f}%")
-    print(f"📈 Best F1 Score: {report['summary']['best_f1']:.4f}")
-    print(f"📈 Avg Accuracy: {report['summary']['avg_accuracy']*100:.2f}%")
-    print(f"📈 Avg FPR: {report['summary']['avg_fpr']*100:.2f}%")
+    print(f"\n Best Model: {report['summary']['best_model_accuracy']}")
+    print(f" Best Accuracy: {report['summary']['best_accuracy']*100:.2f}%")
+    print(f" Best F1 Score: {report['summary']['best_f1']:.4f}")
+    print(f" Avg Accuracy: {report['summary']['avg_accuracy']*100:.2f}%")
+    print(f" Avg FPR: {report['summary']['avg_fpr']*100:.2f}%")
     print(
-        f"\n{'✅' if report['summary']['production_ready'] else '⚠️'} Production Ready: {report['summary']['production_ready']}"
+        f"\n{'' if report['summary']['production_ready'] else ''} Production Ready: {report['summary']['production_ready']}"
     )
 
     print("\n" + "=" * 80)
-    print("🚀 Models are ready for deployment!")
-    print("✅ LEVEL 1: ML MODEL TRAINING - 100% COMPLETE")
+    print(" Models are ready for deployment!")
+    print(" LEVEL 1: ML MODEL TRAINING - 100% COMPLETE")
     print("=" * 80)
 
 

@@ -1,5 +1,5 @@
 """
-🚀 ULTIMATE FEATURE INTEGRATOR - 150+ FEATURES
+ ULTIMATE FEATURE INTEGRATOR - 150+ FEATURES
 ===============================================
 
 Combines ALL feature extractors into one HIGH-PERFORMANCE system
@@ -37,7 +37,7 @@ class UltimateFeatureIntegrator:
     """
 
     def __init__(self, timeout=5):
-        print("🚀 Initializing Ultimate Feature Integrator...")
+        print(" Initializing Ultimate Feature Integrator...")
 
         # Initialize all extractors
         self.url_extractor = URLFeatureExtractor()
@@ -51,7 +51,7 @@ class UltimateFeatureIntegrator:
         self.feature_names = self._get_all_feature_names()
         self.feature_count = len(self.feature_names)
 
-        print(f"✅ Initialized with {self.feature_count} features!")
+        print(f" Initialized with {self.feature_count} features!")
 
     def extract_all_features(
         self, url: str, html_content: str = None
@@ -100,7 +100,7 @@ class UltimateFeatureIntegrator:
             all_features.update(network_features)
 
         except Exception as e:
-            print(f"⚠️ Error extracting features: {e}")
+            print(f" Error extracting features: {e}")
             # Return defaults on error
             all_features = self._get_default_features()
 
@@ -189,14 +189,14 @@ class UltimateFeatureIntegrator:
     def print_feature_summary(self):
         """Print formatted feature summary"""
         print("\n" + "=" * 80)
-        print("📊 ULTIMATE FEATURE INTEGRATOR - FEATURE SUMMARY")
+        print(" ULTIMATE FEATURE INTEGRATOR - FEATURE SUMMARY")
         print("=" * 80)
 
         summary = self.get_feature_summary()
         for category, count in summary.items():
             if category == "TOTAL":
                 print("-" * 80)
-                print(f"{'🎯 ' + category:<50} {count:>10}")
+                print(f"{' ' + category:<50} {count:>10}")
             else:
                 print(f"{category:<50} {count:>10}")
 
@@ -206,7 +206,7 @@ class UltimateFeatureIntegrator:
 def demo_ultimate_integrator():
     """Demonstrate the ultimate feature integrator"""
     print("=" * 80)
-    print("🚀 ULTIMATE FEATURE INTEGRATOR DEMO")
+    print(" ULTIMATE FEATURE INTEGRATOR DEMO")
     print("=" * 80)
 
     # Initialize integrator
@@ -221,11 +221,11 @@ def demo_ultimate_integrator():
         "https://github.com",
     ]
 
-    print(f"\n📊 Testing feature extraction...\n")
+    print(f"\n Testing feature extraction...\n")
 
     for url in test_urls:
         print(f"\n{'=' * 80}")
-        print(f"🔗 URL: {url}")
+        print(f" URL: {url}")
         print(f"{'=' * 80}\n")
 
         # Extract all features
@@ -234,7 +234,7 @@ def demo_ultimate_integrator():
         # Get feature vector
         vector = integrator.extract_features_vector(url)
 
-        print(f"\n📈 Results:")
+        print(f"\n Results:")
         print(f"   Total Features Extracted: {len(features)}")
         print(f"   Feature Vector Shape: {vector.shape}")
         print(f"   Non-zero Features: {np.count_nonzero(vector)}")
@@ -254,7 +254,7 @@ def demo_ultimate_integrator():
         print(f"\n   ... and {len(features) - 10} more features")
 
     print("\n" + "=" * 80)
-    print("✅ ULTIMATE FEATURE INTEGRATOR TEST COMPLETE!")
+    print(" ULTIMATE FEATURE INTEGRATOR TEST COMPLETE!")
     print(f"   Successfully extracted {integrator.feature_count} features")
     print("=" * 80)
 

@@ -293,10 +293,10 @@ if __name__ == "__main__":
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n🔗 URL: {url}")
+        print(f"\n URL: {url}")
         features = extractor.extract_all_features(url)
 
-        print(f"\n📊 Key Features:")
+        print(f"\n Key Features:")
         print(f"   Length: {features['url_length']}")
         print(f"   HTTPS: {'Yes' if features['has_https'] else 'No'}")
         print(f"   Suspicious Keywords: {features['suspicious_keyword_count']}")

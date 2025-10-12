@@ -1,5 +1,5 @@
 """
-🚀 SIMPLIFIED ML MODEL TRAINING
+ SIMPLIFIED ML MODEL TRAINING
 ===============================================
 
 Trains ML models with sample data for demonstration
@@ -61,7 +61,7 @@ class SimpleTrainer:
 
     def generate_sample_data(self, n_samples=1000):
         """Generate sample URLs for training"""
-        print("\n📊 Generating sample training data...")
+        print("\n Generating sample training data...")
 
         # Phishing URLs (examples)
         phishing_urls = [
@@ -143,14 +143,14 @@ class SimpleTrainer:
         all_phishing = all_phishing[: n_samples // 2]
         all_legitimate = all_legitimate[: n_samples // 2]
 
-        print(f"   ✅ Generated {len(all_phishing)} phishing URLs")
-        print(f"   ✅ Generated {len(all_legitimate)} legitimate URLs")
+        print(f"    Generated {len(all_phishing)} phishing URLs")
+        print(f"    Generated {len(all_legitimate)} legitimate URLs")
 
         return all_phishing, all_legitimate
 
     def extract_features(self, urls, labels):
         """Extract features from URLs"""
-        print("\n🔍 Extracting features...")
+        print("\n Extracting features...")
 
         features_list = []
         valid_urls = []
@@ -167,7 +167,7 @@ class SimpleTrainer:
             except Exception as e:
                 continue  # Skip problematic URLs
 
-        print(f"   ✅ Extracted features from {len(features_list)} URLs")
+        print(f"    Extracted features from {len(features_list)} URLs")
 
         return np.array(features_list), np.array(valid_labels), valid_urls
 
@@ -194,11 +194,11 @@ class SimpleTrainer:
 
     def train_models(self, X_train, y_train, X_test, y_test):
         """Train all ML models"""
-        print("\n🧠 Training ML models...")
+        print("\n Training ML models...")
         print("=" * 80)
 
         # 1. Random Forest
-        print("\n📊 Training Random Forest...")
+        print("\n Training Random Forest...")
         rf_model = RandomForestClassifier(
             n_estimators=100, max_depth=10, random_state=42, n_jobs=-1
         )
@@ -213,7 +213,7 @@ class SimpleTrainer:
 
         # 2. XGBoost
         if XGBOOST_AVAILABLE:
-            print("\n📊 Training XGBoost...")
+            print("\n Training XGBoost...")
             xgb_model = xgb.XGBClassifier(
                 n_estimators=100,
                 max_depth=6,
@@ -230,11 +230,11 @@ class SimpleTrainer:
                 "XGBoost", y_test, xgb_pred, xgb_proba
             )
         else:
-            print("\n⚠️  XGBoost not available")
+            print("\n  XGBoost not available")
 
         # 3. LightGBM
         if LIGHTGBM_AVAILABLE:
-            print("\n📊 Training LightGBM...")
+            print("\n Training LightGBM...")
             lgb_model = lgb.LGBMClassifier(
                 n_estimators=100,
                 max_depth=6,
@@ -252,10 +252,10 @@ class SimpleTrainer:
                 "LightGBM", y_test, lgb_pred, lgb_proba
             )
         else:
-            print("\n⚠️  LightGBM not available")
+            print("\n  LightGBM not available")
 
         print("\n" + "=" * 80)
-        print("✅ All models trained successfully!")
+        print(" All models trained successfully!")
 
     def _evaluate_model(self, name, y_test, y_pred, y_proba):
         """Evaluate model performance"""
@@ -285,14 +285,14 @@ class SimpleTrainer:
         """Save trained models"""
         os.makedirs(output_dir, exist_ok=True)
 
-        print(f"\n💾 Saving models to {output_dir}/...")
+        print(f"\n Saving models to {output_dir}/...")
 
         for name, model in self.models.items():
             model_path = os.path.join(output_dir, f"{name}_model.pkl")
             joblib.dump(model, model_path)
-            print(f"   ✅ Saved {name}")
+            print(f"    Saved {name}")
 
-        print(f"   ✅ Saved {len(self.models)} models")
+        print(f"    Saved {len(self.models)} models")
 
     def generate_report(self, output_dir="reports"):
         """Generate evaluation report"""
@@ -318,14 +318,14 @@ class SimpleTrainer:
         with open(report_path, "w") as f:
             json.dump(report, f, indent=2)
 
-        print(f"\n📄 Evaluation report saved to: {report_path}")
+        print(f"\n Evaluation report saved to: {report_path}")
         return report
 
 
 def main():
     """Main training pipeline"""
     print("=" * 80)
-    print("🚀 SIMPLIFIED ML MODEL TRAINING")
+    print(" SIMPLIFIED ML MODEL TRAINING")
     print("=" * 80)
 
     trainer = SimpleTrainer()
@@ -340,7 +340,7 @@ def main():
     # Extract features
     X, y, valid_urls = trainer.extract_features(all_urls, all_labels)
 
-    print(f"\n📊 Dataset Statistics:")
+    print(f"\n Dataset Statistics:")
     print(f"   Total URLs: {len(valid_urls)}")
     print(f"   Phishing: {sum(y)} ({sum(y)/len(y)*100:.1f}%)")
     print(f"   Legitimate: {len(y)-sum(y)} ({(len(y)-sum(y))/len(y)*100:.1f}%)")
@@ -351,7 +351,7 @@ def main():
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    print(f"\n📊 Train/Test Split:")
+    print(f"\n Train/Test Split:")
     print(f"   Training samples: {len(X_train)}")
     print(f"   Testing samples:  {len(X_test)}")
 
@@ -366,12 +366,12 @@ def main():
 
     # Print summary
     print("\n" + "=" * 80)
-    print("🎉 TRAINING COMPLETE!")
+    print(" TRAINING COMPLETE!")
     print("=" * 80)
-    print(f"\n📊 Best Model: {report['summary']['best_model']}")
-    print(f"📈 Best Accuracy: {report['summary']['best_accuracy']*100:.2f}%")
-    print(f"📈 Average Accuracy: {report['summary']['avg_accuracy']*100:.2f}%")
-    print("\n✅ Models ready for deployment!")
+    print(f"\n Best Model: {report['summary']['best_model']}")
+    print(f" Best Accuracy: {report['summary']['best_accuracy']*100:.2f}%")
+    print(f" Average Accuracy: {report['summary']['avg_accuracy']*100:.2f}%")
+    print("\n Models ready for deployment!")
     print("=" * 80)
 
 

@@ -1,5 +1,5 @@
 """
-🎨 50+ BRAND LOGO DATABASE
+ 50+ BRAND LOGO DATABASE
 ==========================
 
 Expanding visual protection from 19 to 50+ major brands
@@ -335,10 +335,10 @@ def save_brand_database():
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(BRAND_DATABASE, f, indent=2, ensure_ascii=False)
 
-    print(f"✅ Saved {len(BRAND_DATABASE)} brands to {output_file}")
+    print(f" Saved {len(BRAND_DATABASE)} brands to {output_file}")
 
     # Print summary
-    print(f"\n📊 Brand Database Summary:")
+    print(f"\n Brand Database Summary:")
     print(f"   Total Brands: {len(BRAND_DATABASE)}")
     print(
         f"   Total Domains: {sum(len(b['domains']) for b in BRAND_DATABASE.values())}"
@@ -354,11 +354,11 @@ def save_brand_database():
         "Social & Communication": 5,
     }
 
-    print(f"\n📁 By Category:")
+    print(f"\n By Category:")
     for cat, count in categories.items():
         print(f"   {cat}: {count} brands")
 
-    print(f"\n🎨 Top 10 Most Targeted Brands:")
+    print(f"\n Top 10 Most Targeted Brands:")
     top_brands = [
         "PayPal",
         "Amazon",
@@ -377,13 +377,13 @@ def save_brand_database():
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🎨 CREATING 50+ BRAND DATABASE")
+    print(" CREATING 50+ BRAND DATABASE")
     print("=" * 80)
 
     save_brand_database()
 
     print("\n" + "=" * 80)
-    print("✅ 50+ BRAND DATABASE COMPLETE!")
+    print(" 50+ BRAND DATABASE COMPLETE!")
     print("=" * 80)
-    print("\n🏆 We now protect 50+ brands (vs competitors' ~10-20)")
+    print("\n We now protect 50+ brands (vs competitors' ~10-20)")
     print("=" * 80)

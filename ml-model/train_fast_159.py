@@ -1,5 +1,5 @@
 """
-🚀 FAST 159-FEATURE TRAINING (SIMULATED DATA)
+ FAST 159-FEATURE TRAINING (SIMULATED DATA)
 ==============================================
 
 Train ML models with 159 features using simulated phishing feature vectors.
@@ -247,7 +247,7 @@ class FastModelTrainer:
         Simulates real feature distributions for 159 features
         """
         print(f"\n{'='*80}")
-        print(f"📊 GENERATING SYNTHETIC TRAINING DATA")
+        print(f" GENERATING SYNTHETIC TRAINING DATA")
         print(f"{'='*80}")
         print(f"   Samples: {n_samples}")
         print(f"   Features: {self.feature_count}")
@@ -258,11 +258,11 @@ class FastModelTrainer:
         n_phishing = n_samples // 2
         n_legit = n_samples - n_phishing
 
-        print(f"\n🎣 Generating {n_phishing} phishing samples...")
+        print(f"\n Generating {n_phishing} phishing samples...")
         X_phishing = self._generate_phishing_features(n_phishing)
         y_phishing = np.ones(n_phishing)
 
-        print(f"✅ Generating {n_legit} legitimate samples...")
+        print(f" Generating {n_legit} legitimate samples...")
         X_legit = self._generate_legit_features(n_legit)
         y_legit = np.zeros(n_legit)
 
@@ -275,7 +275,7 @@ class FastModelTrainer:
         X = X[shuffle_idx]
         y = y[shuffle_idx]
 
-        print(f"\n✅ Training data generated!")
+        print(f"\n Training data generated!")
         print(f"   Shape: {X.shape}")
         print(f"   Phishing: {sum(y == 1)}")
         print(f"   Legitimate: {sum(y == 0)}")
@@ -425,7 +425,7 @@ class FastModelTrainer:
     def train_models(self, X, y):
         """Train all 3 ML models"""
         print(f"\n{'='*80}")
-        print(f"🤖 TRAINING ML MODELS WITH 159 FEATURES")
+        print(f" TRAINING ML MODELS WITH 159 FEATURES")
         print(f"{'='*80}")
 
         # Split data
@@ -473,7 +473,7 @@ class FastModelTrainer:
 
         # Train each model
         for name, model in models_config.items():
-            print(f"\n🔨 Training {name}...")
+            print(f"\n Training {name}...")
 
             # Train
             model.fit(X_train, y_train)
@@ -508,7 +508,7 @@ class FastModelTrainer:
                 "confusion_matrix": cm,
             }
 
-            print(f"   ✅ {name} trained!")
+            print(f"    {name} trained!")
             print(f"      Accuracy:    {metrics['accuracy']:.4f}")
             print(f"      Precision:   {metrics['precision']:.4f}")
             print(f"      Recall:      {metrics['recall']:.4f}")
@@ -519,12 +519,12 @@ class FastModelTrainer:
             )
 
         print(f"\n{'='*80}")
-        print(f"✅ ALL MODELS TRAINED SUCCESSFULLY!")
+        print(f" ALL MODELS TRAINED SUCCESSFULLY!")
         print(f"{'='*80}")
 
     def save_models(self):
         """Save all trained models"""
-        print(f"\n💾 Saving models to {self.output_dir}/...")
+        print(f"\n Saving models to {self.output_dir}/...")
 
         for name, data in self.models.items():
             model = data["model"]
@@ -537,17 +537,17 @@ class FastModelTrainer:
             joblib.dump(model, filepath)
 
             size_kb = os.path.getsize(filepath) / 1024
-            print(f"   ✅ {name}: {filename} ({size_kb:.1f} KB)")
+            print(f"    {name}: {filename} ({size_kb:.1f} KB)")
 
-        print(f"\n✅ All models saved!")
+        print(f"\n All models saved!")
 
     def print_final_report(self):
         """Print comprehensive training report"""
         print(f"\n{'='*80}")
-        print(f"📊 ULTIMATE TRAINING REPORT - 159 FEATURES")
+        print(f" ULTIMATE TRAINING REPORT - 159 FEATURES")
         print(f"{'='*80}")
 
-        print(f"\n🎯 SYSTEM SUMMARY:")
+        print(f"\n SYSTEM SUMMARY:")
         print(f"   Total Features: {self.feature_count}")
         print(f"   - URL Features: 35")
         print(f"   - SSL/TLS Features: 25")
@@ -556,7 +556,7 @@ class FastModelTrainer:
         print(f"   - Behavioral Features: 25")
         print(f"   - Network Features: 20")
 
-        print(f"\n🏆 MODEL PERFORMANCE:")
+        print(f"\n MODEL PERFORMANCE:")
         print(f"{'='*80}")
         print(
             f"{'Model':<20} {'Accuracy':<12} {'Precision':<12} {'Recall':<12} {'F1':<12} {'AUC':<12}"
@@ -578,14 +578,14 @@ class FastModelTrainer:
             importances = model.feature_importances_
             top_10_idx = np.argsort(importances)[-10:][::-1]
 
-            print(f"\n🔝 TOP 10 MOST IMPORTANT FEATURES:")
+            print(f"\n TOP 10 MOST IMPORTANT FEATURES:")
             for i, idx in enumerate(top_10_idx, 1):
                 feature_name = self.feature_names[idx]
                 importance = importances[idx]
                 print(f"   {i:2d}. {feature_name:<40} {importance:.4f}")
 
         # Confusion matrices
-        print(f"\n📈 CONFUSION MATRICES:")
+        print(f"\n CONFUSION MATRICES:")
         for name, data in self.models.items():
             cm = data["confusion_matrix"]
             print(f"\n   {name}:")
@@ -593,7 +593,7 @@ class FastModelTrainer:
             print(f"      FN: {cm[1][0]:<6} TP: {cm[1][1]:<6}")
 
         print(f"\n{'='*80}")
-        print(f"🎉 TRAINING COMPLETE!")
+        print(f" TRAINING COMPLETE!")
         print(
             f"   Average Accuracy: {np.mean([d['metrics']['accuracy'] for d in self.models.values()]):.4f}"
         )
@@ -607,7 +607,7 @@ class FastModelTrainer:
 def main():
     """Main training pipeline"""
     print(f"\n{'='*80}")
-    print(f"🚀 ULTIMATE 159-FEATURE MODEL TRAINING")
+    print(f" ULTIMATE 159-FEATURE MODEL TRAINING")
     print(f"{'='*80}")
     print(f"   Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"   Mode: Fast Training (Synthetic Data)")
@@ -629,7 +629,7 @@ def main():
     trainer.print_final_report()
 
     print(f"\n{'='*80}")
-    print(f"✅ ULTIMATE TRAINING COMPLETE!")
+    print(f" ULTIMATE TRAINING COMPLETE!")
     print(f"   Finished: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*80}\n")
 

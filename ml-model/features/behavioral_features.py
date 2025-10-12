@@ -1,5 +1,5 @@
 """
-🔬 BEHAVIORAL FEATURE EXTRACTOR
+ BEHAVIORAL FEATURE EXTRACTOR
 ================================
 
 Extract 20+ behavioral and temporal features with HIGHEST quality
@@ -394,7 +394,7 @@ class BehavioralFeatureExtractor:
 def demo_behavioral_features():
     """Demonstrate behavioral feature extraction"""
     print("=" * 80)
-    print("🔬 BEHAVIORAL FEATURE EXTRACTOR DEMO")
+    print(" BEHAVIORAL FEATURE EXTRACTOR DEMO")
     print("=" * 80)
 
     extractor = BehavioralFeatureExtractor()
@@ -408,32 +408,32 @@ def demo_behavioral_features():
         "https://bit.ly/abc123",
     ]
 
-    print(f"\n📊 Extracting {extractor.get_feature_count()} behavioral features...\n")
+    print(f"\n Extracting {extractor.get_feature_count()} behavioral features...\n")
 
     for url in test_urls:
-        print(f"🔗 URL: {url}")
+        print(f" URL: {url}")
         print("-" * 80)
 
         features = extractor.extract_features(url)
 
         # Print key features
         print(
-            f"   IP Address: {'⚠️ Yes' if features['url_has_ip_address'] else '✅ No'}"
+            f"   IP Address: {' Yes' if features['url_has_ip_address'] else ' No'}"
         )
         print(
-            f"   URL Shortener: {'⚠️ Yes' if features['url_uses_shortening'] else '✅ No'}"
+            f"   URL Shortener: {' Yes' if features['url_uses_shortening'] else ' No'}"
         )
         print(f"   Phishing Keywords: {features['phishing_keywords_count']}")
         print(f"   Obfuscation Score: {features['url_obfuscation_score']:.2f}")
         print(f"   Impersonation Score: {features['impersonation_score']:.2f}")
         print(f"   Typosquatting Score: {features['typosquatting_score']:.2f}")
         print(
-            f"   Suspicious Params: {'⚠️ Yes' if features['param_suspicious'] else '✅ No'}"
+            f"   Suspicious Params: {' Yes' if features['param_suspicious'] else ' No'}"
         )
         print()
 
     print("=" * 80)
-    print(f"✅ BEHAVIORAL FEATURE EXTRACTION COMPLETE")
+    print(f" BEHAVIORAL FEATURE EXTRACTION COMPLETE")
     print(f"   Total Features: {extractor.get_feature_count()}")
     print("=" * 80)
 

@@ -21,22 +21,22 @@ def main():
     print(" ELITE PHISHING DETECTION ML MODEL - QUICK START")
     print("=" * 80)
     print("\nThis script will:")
-    print("  1️⃣  Collect training data (phishing + legitimate URLs)")
-    print("  2️⃣  Extract 150+ features from each URL")
-    print("  3️⃣  Train ensemble models (Random Forest + XGBoost + LightGBM)")
-    print("  4️⃣  Achieve >98% accuracy with <0.5% false positive rate")
+    print("  1⃣  Collect training data (phishing + legitimate URLs)")
+    print("  2⃣  Extract 150+ features from each URL")
+    print("  3⃣  Train ensemble models (Random Forest + XGBoost + LightGBM)")
+    print("  4⃣  Achieve >98% accuracy with <0.5% false positive rate")
     print("\n" + "=" * 80)
 
     # Configuration
     PHISHING_COUNT = 1000  # Number of phishing URLs to collect
     LEGITIMATE_COUNT = 1000  # Number of legitimate URLs to collect
 
-    print(f"\n📊 Configuration:")
+    print(f"\n Configuration:")
     print(f"   Phishing URLs:    {PHISHING_COUNT}")
     print(f"   Legitimate URLs:  {LEGITIMATE_COUNT}")
     print(f"   Total samples:    {PHISHING_COUNT + LEGITIMATE_COUNT}")
 
-    input("\n⏸️  Press ENTER to start, or Ctrl+C to cancel...")
+    input("\n⏸  Press ENTER to start, or Ctrl+C to cancel...")
 
     # ========================================================================
     # STEP 1: DATA COLLECTION
@@ -51,10 +51,10 @@ def main():
     )
 
     if df_urls.empty:
-        print("\n❌ Failed to collect data. Exiting.")
+        print("\n Failed to collect data. Exiting.")
         return
 
-    print(f"\n✅ Collected {len(df_urls)} URLs successfully")
+    print(f"\n Collected {len(df_urls)} URLs successfully")
 
     # ========================================================================
     # STEP 2: FEATURE EXTRACTION
@@ -63,9 +63,9 @@ def main():
     print("STEP 2: FEATURE EXTRACTION")
     print("=" * 80)
     print("\nExtracting 150+ features from each URL...")
-    print("⚠️  This may take several minutes...")
+    print("  This may take several minutes...")
 
-    input("\n⏸️  Press ENTER to continue...")
+    input("\n⏸  Press ENTER to continue...")
 
     extractor = MasterFeatureExtractor(parallel=True, max_workers=5)
 
@@ -82,7 +82,7 @@ def main():
     features_file.parent.mkdir(parents=True, exist_ok=True)
     df_features.to_csv(features_file, index=False)
 
-    print(f"\n✅ Features extracted and saved to: {features_file}")
+    print(f"\n Features extracted and saved to: {features_file}")
     print(f"   Shape: {df_features.shape}")
 
     # ========================================================================
@@ -96,7 +96,7 @@ def main():
     print("   - XGBoost (gradient boosting)")
     print("   - LightGBM (fast gradient boosting)")
 
-    input("\n⏸️  Press ENTER to start training...")
+    input("\n⏸  Press ENTER to start training...")
 
     trainer = EnsembleTrainer()
     trainer.train_all(str(features_file))
@@ -105,15 +105,15 @@ def main():
     # COMPLETION
     # ========================================================================
     print("\n" + "=" * 80)
-    print("🎉 TRAINING PIPELINE COMPLETE!")
+    print(" TRAINING PIPELINE COMPLETE!")
     print("=" * 80)
 
-    print("\n📦 Generated Files:")
+    print("\n Generated Files:")
     print(f"   Data:     {RAW_DATA_DIR}")
     print(f"   Features: {features_file}")
     print(f"   Models:   {Path(__file__).parent / 'models'}")
 
-    print("\n🎯 Performance Summary:")
+    print("\n Performance Summary:")
     if trainer.metrics:
         for model_name, metrics in trainer.metrics.items():
             print(f"\n   {model_name.upper()}:")
@@ -122,7 +122,7 @@ def main():
             print(f"      Recall:    {metrics['recall']:.4f}")
             print(f"      FPR:       {metrics['fpr']*100:.3f}%")
 
-    print("\n🚀 Next Steps:")
+    print("\n Next Steps:")
     print("   1. Test models: python evaluation/evaluate.py")
     print("   2. Export to browser: python deployment/export_tfjs.py")
     print("   3. Integrate with Chrome extension")
@@ -134,9 +134,9 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n\n⏹️  Training cancelled by user")
+        print("\n\n⏹  Training cancelled by user")
     except Exception as e:
-        print(f"\n\n❌ Error: {e}")
+        print(f"\n\n Error: {e}")
         import traceback
 
         traceback.print_exc()

@@ -1,5 +1,5 @@
 """
-🛡️ ADVANCED DOWNLOAD PROTECTION SYSTEM
+ ADVANCED DOWNLOAD PROTECTION SYSTEM
 ========================================
 
 Implements advanced malware detection for downloaded files:
@@ -66,7 +66,7 @@ class AdvancedDownloadProtector:
         # Known malicious hashes (example - should be loaded from database)
         self.malicious_hashes = set()
 
-        print("🛡️ Advanced Download Protector initialized")
+        print(" Advanced Download Protector initialized")
 
     def _compile_yara_rules(self):
         """Compile YARA rules for malware detection"""
@@ -132,7 +132,7 @@ class AdvancedDownloadProtector:
             Dict with scan results and threat level
         """
         print(f"\n{'='*80}")
-        print(f"🔍 SCANNING FILE: {os.path.basename(file_path)}")
+        print(f" SCANNING FILE: {os.path.basename(file_path)}")
         print(f"{'='*80}")
 
         results = {
@@ -146,14 +146,14 @@ class AdvancedDownloadProtector:
         }
 
         # 1. Hash-based detection
-        print("\n1️⃣ Hash Analysis...")
+        print("\n1⃣ Hash Analysis...")
         hash_result = self._check_file_hash(file_path)
         results["scan_results"]["hash"] = hash_result
         if hash_result["is_malicious"]:
             results["threats_detected"].append("Known malicious hash")
 
         # 2. YARA rules pattern matching
-        print("2️⃣ YARA Pattern Matching...")
+        print("2⃣ YARA Pattern Matching...")
         yara_result = self._scan_with_yara(file_path)
         results["scan_results"]["yara"] = yara_result
         if yara_result["matches"]:
@@ -161,7 +161,7 @@ class AdvancedDownloadProtector:
 
         # 3. PE header analysis (for executables)
         if file_path.endswith((".exe", ".dll", ".sys")):
-            print("3️⃣ PE Header Analysis...")
+            print("3⃣ PE Header Analysis...")
             pe_result = self._analyze_pe_file(file_path)
             results["scan_results"]["pe_analysis"] = pe_result
             if pe_result["suspicious"]:
@@ -169,7 +169,7 @@ class AdvancedDownloadProtector:
 
         # 4. VirusTotal scanning
         if self.virustotal_api_key:
-            print("4️⃣ VirusTotal Scanning (70+ engines)...")
+            print("4⃣ VirusTotal Scanning (70+ engines)...")
             vt_result = self._scan_virustotal(file_path)
             results["scan_results"]["virustotal"] = vt_result
             if vt_result["malicious"] > 0:
@@ -178,7 +178,7 @@ class AdvancedDownloadProtector:
                 )
 
         # 5. Behavioral analysis
-        print("5️⃣ Behavior Analysis...")
+        print("5⃣ Behavior Analysis...")
         behavior_result = self._analyze_behavior(file_path)
         results["scan_results"]["behavior"] = behavior_result
         if behavior_result["suspicious_count"] > 3:
@@ -188,7 +188,7 @@ class AdvancedDownloadProtector:
         results["threat_level"] = self._calculate_threat_level(results)
 
         print(f"\n{'='*80}")
-        print(f"🎯 SCAN COMPLETE")
+        print(f" SCAN COMPLETE")
         print(f"   Threat Level: {results['threat_level']}")
         print(f"   Threats: {len(results['threats_detected'])}")
         print(f"{'='*80}\n")
@@ -211,7 +211,7 @@ class AdvancedDownloadProtector:
 
         print(f"   MD5: {hashes['md5']}")
         print(f"   SHA256: {hashes['sha256']}")
-        print(f"   Known Malware: {'YES ❌' if is_malicious else 'NO ✅'}")
+        print(f"   Known Malware: {'YES ' if is_malicious else 'NO '}")
 
         return {"hashes": hashes, "is_malicious": is_malicious}
 
@@ -437,7 +437,7 @@ class AdvancedDownloadProtector:
 def demo_advanced_protection():
     """Demo the advanced download protection system"""
     print("\n" + "=" * 80)
-    print("🛡️ ADVANCED DOWNLOAD PROTECTION DEMO")
+    print(" ADVANCED DOWNLOAD PROTECTION DEMO")
     print("=" * 80)
 
     # Initialize protector (without VirusTotal API key for demo)
@@ -452,15 +452,15 @@ def demo_advanced_protection():
     # Check if should block
     should_block, reason = protector.should_block_download(results)
 
-    print("\n📊 FINAL VERDICT:")
+    print("\n FINAL VERDICT:")
     print(f"   File: {results['file_name']}")
     print(f"   Threat Level: {results['threat_level']}")
     print(f"   Threats: {len(results['threats_detected'])}")
-    print(f"   Action: {'BLOCK ❌' if should_block else 'ALLOW ✅'}")
+    print(f"   Action: {'BLOCK ' if should_block else 'ALLOW '}")
     print(f"   Reason: {reason}")
 
     if results["threats_detected"]:
-        print(f"\n⚠️ THREATS DETECTED:")
+        print(f"\n THREATS DETECTED:")
         for i, threat in enumerate(results["threats_detected"], 1):
             print(f"   {i}. {threat}")
 

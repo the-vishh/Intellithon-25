@@ -309,10 +309,10 @@ if __name__ == "__main__":
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n⚡ URL: {url}")
+        print(f"\n URL: {url}")
         features = extractor.extract_all_features(url)
 
-        print(f"\n📊 Key JavaScript Features:")
+        print(f"\n Key JavaScript Features:")
         print(f"   Inline Scripts: {features['inline_script_count']}")
         print(f"   External Scripts: {features['external_script_count']}")
         print(f"   Total Script Length: {features['total_script_length']} chars")

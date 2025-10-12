@@ -50,7 +50,7 @@ class EnsembleTrainer:
         self.feature_names = []
         self.metrics = {}
 
-        print("✅ Ensemble Trainer initialized")
+        print(" Ensemble Trainer initialized")
 
     def load_data(self, features_file: str) -> tuple:
         """
@@ -62,7 +62,7 @@ class EnsembleTrainer:
         Returns:
             X_train, X_val, X_test, y_train, y_val, y_test
         """
-        print("\n📂 Loading training data...")
+        print("\n Loading training data...")
 
         # Load features
         df = pd.read_csv(features_file)
@@ -91,7 +91,7 @@ class EnsembleTrainer:
         print(f"   Legitimate: {sum(y == 0)} ({sum(y == 0)/len(y)*100:.1f}%)")
 
         # Handle missing values
-        print("\n🔧 Preprocessing data...")
+        print("\n Preprocessing data...")
         X = X.fillna(0)
 
         # Replace infinite values
@@ -119,7 +119,7 @@ class EnsembleTrainer:
         print(f"   Test:  {len(X_test)} samples")
 
         # Scale features
-        print("\n📊 Scaling features...")
+        print("\n Scaling features...")
         scaler = RobustScaler()  # Robust to outliers
         X_train_scaled = scaler.fit_transform(X_train)
         X_val_scaled = scaler.transform(X_val)
@@ -130,7 +130,7 @@ class EnsembleTrainer:
         # Save scaler
         scaler_file = self.models_dir / "scaler.joblib"
         joblib.dump(scaler, scaler_file)
-        print(f"   ✅ Scaler saved to {scaler_file}")
+        print(f"    Scaler saved to {scaler_file}")
 
         return X_train_scaled, X_val_scaled, X_test_scaled, y_train, y_val, y_test
 
@@ -139,7 +139,7 @@ class EnsembleTrainer:
     ) -> RandomForestClassifier:
         """Train Random Forest model"""
         print("\n" + "=" * 80)
-        print("🌲 TRAINING RANDOM FOREST")
+        print(" TRAINING RANDOM FOREST")
         print("=" * 80)
 
         start_time = time.time()
@@ -163,13 +163,13 @@ class EnsembleTrainer:
         self.metrics["random_forest"] = metrics
 
         training_time = time.time() - start_time
-        print(f"\n   ⏱️  Training time: {training_time:.2f}s")
+        print(f"\n   ⏱  Training time: {training_time:.2f}s")
 
         # Save model
         model_file = self.models_dir / "random_forest" / "model.joblib"
         model_file.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(rf_model, model_file)
-        print(f"   ✅ Model saved to {model_file}")
+        print(f"    Model saved to {model_file}")
 
         self.models["random_forest"] = rf_model
         return rf_model
@@ -177,7 +177,7 @@ class EnsembleTrainer:
     def train_xgboost(self, X_train, y_train, X_val, y_val) -> xgb.XGBClassifier:
         """Train XGBoost model"""
         print("\n" + "=" * 80)
-        print("🚀 TRAINING XGBOOST")
+        print(" TRAINING XGBOOST")
         print("=" * 80)
 
         start_time = time.time()
@@ -201,13 +201,13 @@ class EnsembleTrainer:
         self.metrics["xgboost"] = metrics
 
         training_time = time.time() - start_time
-        print(f"\n   ⏱️  Training time: {training_time:.2f}s")
+        print(f"\n   ⏱  Training time: {training_time:.2f}s")
 
         # Save model
         model_file = self.models_dir / "xgboost" / "model.joblib"
         model_file.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(xgb_model, model_file)
-        print(f"   ✅ Model saved to {model_file}")
+        print(f"    Model saved to {model_file}")
 
         self.models["xgboost"] = xgb_model
         return xgb_model
@@ -215,7 +215,7 @@ class EnsembleTrainer:
     def train_lightgbm(self, X_train, y_train, X_val, y_val) -> lgb.LGBMClassifier:
         """Train LightGBM model"""
         print("\n" + "=" * 80)
-        print("⚡ TRAINING LIGHTGBM")
+        print(" TRAINING LIGHTGBM")
         print("=" * 80)
 
         start_time = time.time()
@@ -247,13 +247,13 @@ class EnsembleTrainer:
         self.metrics["lightgbm"] = metrics
 
         training_time = time.time() - start_time
-        print(f"\n   ⏱️  Training time: {training_time:.2f}s")
+        print(f"\n   ⏱  Training time: {training_time:.2f}s")
 
         # Save model
         model_file = self.models_dir / "lightgbm" / "model.joblib"
         model_file.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(lgbm_model, model_file)
-        print(f"   ✅ Model saved to {model_file}")
+        print(f"    Model saved to {model_file}")
 
         self.models["lightgbm"] = lgbm_model
         return lgbm_model
@@ -277,7 +277,7 @@ class EnsembleTrainer:
         metrics["true_positives"] = int(tp)
         metrics["fpr"] = fp / (fp + tn)  # False Positive Rate
 
-        print(f"\n   📊 {model_name} Validation Metrics:")
+        print(f"\n    {model_name} Validation Metrics:")
         print(
             f"      Accuracy:  {metrics['accuracy']:.4f} ({metrics['accuracy']*100:.2f}%)"
         )
@@ -296,7 +296,7 @@ class EnsembleTrainer:
     def train_all(self, features_file: str):
         """Train all ensemble models"""
         print("\n" + "=" * 80)
-        print("🎯 ELITE ENSEMBLE TRAINING PIPELINE")
+        print(" ELITE ENSEMBLE TRAINING PIPELINE")
         print("=" * 80)
         print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
@@ -310,7 +310,7 @@ class EnsembleTrainer:
 
         # Final evaluation on test set
         print("\n" + "=" * 80)
-        print("🎯 FINAL TEST SET EVALUATION")
+        print(" FINAL TEST SET EVALUATION")
         print("=" * 80)
 
         for model_name, model in self.models.items():
@@ -323,10 +323,10 @@ class EnsembleTrainer:
         metrics_file = self.models_dir / "training_metrics.json"
         with open(metrics_file, "w") as f:
             json.dump(self.metrics, f, indent=2)
-        print(f"\n✅ Metrics saved to {metrics_file}")
+        print(f"\n Metrics saved to {metrics_file}")
 
         print("\n" + "=" * 80)
-        print("✅ TRAINING COMPLETE!")
+        print(" TRAINING COMPLETE!")
         print("=" * 80)
         print(f"Models saved in: {self.models_dir}")
 
@@ -341,7 +341,7 @@ if __name__ == "__main__":
     features_file = PROCESSED_DATA_DIR / "features.csv"
 
     if not features_file.exists():
-        print(f"❌ Features file not found: {features_file}")
+        print(f" Features file not found: {features_file}")
         print("\nPlease run these steps first:")
         print("1. python utils/data_collector.py")
         print("2. python features/master_extractor.py --extract-batch")

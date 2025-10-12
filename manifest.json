@@ -1,34 +1,44 @@
 {
   "manifest_version": 3,
-  "name": "Phishing Counter Extension",
-  "description": "Counts the number of phishing websites visited and allows toggling protection.",
-  "version": "1.0",
+  "name": "PhishGuard AI - Advanced Phishing Detector",
+  "description": "AI-powered real-time phishing detection with ML models, behavioral analysis, and comprehensive threat intelligence.",
+  "version": "1.0.0",
+  "author": "PhishGuard AI Team",
+  "homepage_url": "https://github.com/the-vishh/Intellithon-25",
+  
   "icons": {
     "16": "icon16.svg",
     "48": "icon48.svg",
     "128": "icon128.svg"
   },
+  
   "action": {
     "default_popup": "popup.html",
+    "default_title": "PhishGuard AI - Click to view protection status",
     "default_icon": {
       "16": "icon16.svg",
       "48": "icon48.svg",
       "128": "icon128.svg"
     }
   },
+  
   "permissions": [
     "tabs",
     "activeTab",
-    "downloads",
     "storage",
     "webRequest",
     "notifications"
   ],
-  "host_permissions": ["<all_urls>"],
+  
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  
   "background": {
     "service_worker": "background.js",
     "type": "module"
   },
+  
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -41,19 +51,22 @@
       "all_frames": true
     }
   ],
+  
   "web_accessible_resources": [
     {
       "resources": [
         "chart.min.js",
         "style.css",
-        "app.js",
         "dashboard.html",
-        "index (1).html"
+        "popup-enhanced.html"
       ],
       "matches": ["<all_urls>"]
     }
   ],
+  
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
-  }
+  },
+  
+  "minimum_chrome_version": "96"
 }

@@ -1,5 +1,5 @@
 """
-🛡️ THREAT INTELLIGENCE - LEVEL 4 LIVE PROTECTION
+ THREAT INTELLIGENCE - LEVEL 4 LIVE PROTECTION
 =================================================
 
 Real-time threat intelligence integration:
@@ -28,12 +28,12 @@ try:
     REDIS_AVAILABLE = True
 except ImportError:
     REDIS_AVAILABLE = False
-    print("⚠️  Redis not available - Using in-memory cache")
+    print("  Redis not available - Using in-memory cache")
 
 
 class ThreatIntelligence:
     """
-    🔍 Multi-source threat intelligence aggregator
+     Multi-source threat intelligence aggregator
 
     Checks URLs against:
     - PhishTank database
@@ -73,14 +73,14 @@ class ThreatIntelligence:
             try:
                 self.redis_client = redis.Redis(host="localhost", port=6379, db=0)
                 self.redis_client.ping()
-                print("✅ Redis cache connected")
+                print(" Redis cache connected")
             except:
-                print("⚠️  Redis not accessible - Using in-memory cache")
+                print("  Redis not accessible - Using in-memory cache")
                 self.redis_client = None
 
     def check_url(self, url: str, use_cache: bool = True) -> Dict:
         """
-        🔍 Check URL against all threat intelligence sources
+         Check URL against all threat intelligence sources
 
         Args:
             url: URL to check
@@ -347,33 +347,33 @@ class ThreatIntelligence:
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🛡️ THREAT INTELLIGENCE - LEVEL 4")
+    print(" THREAT INTELLIGENCE - LEVEL 4")
     print("=" * 80)
     print()
 
     # Initialize
     threat_intel = ThreatIntelligence()
 
-    print("📊 THREAT SOURCES:")
-    print("   1️⃣  PhishTank - Community phishing database")
-    print("   2️⃣  Google Safe Browsing - Google's threat DB")
-    print("   3️⃣  VirusTotal - 70+ antivirus engines")
-    print("   4️⃣  Custom blocklist with Redis caching")
+    print(" THREAT SOURCES:")
+    print("   1⃣  PhishTank - Community phishing database")
+    print("   2⃣  Google Safe Browsing - Google's threat DB")
+    print("   3⃣  VirusTotal - 70+ antivirus engines")
+    print("   4⃣  Custom blocklist with Redis caching")
     print()
 
-    print("🔑 API KEY STATUS:")
+    print(" API KEY STATUS:")
     print(
-        f"   PhishTank: {'✅ Configured' if threat_intel.phishtank_api_key else '⚠️  Not configured (optional)'}"
+        f"   PhishTank: {' Configured' if threat_intel.phishtank_api_key else '  Not configured (optional)'}"
     )
     print(
-        f"   Google Safe Browsing: {'✅ Configured' if threat_intel.google_api_key else '⚠️  Not configured'}"
+        f"   Google Safe Browsing: {' Configured' if threat_intel.google_api_key else '  Not configured'}"
     )
     print(
-        f"   VirusTotal: {'✅ Configured' if threat_intel.virustotal_api_key else '⚠️  Not configured'}"
+        f"   VirusTotal: {' Configured' if threat_intel.virustotal_api_key else '  Not configured'}"
     )
     print()
 
-    print("💡 TO USE:")
+    print(" TO USE:")
     print("   1. Set environment variables for API keys:")
     print("      export VIRUSTOTAL_API_KEY='your_key'")
     print("      export GOOGLE_SAFE_BROWSING_KEY='your_key'")
@@ -389,7 +389,7 @@ if __name__ == "__main__":
     print()
 
     # Test with known safe URL (without API keys)
-    print("🧪 Testing with safe URL...")
+    print(" Testing with safe URL...")
     result = threat_intel.check_url("https://www.google.com")
     print(f"   URL: {result['url']}")
     print(f"   Is Threat: {result['is_threat']}")
@@ -398,11 +398,11 @@ if __name__ == "__main__":
 
     # Show statistics
     stats = threat_intel.get_statistics()
-    print("📈 STATISTICS:")
+    print(" STATISTICS:")
     print(f"   Total Checks: {stats['total_checks']}")
     print(f"   Cache Hits: {stats['cache_hits']}")
     print(f"   Threats Detected: {stats['threats_detected']}")
     print()
 
-    print("🔥 THREAT INTELLIGENCE READY!")
+    print(" THREAT INTELLIGENCE READY!")
     print("=" * 80)

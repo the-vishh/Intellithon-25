@@ -23,8 +23,11 @@
 // ============================================================================
 
 const CONFIG = {
-  // ML API endpoint (update with your server)
-  ML_API_URL: "http://localhost:5000/predict",
+  // ML API endpoint - REAL RUST API GATEWAY
+  ML_API_URL: "http://localhost:8080/api/check-url",
+
+  // 📊 USER ANALYTICS API - NEW
+  ANALYTICS_API_URL: "http://localhost:8080/api/user",
 
   // Data exfiltration thresholds
   LARGE_POST_THRESHOLD: 100 * 1024, // 100 KB
@@ -147,6 +150,165 @@ function addToBlacklist(domain, reason = "Suspicious activity") {
 }
 
 // ============================================================================
+// 🔐 ENCRYPTION & USER ANALYTICS (NEW)
+// ============================================================================
+
+/**
+ * Get or generate user ID
+ */
+async function getUserId() {
+  const result = await chrome.storage.local.get("userId");
+  if (result.userId) {
+    return result.userId;
+  }
+
+  // Generate new UUID for user
+  const userId = crypto.randomUUID();
+  await chrome.storage.local.set({ userId });
+  debug(`🆔 Generated new user ID: ${userId}`);
+  return userId;
+}
+
+/**
+ * Derive encryption key from user ID using SHA-256
+ */
+async function deriveEncryptionKey(userId) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(userId);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Import as AES-GCM key
+  const key = await crypto.subtle.importKey(
+    "raw",
+    hashBuffer,
+    { name: "AES-GCM" },
+    false,
+    ["encrypt", "decrypt"]
+  );
+
+  return key;
+}
+
+/**
+ * Encrypt URL with AES-256-GCM
+ */
+async function encryptURL(url, key) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(url);
+
+  // Generate random 96-bit nonce
+  const nonce = crypto.getRandomValues(new Uint8Array(12));
+
+  // Encrypt
+  const ciphertext = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv: nonce },
+    key,
+    data
+  );
+
+  // Convert to base64
+  const ciphertextBase64 = btoa(
+    String.fromCharCode(...new Uint8Array(ciphertext))
+  );
+  const nonceBase64 = btoa(String.fromCharCode(...nonce));
+
+  return {
+    ciphertext: ciphertextBase64,
+    nonce: nonceBase64,
+  };
+}
+
+/**
+ * Create SHA-256 hash for URL indexing
+ */
+async function hashForIndexing(data) {
+  const encoder = new TextEncoder();
+  const dataBuffer = encoder.encode(data);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Log activity to user analytics API
+ */
+/**
+ * Get client's public IP address for GeoIP lookup
+ * Note: This is optional and respects user privacy
+ */
+async function getClientIP() {
+  try {
+    const response = await fetch("https://api.ipify.org?format=json", {
+      method: "GET",
+      cache: "no-cache",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.ip;
+    }
+  } catch (error) {
+    debug(`Could not fetch IP: ${error.message}`);
+  }
+  return null;
+}
+
+async function logUserActivity(url, scanResult) {
+  try {
+    const userId = await getUserId();
+    const key = await deriveEncryptionKey(userId);
+    const encrypted = await encryptURL(url, key);
+    const urlHash = await hashForIndexing(url);
+
+    const domain = extractDomain(url);
+
+    // 🌍 Get client IP for GeoIP tracking (only for threats)
+    let clientIp = null;
+    if (scanResult.is_phishing) {
+      clientIp = await getClientIP();
+      if (clientIp) {
+        debug(`🌍 Client IP: ${clientIp} (for GeoIP lookup)`);
+      }
+    }
+
+    const activity = {
+      encrypted_url: encrypted.ciphertext,
+      encrypted_url_hash: urlHash,
+      domain: domain || "unknown",
+      is_phishing: scanResult.is_phishing || false,
+      threat_type: scanResult.threat_type || null,
+      threat_level: scanResult.threat_level || null,
+      confidence: scanResult.confidence || 0.0,
+      action_taken: scanResult.blocked
+        ? "blocked"
+        : scanResult.warning
+        ? "warned"
+        : "allowed",
+      client_ip: clientIp, // NEW: For GeoIP lookup
+    };
+
+    // Send to API
+    const response = await fetch(
+      `${CONFIG.ANALYTICS_API_URL}/${userId}/activity`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(activity),
+      }
+    );
+
+    if (response.ok) {
+      debug(`📊 Activity logged for user ${userId}`);
+    } else {
+      debug(`⚠️ Failed to log activity: ${response.status}`);
+    }
+  } catch (error) {
+    debug(`❌ Error logging activity: ${error.message}`);
+  }
+}
+
+// ============================================================================
 // NETWORK REQUEST MONITORING
 // ============================================================================
 
@@ -236,7 +398,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     return {};
   },
   { urls: ["<all_urls>"] },
-  ["requestBody", "blocking"]
+  ["requestBody"] // Removed "blocking" - not supported in Manifest V3 without enterprise policy
 );
 
 /**
@@ -264,7 +426,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     return {};
   },
   { urls: ["<all_urls>"] },
-  ["requestHeaders", "blocking"]
+  ["requestHeaders"] // Removed "blocking" - not supported in Manifest V3 without enterprise policy
 );
 
 // ============================================================================
@@ -472,34 +634,77 @@ function blockConnection(data) {
 
 async function checkURLWithML(url) {
   try {
+    debug(`🔍 Checking URL with ML API: ${url}`);
+
+    // Get user's sensitivity mode from settings
+    const settings = await chrome.storage.local.get(["sensitivityMode"]);
+    const sensitivityMode = settings.sensitivityMode || "balanced";
+
+    debug(`   Using sensitivity mode: ${sensitivityMode}`);
+
     const response = await fetch(CONFIG.ML_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ url: url }),
+      body: JSON.stringify({
+        url: url,
+        sensitivity_mode: sensitivityMode,
+      }),
+      signal: AbortSignal.timeout(30000), // 30s timeout
     });
 
     if (!response.ok) {
-      throw new Error(`ML API error: ${response.status}`);
+      throw new Error(
+        `ML API returned status ${response.status}: ${response.statusText}`
+      );
     }
 
     const result = await response.json();
 
-    debug(`ML Prediction for ${url}:`, result);
+    debug(`✅ ML Prediction received:`, result);
 
+    // 📊 Log activity to user analytics (NEW)
+    logUserActivity(url, {
+      is_phishing: result.is_phishing,
+      threat_type: result.threat_type || "unknown",
+      threat_level: result.threat_level || "low",
+      confidence: result.confidence,
+      blocked: result.is_phishing,
+      warning: false,
+    }).catch((err) => debug(`⚠️ Failed to log activity: ${err.message}`));
+
+    // Update state based on result
     if (result.is_phishing) {
       state.phishingSitesBlocked++;
       const domain = extractDomain(url);
       if (domain) {
         addToBlacklist(domain, "ML detected phishing");
+
+        showNotification(
+          "🚨 Phishing Site Detected!",
+          `Blocked: ${domain}\nConfidence: ${(result.confidence * 100).toFixed(
+            1
+          )}%\nThreat: ${result.threat_level}`
+        );
       }
     }
 
+    // Update last scan time
+    state.lastScanTime = Date.now();
+
     return result;
   } catch (error) {
-    console.error("ML API error:", error);
-    return { error: error.message };
+    console.error("❌ ML API error:", error);
+    return {
+      error: error.message,
+      is_phishing: false,
+      confidence: 0,
+      details: {
+        error: true,
+        message: `Failed to connect to ML API: ${error.message}`,
+      },
+    };
   }
 }
 
@@ -509,7 +714,16 @@ async function checkURLWithML(url) {
 
 // Load state from storage on startup
 chrome.storage.local.get(
-  ["domainBlacklist", "ccServerBlacklist", "protectionEnabled"],
+  [
+    "domainBlacklist",
+    "ccServerBlacklist",
+    "protectionEnabled",
+    "statistics",
+    "suspiciousActivity",
+    "dataExfiltrationEvents",
+    "fingerprintingDetections",
+    "behavioralAlerts",
+  ],
   (result) => {
     if (result.domainBlacklist) {
       state.domainBlacklist = new Set(result.domainBlacklist);
@@ -525,27 +739,87 @@ chrome.storage.local.get(
       state.protectionEnabled = result.protectionEnabled;
     }
 
-    debug("State loaded from storage");
+    if (result.statistics) {
+      state.totalRequests = result.statistics.totalRequests || 0;
+      state.blockedRequests = result.statistics.blockedRequests || 0;
+      state.phishingSitesBlocked = result.statistics.phishingSitesBlocked || 0;
+      state.lastScanTime = result.statistics.lastScanTime;
+      state.lastThreatDetected = result.statistics.lastThreatDetected;
+      debug(`Loaded statistics:`, result.statistics);
+    }
+
+    if (result.suspiciousActivity) {
+      state.suspiciousActivity = result.suspiciousActivity;
+    }
+
+    if (result.dataExfiltrationEvents) {
+      state.dataExfiltrationEvents = result.dataExfiltrationEvents;
+    }
+
+    if (result.fingerprintingDetections) {
+      state.fingerprintingDetections = result.fingerprintingDetections;
+    }
+
+    if (result.behavioralAlerts) {
+      state.behavioralAlerts = result.behavioralAlerts;
+    }
+
+    debug("✅ Complete state loaded from storage");
   }
 );
 
-// Periodic save to storage
+// Periodic save to storage and broadcast updates
 setInterval(() => {
+  const statistics = {
+    totalRequests: state.totalRequests,
+    blockedRequests: state.blockedRequests,
+    phishingSitesBlocked: state.phishingSitesBlocked,
+    suspiciousActivityCount: state.suspiciousActivity.length,
+    dataExfiltrationCount: state.dataExfiltrationEvents.length,
+    fingerprintingCount: state.fingerprintingDetections.length,
+    behavioralAlertsCount: state.behavioralAlerts.length,
+    lastScanTime: state.lastScanTime,
+    lastThreatDetected: state.lastThreatDetected,
+  };
+
   chrome.storage.local.set({
     domainBlacklist: Array.from(state.domainBlacklist),
     ccServerBlacklist: Array.from(state.ccServerBlacklist),
     protectionEnabled: state.protectionEnabled,
-    statistics: {
-      totalRequests: state.totalRequests,
-      blockedRequests: state.blockedRequests,
-      phishingSitesBlocked: state.phishingSitesBlocked,
-    },
+    statistics: statistics,
+    suspiciousActivity: state.suspiciousActivity.slice(-100), // Keep last 100
+    dataExfiltrationEvents: state.dataExfiltrationEvents.slice(-100),
+    fingerprintingDetections: state.fingerprintingDetections.slice(-50),
+    behavioralAlerts: state.behavioralAlerts.slice(-50),
   });
-}, 60000); // Every minute
+
+  debug("📊 Statistics saved to storage:", statistics);
+}, 10000); // Every 10 seconds for real-time updates
 
 // ============================================================================
-// INITIALIZATION
+// INSTALLATION & INITIALIZATION
 // ============================================================================
+
+// Initialize user ID on installation
+chrome.runtime.onInstalled.addListener(async (details) => {
+  if (details.reason === "install") {
+    const userId = await getUserId();
+    debug(`🎉 Extension installed! User ID: ${userId}`);
+
+    // Initialize default settings
+    await chrome.storage.local.set({
+      protectionEnabled: true,
+      sensitivityMode: "balanced",
+      autoBlockEnabled: true,
+    });
+  } else if (details.reason === "update") {
+    debug(
+      `🔄 Extension updated to version ${chrome.runtime.getManifest().version}`
+    );
+    // Ensure user ID exists for existing users
+    await getUserId();
+  }
+});
 
 debug("🛡️ PhishGuard Background Service Worker initialized");
 debug("Protection:", state.protectionEnabled ? "ENABLED ✅" : "DISABLED ❌");

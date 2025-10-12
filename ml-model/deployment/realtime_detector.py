@@ -123,7 +123,7 @@ class RealTimePhishingDetector:
         if domain in self.trusted_domains:
             score = 0.0
             verdict = "SAFE"
-            details["checks"].append("✅ Trusted domain")
+            details["checks"].append(" Trusted domain")
             self._cache_result(url, score, verdict, details)
             return score, verdict, details
 
@@ -175,26 +175,26 @@ class RealTimePhishingDetector:
         # Check 1: IP address instead of domain (HIGH RISK)
         if re.match(r"https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", url):
             score += 0.4
-            details["checks"].append("🚨 IP address in URL")
+            details["checks"].append(" IP address in URL")
 
         # Check 2: Suspicious keywords (HIGH RISK)
         keyword_count = sum(1 for kw in self.phishing_keywords if kw in url_lower)
         if keyword_count >= 2:
             score += 0.3
-            details["checks"].append(f"🚨 {keyword_count} suspicious keywords")
+            details["checks"].append(f" {keyword_count} suspicious keywords")
         elif keyword_count == 1:
             score += 0.15
-            details["checks"].append(f"⚠️  1 suspicious keyword")
+            details["checks"].append(f"  1 suspicious keyword")
 
         # Check 3: Suspicious TLD (MEDIUM RISK)
         if any(url_lower.endswith(tld) for tld in self.suspicious_tlds):
             score += 0.25
-            details["checks"].append("⚠️  Suspicious TLD")
+            details["checks"].append("  Suspicious TLD")
 
         # Check 4: No HTTPS (MEDIUM RISK)
         if parsed.scheme != "https":
             score += 0.2
-            details["checks"].append("⚠️  No HTTPS")
+            details["checks"].append("  No HTTPS")
 
         # Check 5: Excessive subdomains (MEDIUM RISK)
         subdomain = extracted.subdomain
@@ -202,22 +202,22 @@ class RealTimePhishingDetector:
             subdomain_count = subdomain.count(".") + 1
             if subdomain_count >= 3:
                 score += 0.2
-                details["checks"].append(f"⚠️  {subdomain_count} subdomains")
+                details["checks"].append(f"  {subdomain_count} subdomains")
 
         # Check 6: URL length (MEDIUM RISK)
         if len(url) > 100:
             score += 0.15
-            details["checks"].append(f"⚠️  Long URL ({len(url)} chars)")
+            details["checks"].append(f"  Long URL ({len(url)} chars)")
 
         # Check 7: @ symbol (HIGH RISK)
         if "@" in url:
             score += 0.3
-            details["checks"].append("🚨 @ symbol in URL")
+            details["checks"].append(" @ symbol in URL")
 
         # Check 8: Suspicious port (MEDIUM RISK)
         if parsed.port and parsed.port not in [80, 443, 8080]:
             score += 0.15
-            details["checks"].append(f"⚠️  Unusual port: {parsed.port}")
+            details["checks"].append(f"  Unusual port: {parsed.port}")
 
         # Check 9: Typosquatting indicators
         typo_score = self._check_typosquatting(extracted.domain, details)
@@ -246,7 +246,7 @@ class RealTimePhishingDetector:
                 if domain_lower == brand:
                     return 0.0  # Legitimate
                 else:
-                    details["checks"].append(f"🚨 Possible typosquatting: {brand}")
+                    details["checks"].append(f" Possible typosquatting: {brand}")
                     return 0.4
 
         return 0.0
@@ -314,12 +314,12 @@ class RealTimePhishingDetector:
         # Rule 2: High entropy (random strings)
         if features["domain_entropy"] > 4.0:
             score += 0.2
-            details["checks"].append("⚠️  High domain entropy (random strings)")
+            details["checks"].append("  High domain entropy (random strings)")
 
         # Rule 3: Many hyphens (common in phishing)
         if features["num_hyphens"] > 2:
             score += 0.15
-            details["checks"].append("⚠️  Multiple hyphens in URL")
+            details["checks"].append("  Multiple hyphens in URL")
 
         # Rule 4: No HTTPS
         if features["has_https"] == 0:
@@ -398,16 +398,16 @@ class ChromeExtensionInterface:
         if verdict == "PHISHING":
             action = "BLOCK"
             message = (
-                "🚨 PHISHING DETECTED! This website has been blocked for your safety."
+                " PHISHING DETECTED! This website has been blocked for your safety."
             )
             self.stats["phishing_blocked"] += 1
         elif verdict == "SUSPICIOUS":
             action = "WARN"
-            message = "⚠️  SUSPICIOUS WEBSITE! Proceed with extreme caution."
+            message = "  SUSPICIOUS WEBSITE! Proceed with extreme caution."
             self.stats["suspicious_warned"] += 1
         else:
             action = "ALLOW"
-            message = "✅ Website appears safe."
+            message = " Website appears safe."
             self.stats["safe_allowed"] += 1
 
         # Update average latency
@@ -456,28 +456,28 @@ if __name__ == "__main__":
         "https://faceb00k.com/login.php",
     ]
 
-    print("\n🔍 Testing Real-Time Detection...")
+    print("\n Testing Real-Time Detection...")
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n🔗 URL: {url}")
+        print(f"\n URL: {url}")
         result = interface.check_url_before_navigation(url)
 
-        print(f"   ⚡ Latency: {result['latency_ms']:.2f}ms")
-        print(f"   📊 Score: {result['score']:.3f}")
-        print(f"   🎯 Verdict: {result['verdict']}")
-        print(f"   🛡️  Action: {result['action']}")
-        print(f"   💬 Message: {result['message']}")
+        print(f"    Latency: {result['latency_ms']:.2f}ms")
+        print(f"    Score: {result['score']:.3f}")
+        print(f"    Verdict: {result['verdict']}")
+        print(f"     Action: {result['action']}")
+        print(f"    Message: {result['message']}")
 
         if result["checks_performed"]:
-            print(f"   🔍 Checks:")
+            print(f"    Checks:")
             for check in result["checks_performed"]:
                 print(f"      {check}")
 
         print("-" * 80)
 
     # Statistics
-    print("\n📈 STATISTICS")
+    print("\n STATISTICS")
     print("=" * 80)
     stats = interface.get_statistics()
     print(f"   Total Checks: {stats['total_checks']}")
@@ -486,4 +486,4 @@ if __name__ == "__main__":
     print(f"   Safe Allowed: {stats['safe_allowed']}")
     print(f"   Average Latency: {stats['avg_latency_ms']:.2f}ms")
 
-    print("\n✅ REAL-TIME DETECTION READY FOR CHROME EXTENSION!")
+    print("\n REAL-TIME DETECTION READY FOR CHROME EXTENSION!")

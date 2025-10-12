@@ -1,5 +1,5 @@
 """
-📣 USER REPORTING SYSTEM
+ USER REPORTING SYSTEM
 ========================
 
 Allow users to report false positives/negatives and suspicious sites
@@ -79,7 +79,7 @@ class UserReportingSystem:
         # Update statistics
         self._update_stats("report_submitted", report_data["report_type"])
 
-        print(f"✅ Report submitted: {report_id}")
+        print(f" Report submitted: {report_id}")
         print(f"   Type: {report_data['report_type']}")
         print(f"   URL: {report_data['url']}")
 
@@ -116,7 +116,7 @@ class UserReportingSystem:
         report = self._load_report(report_id)
 
         if not report:
-            print(f"❌ Report {report_id} not found")
+            print(f" Report {report_id} not found")
             return None
 
         # Update votes
@@ -128,7 +128,7 @@ class UserReportingSystem:
         # Save updated report
         self._update_report(report)
 
-        print(f"✅ Vote recorded: {vote_type} on {report_id}")
+        print(f" Vote recorded: {vote_type} on {report_id}")
 
         return report["votes"]
 
@@ -176,7 +176,7 @@ class UserReportingSystem:
         report = self._load_report(report_id)
 
         if not report:
-            print(f"❌ Report {report_id} not found")
+            print(f" Report {report_id} not found")
             return None
 
         # Update report
@@ -200,7 +200,7 @@ class UserReportingSystem:
         # Update statistics
         self._update_stats("report_reviewed", decision)
 
-        print(f"✅ Report reviewed: {report_id}")
+        print(f" Report reviewed: {report_id}")
         print(f"   Decision: {decision}")
 
         return report
@@ -236,10 +236,10 @@ class UserReportingSystem:
 
             # Collect feedback (requires feature extraction)
             # In production, this would extract features from the URL
-            print(f"   🔄 Integrating with continuous learning...")
+            print(f"    Integrating with continuous learning...")
 
         except Exception as e:
-            print(f"   ⚠️ Could not integrate with learning: {e}")
+            print(f"    Could not integrate with learning: {e}")
 
     def get_pending_reports(self, limit=10):
         """
@@ -375,7 +375,7 @@ class UserReportingSystem:
     </style>
 </head>
 <body>
-    <h2>🛡️ Report to PhishGuard</h2>
+    <h2> Report to PhishGuard</h2>
 
     <form id="reportForm">
         <div class="report-type">
@@ -404,7 +404,7 @@ class UserReportingSystem:
     </form>
 
     <div id="successMessage" class="success" style="display: none;">
-        ✅ Thank you! Your report has been submitted and will be reviewed.
+         Thank you! Your report has been submitted and will be reviewed.
     </div>
 
     <script src="report_handler.js"></script>
@@ -417,13 +417,13 @@ class UserReportingSystem:
 def demo_reporting_system():
     """Demonstrate user reporting system"""
     print("=" * 80)
-    print("📣 USER REPORTING SYSTEM DEMO")
+    print(" USER REPORTING SYSTEM DEMO")
     print("=" * 80)
 
     urs = UserReportingSystem()
 
     # Submit reports
-    print("\n1️⃣ Submitting user reports...")
+    print("\n1⃣ Submitting user reports...")
 
     # False positive report
     report1_id = urs.submit_report(
@@ -455,18 +455,18 @@ def demo_reporting_system():
     )
 
     # Vote on reports
-    print("\n2️⃣ Community voting...")
+    print("\n2⃣ Community voting...")
     urs.vote_report(report2_id, "upvote")
     urs.vote_report(report2_id, "upvote")
     urs.vote_report(report2_id, "upvote")
 
     # Get pending reports
-    print("\n3️⃣ Reviewing pending reports...")
+    print("\n3⃣ Reviewing pending reports...")
     pending = urs.get_pending_reports(limit=5)
     print(f"   Found {len(pending)} pending reports")
 
     for report in pending:
-        print(f"\n   📋 Report: {report['report_id']}")
+        print(f"\n    Report: {report['report_id']}")
         print(f"      Type: {report['report_type']}")
         print(f"      URL: {report['url']}")
         print(
@@ -474,7 +474,7 @@ def demo_reporting_system():
         )
 
     # Review reports
-    print("\n4️⃣ Admin reviewing reports...")
+    print("\n4⃣ Admin reviewing reports...")
     urs.review_report(
         report1_id,
         reviewer="admin",
@@ -490,34 +490,34 @@ def demo_reporting_system():
     )
 
     # Get statistics
-    print("\n5️⃣ Reporting statistics:")
+    print("\n5⃣ Reporting statistics:")
     stats = urs.get_report_stats()
     for key, value in stats.items():
         print(f"   {key}: {value}")
 
     # Generate UI
-    print("\n6️⃣ Generating reporting UI...")
+    print("\n6⃣ Generating reporting UI...")
     html = urs.generate_report_ui_html()
 
     output_file = "user_report_form.html"
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(html)
 
-    print(f"   ✅ Generated report form UI")
-    print(f"   💾 Saved to: {output_file}")
+    print(f"    Generated report form UI")
+    print(f"    Saved to: {output_file}")
 
     print("\n" + "=" * 80)
-    print("✅ USER REPORTING SYSTEM READY")
+    print(" USER REPORTING SYSTEM READY")
     print("=" * 80)
-    print("\n📣 Features:")
-    print("   ✅ False positive reporting")
-    print("   ✅ False negative reporting")
-    print("   ✅ Suspicious site reporting")
-    print("   ✅ Community voting")
-    print("   ✅ Admin review queue")
-    print("   ✅ Continuous learning integration")
-    print("   ✅ Email follow-up support")
-    print("\n💡 Benefits:")
+    print("\n Features:")
+    print("    False positive reporting")
+    print("    False negative reporting")
+    print("    Suspicious site reporting")
+    print("    Community voting")
+    print("    Admin review queue")
+    print("    Continuous learning integration")
+    print("    Email follow-up support")
+    print("\n Benefits:")
     print("   • Community-driven threat intelligence")
     print("   • Rapid false positive correction")
     print("   • Faster phishing site detection")

@@ -24,8 +24,8 @@ class DataCollector:
         self.raw_data_dir = RAW_DATA_DIR
         self.raw_data_dir.mkdir(parents=True, exist_ok=True)
 
-        print("✅ Data Collector initialized")
-        print(f"📁 Raw data directory: {self.raw_data_dir}")
+        print(" Data Collector initialized")
+        print(f" Raw data directory: {self.raw_data_dir}")
 
     def collect_phishtank(self, limit: int = None) -> pd.DataFrame:
         """
@@ -37,7 +37,7 @@ class DataCollector:
         Returns:
             DataFrame with phishing URLs
         """
-        print("\n📥 Collecting from PhishTank...")
+        print("\n Collecting from PhishTank...")
 
         try:
             url = DATA_SOURCES["phishtank"]["url"]
@@ -58,7 +58,7 @@ class DataCollector:
                 if "url" in df.columns:
                     phishing_urls = df["url"].tolist()
                 else:
-                    print("   ⚠️  'url' column not found, using first column")
+                    print("     'url' column not found, using first column")
                     phishing_urls = df.iloc[:, 0].tolist()
 
                 # Limit if specified
@@ -75,11 +75,11 @@ class DataCollector:
                     }
                 )
 
-                print(f"   ✅ Collected {len(result_df)} phishing URLs from PhishTank")
+                print(f"    Collected {len(result_df)} phishing URLs from PhishTank")
                 return result_df
 
         except Exception as e:
-            print(f"   ❌ Error collecting from PhishTank: {e}")
+            print(f"    Error collecting from PhishTank: {e}")
             return pd.DataFrame(columns=["url", "label", "source", "collected_date"])
 
     def collect_openphish(self, limit: int = None) -> pd.DataFrame:
@@ -92,7 +92,7 @@ class DataCollector:
         Returns:
             DataFrame with phishing URLs
         """
-        print("\n📥 Collecting from OpenPhish...")
+        print("\n Collecting from OpenPhish...")
 
         try:
             url = DATA_SOURCES["openphish"]["url"]
@@ -124,11 +124,11 @@ class DataCollector:
                     }
                 )
 
-                print(f"   ✅ Collected {len(result_df)} phishing URLs from OpenPhish")
+                print(f"    Collected {len(result_df)} phishing URLs from OpenPhish")
                 return result_df
 
         except Exception as e:
-            print(f"   ❌ Error collecting from OpenPhish: {e}")
+            print(f"    Error collecting from OpenPhish: {e}")
             return pd.DataFrame(columns=["url", "label", "source", "collected_date"])
 
     def collect_alexa_top(self, sample_size: int = 10000) -> pd.DataFrame:
@@ -141,7 +141,7 @@ class DataCollector:
         Returns:
             DataFrame with legitimate URLs
         """
-        print(f"\n📥 Collecting top {sample_size} sites from Alexa...")
+        print(f"\n Collecting top {sample_size} sites from Alexa...")
 
         try:
             # Note: Alexa Top Million is no longer freely available
@@ -178,14 +178,14 @@ class DataCollector:
                     }
                 )
 
-                print(f"   ✅ Collected {len(result_df)} legitimate URLs")
+                print(f"    Collected {len(result_df)} legitimate URLs")
                 return result_df
 
         except Exception as e:
-            print(f"   ❌ Error collecting from Alexa: {e}")
+            print(f"    Error collecting from Alexa: {e}")
 
             # Fallback: Use common legitimate domains
-            print("   ℹ️  Using fallback list of known legitimate domains")
+            print("   ℹ  Using fallback list of known legitimate domains")
             legitimate_domains = self._get_fallback_legitimate_domains(sample_size)
 
             result_df = pd.DataFrame(
@@ -261,7 +261,7 @@ class DataCollector:
         all_dataframes = []
 
         # Collect phishing URLs
-        print("\n🎣 Collecting Phishing URLs...")
+        print("\n Collecting Phishing URLs...")
         print("-" * 80)
 
         # PhishTank
@@ -277,7 +277,7 @@ class DataCollector:
             all_dataframes.append(df_openphish)
 
         # Collect legitimate URLs
-        print("\n✅ Collecting Legitimate URLs...")
+        print("\n Collecting Legitimate URLs...")
         print("-" * 80)
 
         df_legitimate = self.collect_alexa_top(sample_size=legitimate_count)
@@ -294,7 +294,7 @@ class DataCollector:
             after_dedup = len(combined_df)
 
             if before_dedup != after_dedup:
-                print(f"\n   ℹ️  Removed {before_dedup - after_dedup} duplicate URLs")
+                print(f"\n   ℹ  Removed {before_dedup - after_dedup} duplicate URLs")
 
             # Save combined dataset
             output_file = self.raw_data_dir / "combined_dataset.csv"
@@ -304,14 +304,14 @@ class DataCollector:
             print("\n" + "=" * 80)
             print("DATA COLLECTION COMPLETE")
             print("=" * 80)
-            print(f"📊 Total URLs: {len(combined_df)}")
-            print(f"   🎣 Phishing: {len(combined_df[combined_df['label'] == 1])}")
-            print(f"   ✅ Legitimate: {len(combined_df[combined_df['label'] == 0])}")
-            print(f"📁 Saved to: {output_file}")
+            print(f" Total URLs: {len(combined_df)}")
+            print(f"    Phishing: {len(combined_df[combined_df['label'] == 1])}")
+            print(f"    Legitimate: {len(combined_df[combined_df['label'] == 0])}")
+            print(f" Saved to: {output_file}")
 
             return combined_df
         else:
-            print("\n❌ No data collected!")
+            print("\n No data collected!")
             return pd.DataFrame()
 
 
@@ -329,8 +329,8 @@ if __name__ == "__main__":
     )
 
     if not df.empty:
-        print("\n📋 Sample Data:")
+        print("\n Sample Data:")
         print(df.head(10))
 
-        print("\n📊 Label Distribution:")
+        print("\n Label Distribution:")
         print(df["label"].value_counts())

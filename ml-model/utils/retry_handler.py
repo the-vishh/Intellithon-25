@@ -1,5 +1,5 @@
 """
-🔄 PHISHGUARD AI - RETRY HANDLER WITH EXPONENTIAL BACKOFF
+ PHISHGUARD AI - RETRY HANDLER WITH EXPONENTIAL BACKOFF
 =========================================================
 
 Intelligent retry logic for API calls with exponential backoff and jitter
@@ -300,7 +300,7 @@ class RetryHandler:
 
                 # Success
                 if attempt > 0:
-                    logging.info(f"[RetryHandler] ✅ Success after {attempt} retries")
+                    logging.info(f"[RetryHandler]  Success after {attempt} retries")
 
                 return result
 
@@ -310,7 +310,7 @@ class RetryHandler:
                 # Check if should retry
                 if not self.should_retry(e, attempt):
                     logging.error(
-                        f"[RetryHandler] ❌ Failed (not retryable): {type(e).__name__}: {e}"
+                        f"[RetryHandler]  Failed (not retryable): {type(e).__name__}: {e}"
                     )
                     self.total_failures += 1
                     raise e
@@ -320,7 +320,7 @@ class RetryHandler:
 
                 # Log retry
                 logging.warning(
-                    f"[RetryHandler] 🔄 Retry {attempt + 1}/{self.max_retries} "
+                    f"[RetryHandler]  Retry {attempt + 1}/{self.max_retries} "
                     f"after {delay:.2f}s: {type(e).__name__}: {e}"
                 )
 
@@ -336,7 +336,7 @@ class RetryHandler:
         # All retries failed
         self.total_failures += 1
         logging.error(
-            f"[RetryHandler] ❌ Failed after {self.max_retries} retries: "
+            f"[RetryHandler]  Failed after {self.max_retries} retries: "
             f"{type(last_exception).__name__}: {last_exception}"
         )
         raise last_exception
@@ -447,7 +447,7 @@ def get_retry_handler() -> RetryHandler:
 
     if _default_handler is None:
         _default_handler = RetryHandler()
-        logging.info("[RetryHandler] ✅ Initialized global retry handler")
+        logging.info("[RetryHandler]  Initialized global retry handler")
 
     return _default_handler
 
@@ -460,7 +460,7 @@ if __name__ == "__main__":
     # Configure logging
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
-    print("🔄 PhishGuard Retry Handler - Example Usage\n")
+    print(" PhishGuard Retry Handler - Example Usage\n")
 
     # Example 1: Using RetryHandler directly
     print("Example 1: Direct usage")
@@ -476,9 +476,9 @@ if __name__ == "__main__":
 
     try:
         result = handler.execute(flaky_function)
-        print(f"✅ Result: {result}")
+        print(f" Result: {result}")
     except Exception as e:
-        print(f"❌ Failed: {e}")
+        print(f" Failed: {e}")
 
     print(f"\nStats: {handler.get_stats()}\n")
 
@@ -495,9 +495,9 @@ if __name__ == "__main__":
 
     try:
         data = fetch_data("https://api.example.com")
-        print(f"✅ Data: {data}")
+        print(f" Data: {data}")
     except Exception as e:
-        print(f"❌ Failed: {e}")
+        print(f" Failed: {e}")
 
     print(f"\nStats: {fetch_data.retry_handler.get_stats()}\n")
 

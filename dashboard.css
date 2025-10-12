@@ -173,3 +173,67 @@ body {
 .loading {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* Sensitivity Mode Styles */
+.sensitivity-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.sensitivity-option {
+  cursor: pointer;
+  position: relative;
+}
+
+.sensitivity-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sensitivity-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.sensitivity-option input[type="radio"]:checked + .sensitivity-card {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.sensitivity-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.sensitivity-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.sensitivity-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: white;
+}
+
+.sensitivity-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .sensitivity-modes {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

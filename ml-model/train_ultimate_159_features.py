@@ -1,5 +1,5 @@
 """
-🏆 ULTIMATE 159-FEATURE TRAINING SCRIPT
+ ULTIMATE 159-FEATURE TRAINING SCRIPT
 ========================================
 
 Train ML models with ALL 159 features at HIGHEST quality and performance
@@ -51,12 +51,12 @@ class UltimateModelTrainer:
         os.makedirs(output_dir, exist_ok=True)
 
         # Initialize feature integrator (timeout=0 for fast training with URL features only)
-        print("🚀 Initializing Ultimate Feature Integrator...")
+        print(" Initializing Ultimate Feature Integrator...")
         self.integrator = UltimateFeatureIntegrator(
             timeout=0
         )  # Fast mode - URL features only
         print(
-            f"✅ Loaded {self.integrator.feature_count} features (FAST MODE - URL-based only)"
+            f" Loaded {self.integrator.feature_count} features (FAST MODE - URL-based only)"
         )
 
         # Models will be stored here
@@ -74,7 +74,7 @@ class UltimateModelTrainer:
             y: Labels (n_samples,)
         """
         print(f"\n{'='*80}")
-        print(f"📊 GENERATING TRAINING DATA")
+        print(f" GENERATING TRAINING DATA")
         print(f"{'='*80}")
         print(f"   Samples: {n_samples}")
         print(f"   Features: {self.integrator.feature_count}")
@@ -84,21 +84,21 @@ class UltimateModelTrainer:
         labels = []
 
         # Phishing URLs (1000)
-        print(f"\n🎣 Generating {n_samples//2} phishing URLs...")
+        print(f"\n Generating {n_samples//2} phishing URLs...")
         for i in range(n_samples // 2):
             url = self._generate_phishing_url(i)
             urls.append(url)
             labels.append(1)
 
         # Legitimate URLs (1000)
-        print(f"✅ Generating {n_samples//2} legitimate URLs...")
+        print(f" Generating {n_samples//2} legitimate URLs...")
         for i in range(n_samples // 2):
             url = self._generate_legitimate_url(i)
             urls.append(url)
             labels.append(0)
 
         # Extract features for all URLs
-        print(f"\n🔧 Extracting {self.integrator.feature_count} features per URL...")
+        print(f"\n Extracting {self.integrator.feature_count} features per URL...")
         feature_matrix = []
 
         for idx, url in enumerate(urls):
@@ -117,7 +117,7 @@ class UltimateModelTrainer:
         X = np.array(feature_matrix)
         y = np.array(labels)
 
-        print(f"\n✅ Training data generated!")
+        print(f"\n Training data generated!")
         print(f"   Shape: {X.shape}")
         print(f"   Phishing: {sum(y == 1)}")
         print(f"   Legitimate: {sum(y == 0)}")
@@ -167,7 +167,7 @@ class UltimateModelTrainer:
             y: Labels
         """
         print(f"\n{'='*80}")
-        print(f"🤖 TRAINING ML MODELS")
+        print(f" TRAINING ML MODELS")
         print(f"{'='*80}")
 
         # Split data
@@ -226,7 +226,7 @@ class UltimateModelTrainer:
 
         # Train each model
         for name, model in models_config.items():
-            print(f"\n🔨 Training {name}...")
+            print(f"\n Training {name}...")
 
             # Train
             model.fit(X_train, y_train)
@@ -252,7 +252,7 @@ class UltimateModelTrainer:
             }
 
             # Print metrics
-            print(f"   ✅ {name} trained!")
+            print(f"    {name} trained!")
             print(f"      Accuracy:  {metrics['accuracy']:.4f}")
             print(f"      Precision: {metrics['precision']:.4f}")
             print(f"      Recall:    {metrics['recall']:.4f}")
@@ -260,12 +260,12 @@ class UltimateModelTrainer:
             print(f"      AUC-ROC:   {metrics['auc_roc']:.4f}")
 
         print(f"\n{'='*80}")
-        print(f"✅ ALL MODELS TRAINED SUCCESSFULLY!")
+        print(f" ALL MODELS TRAINED SUCCESSFULLY!")
         print(f"{'='*80}")
 
     def save_models(self):
         """Save all trained models"""
-        print(f"\n💾 Saving models to {self.output_dir}/...")
+        print(f"\n Saving models to {self.output_dir}/...")
 
         for name, data in self.models.items():
             model = data["model"]
@@ -281,22 +281,22 @@ class UltimateModelTrainer:
             # Get file size
             size_kb = os.path.getsize(filepath) / 1024
 
-            print(f"   ✅ {name}: {filepath} ({size_kb:.1f} KB)")
+            print(f"    {name}: {filepath} ({size_kb:.1f} KB)")
 
-        print(f"\n✅ All models saved!")
+        print(f"\n All models saved!")
 
     def print_final_report(self):
         """Print comprehensive training report"""
         print(f"\n{'='*80}")
-        print(f"📊 ULTIMATE TRAINING REPORT - 159 FEATURES")
+        print(f" ULTIMATE TRAINING REPORT - 159 FEATURES")
         print(f"{'='*80}")
 
-        print(f"\n🎯 FEATURE SUMMARY:")
+        print(f"\n FEATURE SUMMARY:")
         summary = self.integrator.get_feature_summary()
         for category, count in summary.items():
             print(f"   {category:<30} {count:>5}")
 
-        print(f"\n🏆 MODEL PERFORMANCE:")
+        print(f"\n MODEL PERFORMANCE:")
         print(f"{'='*80}")
         print(
             f"{'Model':<20} {'Accuracy':<12} {'Precision':<12} {'Recall':<12} {'F1':<12}"
@@ -318,14 +318,14 @@ class UltimateModelTrainer:
             importances = model.feature_importances_
             top_10_idx = np.argsort(importances)[-10:][::-1]
 
-            print(f"\n🔝 TOP 10 MOST IMPORTANT FEATURES:")
+            print(f"\n TOP 10 MOST IMPORTANT FEATURES:")
             for i, idx in enumerate(top_10_idx, 1):
                 feature_name = self.integrator.feature_names[idx]
                 importance = importances[idx]
                 print(f"   {i:2d}. {feature_name:<40} {importance:.4f}")
 
         print(f"\n{'='*80}")
-        print(f"🎉 TRAINING COMPLETE!")
+        print(f" TRAINING COMPLETE!")
         print(f"   Total Features: {self.integrator.feature_count}")
         print(f"   Models Trained: {len(self.models)}")
         print(
@@ -337,7 +337,7 @@ class UltimateModelTrainer:
 def main():
     """Main training pipeline"""
     print(f"\n{'='*80}")
-    print(f"🏆 ULTIMATE 159-FEATURE MODEL TRAINING")
+    print(f" ULTIMATE 159-FEATURE MODEL TRAINING")
     print(f"{'='*80}")
     print(f"   Started: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"{'='*80}")
@@ -358,7 +358,7 @@ def main():
     trainer.print_final_report()
 
     print(f"\n{'='*80}")
-    print(f"✅ ULTIMATE TRAINING COMPLETE!")
+    print(f" ULTIMATE TRAINING COMPLETE!")
     print(f"   Finished: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"   Models saved in: models/")
     print(f"{'='*80}\n")

@@ -48,9 +48,9 @@ class MasterFeatureExtractor:
 
         self.total_features = sum(self.feature_count.values())
 
-        print(f"✅ Master Feature Extractor initialized")
-        print(f"📊 Total Features: {self.total_features}")
-        print(f"⚡ Parallel Processing: {'Enabled' if parallel else 'Disabled'}")
+        print(f" Master Feature Extractor initialized")
+        print(f" Total Features: {self.total_features}")
+        print(f" Parallel Processing: {'Enabled' if parallel else 'Disabled'}")
 
     def extract_features(self, url: str, verbose=False) -> Dict[str, Any]:
         """
@@ -76,7 +76,7 @@ class MasterFeatureExtractor:
 
         if verbose:
             print(
-                f"✅ Extracted {len(features)} features in {features['extraction_time_ms']}ms"
+                f" Extracted {len(features)} features in {features['extraction_time_ms']}ms"
             )
 
         return features
@@ -169,7 +169,7 @@ class MasterFeatureExtractor:
         Returns:
             DataFrame with all features
         """
-        print(f"🔄 Extracting features from {len(urls)} URLs...")
+        print(f" Extracting features from {len(urls)} URLs...")
 
         all_features = []
 
@@ -186,8 +186,8 @@ class MasterFeatureExtractor:
 
         df = pd.DataFrame(all_features)
 
-        print(f"✅ Extracted features from {len(df)} URLs successfully")
-        print(f"📊 Feature Matrix Shape: {df.shape}")
+        print(f" Extracted features from {len(df)} URLs successfully")
+        print(f" Feature Matrix Shape: {df.shape}")
 
         return df
 
@@ -241,7 +241,7 @@ if __name__ == "__main__":
     print("=" * 80)
 
     # Print feature summary
-    print("\n📊 Feature Summary:")
+    print("\n Feature Summary:")
     for module, count in extractor.get_feature_summary().items():
         print(f"   {module}: {count}")
 
@@ -252,18 +252,18 @@ if __name__ == "__main__":
         "http://suspicious-phishing-site.tk/login.php?verify=account",
     ]
 
-    print(f"\n🔄 Testing {len(test_urls)} URLs...")
+    print(f"\n Testing {len(test_urls)} URLs...")
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n🔗 URL: {url}")
+        print(f"\n URL: {url}")
 
         start = time.time()
         features = extractor.extract_features(url, verbose=True)
         elapsed = time.time() - start
 
-        print(f"⏱️  Total Time: {elapsed*1000:.2f}ms")
-        print(f"📈 Features Extracted: {len(features)}")
+        print(f"⏱  Total Time: {elapsed*1000:.2f}ms")
+        print(f" Features Extracted: {len(features)}")
 
         # Show some key features
         print(f"\n   Key Indicators:")
@@ -280,5 +280,5 @@ if __name__ == "__main__":
 
         print("-" * 80)
 
-    print("\n✅ Master Feature Extraction Complete!")
+    print("\n Master Feature Extraction Complete!")
     print("=" * 80)

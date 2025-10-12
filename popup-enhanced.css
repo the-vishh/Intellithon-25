@@ -1,0 +1,726 @@
+/* 🎨 ENHANCED POPUP STYLES - REAL-TIME USER ANALYTICS */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  color: #1f2937;
+}
+
+.container {
+  background: white;
+  padding: 20px;
+}
+
+/* ==================== HEADER ==================== */
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.shield-icon {
+  font-size: 32px;
+  animation: shield-pulse 2s ease-in-out infinite;
+}
+
+@keyframes shield-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.site-info {
+  flex: 1;
+}
+
+.site-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.site-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(239, 68, 68, 0.9);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ==================== STATS DASHBOARD ==================== */
+
+.stats-dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.primary {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  grid-column: 1 / -1;
+}
+
+.stat-card.primary .stat-icon {
+  font-size: 32px;
+}
+
+.stat-card.primary .stat-number,
+.stat-card.primary .stat-label,
+.stat-card.primary .trend-text {
+  color: white;
+}
+
+.stat-icon {
+  font-size: 24px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.trend-icon {
+  font-size: 12px;
+}
+
+.trend-text {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.stat-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  color: #374151;
+}
+
+.stat-badge.success {
+  background: #10b981;
+  color: white;
+}
+
+.stat-badge.warning {
+  background: #f59e0b;
+  color: white;
+}
+
+/* ==================== ACTIVITY FEED ==================== */
+
+.activity-section {
+  margin-bottom: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-header h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-icon {
+  font-size: 16px;
+}
+
+.auto-refresh {
+  font-size: 10px;
+  font-weight: 400;
+  color: #6b7280;
+}
+
+.activity-feed {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background 0.2s;
+}
+
+.activity-item:hover {
+  background: #f9fafb;
+}
+
+.activity-item.threat {
+  border-left: 3px solid #ef4444;
+}
+
+.activity-item.safe {
+  border-left: 3px solid #10b981;
+}
+
+.activity-icon {
+  font-size: 20px;
+}
+
+.activity-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-url {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.activity-time {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.activity-action {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.activity-action.danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.activity-action.warning {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.activity-confidence {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6366f1;
+}
+
+.activity-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.activity-badge.critical {
+  background: #dc2626;
+  color: white;
+}
+
+.activity-badge.high {
+  background: #f59e0b;
+  color: white;
+}
+
+.activity-badge.medium {
+  background: #eab308;
+  color: white;
+}
+
+.activity-badge.low {
+  background: #3b82f6;
+  color: white;
+}
+
+.activity-badge.safe {
+  background: #10b981;
+  color: white;
+}
+
+/* ==================== THREAT BREAKDOWN ==================== */
+
+.threat-section {
+  margin-bottom: 16px;
+}
+
+.threat-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.threat-type {
+  display: grid;
+  grid-template-columns: 100px 1fr 40px;
+  align-items: center;
+  gap: 10px;
+}
+
+.threat-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.threat-icon {
+  font-size: 16px;
+}
+
+.threat-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.threat-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.threat-fill.phishing {
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
+.threat-fill.malware {
+  background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.threat-fill.crypto {
+  background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.threat-fill.scam {
+  background: linear-gradient(90deg, #ec4899 0%, #db2777 100%);
+}
+
+.threat-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: right;
+}
+
+/* ==================== PERFORMANCE ==================== */
+
+.performance-section {
+  margin-bottom: 16px;
+}
+
+.performance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.perf-item {
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.perf-label {
+  font-size: 10px;
+  color: #6b7280;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.perf-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-icon {
+  font-size: 12px;
+}
+
+/* ==================== GEOGRAPHIC SOURCES ==================== */
+
+.geographic-section {
+  margin-bottom: 16px;
+}
+
+.threat-sources {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.source-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: white;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.source-flag {
+  font-size: 24px;
+}
+
+.source-content {
+  flex: 1;
+}
+
+.source-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.source-bar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.source-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+  transition: width 0.3s ease;
+}
+
+.source-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dc2626;
+}
+
+/* ==================== ACTIONS ==================== */
+
+.actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  background: #f9fafb;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-icon {
+  font-size: 16px;
+}
+
+/* ==================== PRIVACY FOOTER ==================== */
+
+.privacy-footer {
+  padding: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.encryption-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #10b981;
+  margin-bottom: 6px;
+}
+
+.lock-icon {
+  font-size: 14px;
+}
+
+.last-update {
+  text-align: center;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+/* ==================== LOADING/EMPTY STATES ==================== */
+
+.activity-item.loading,
+.source-item.loading {
+  justify-content: center;
+  padding: 20px;
+}
+
+.activity-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.activity-item.empty,
+.source-item.empty {
+  justify-content: center;
+  padding: 20px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+/* ==================== SCROLLBAR ==================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ==========================================
+   🔴 LIVE THREAT NOTIFICATIONS
+   ========================================== */
+
+.live-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(255, 68, 68, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  transform: translateX(400px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10000;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.live-notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-icon {
+  font-size: 32px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.notification-domain {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+
+.notification-type {
+  font-size: 11px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}

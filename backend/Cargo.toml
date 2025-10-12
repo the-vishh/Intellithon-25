@@ -1,0 +1,71 @@
+[package]
+name = "phishing-detector-api"
+version = "1.0.0"
+edition = "2021"
+authors = ["Phishing Detection Team"]
+description = "High-performance Rust API gateway for phishing detection"
+
+[dependencies]
+# Web framework
+actix-web = "4.4"
+actix-cors = "0.7"
+actix-rt = "2.9"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# HTTP client (to call Python ML service)
+reqwest = { version = "0.11", features = ["json"] }
+
+# Redis client
+redis = { version = "0.24", features = ["tokio-comp", "connection-manager"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Logging
+env_logger = "0.11"
+log = "0.4"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+dotenv = "0.15"
+
+# Database (Diesel ORM) - SQLite for local storage
+diesel = { version = "2.1", features = ["sqlite", "uuid", "chrono", "r2d2", "serde_json", "returning_clauses_for_sqlite_3_35"] }
+diesel_migrations = "2.1"
+libsqlite3-sys = { version = "0.27", features = ["bundled"] }
+
+# Rate limiting
+governor = "0.6"
+
+# Hashing (for cache keys)
+sha2 = "0.10"
+hex = "0.4"
+
+# Encryption (AES-256-GCM for E2E encryption)
+aes-gcm = "0.10"
+base64 = "0.21"
+rand = "0.8"
+
+# WebSocket support
+actix-web-actors = "4.2"
+
+# GeoIP lookup
+maxminddb = "0.24"
+
+# Async streams for SSE
+async-stream = "0.3"
+futures = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

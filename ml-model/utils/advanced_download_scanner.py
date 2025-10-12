@@ -1,5 +1,5 @@
 """
-🛡️ ADVANCED DOWNLOAD PROTECTION
+ ADVANCED DOWNLOAD PROTECTION
 =================================
 
 Enterprise-grade file scanning with:
@@ -40,7 +40,7 @@ load_dotenv()
 
 class AdvancedDownloadScanner:
     """
-    🛡️ ENTERPRISE DOWNLOAD PROTECTION
+     ENTERPRISE DOWNLOAD PROTECTION
 
     Features that BEAT commercial products:
     - VirusTotal: 70+ antivirus engines (vs Norton's 1)
@@ -57,13 +57,13 @@ class AdvancedDownloadScanner:
         # Initialize YARA rules
         self.yara_rules = self._load_yara_rules() if YARA_AVAILABLE else None
 
-        print("🛡️  Advanced Download Scanner initialized")
+        print("  Advanced Download Scanner initialized")
         if self.vt_api_key:
-            print("   ✅ VirusTotal: Enabled (70+ engines)")
+            print("    VirusTotal: Enabled (70+ engines)")
         if YARA_AVAILABLE:
-            print("   ✅ YARA Rules: Enabled")
+            print("    YARA Rules: Enabled")
         if PE_AVAILABLE:
-            print("   ✅ PE Analysis: Enabled")
+            print("    PE Analysis: Enabled")
 
     def _load_yara_rules(self):
         """Load YARA rules for malware detection"""
@@ -116,12 +116,12 @@ class AdvancedDownloadScanner:
             rules = yara.compile(source=rules_source)
             return rules
         except Exception as e:
-            print(f"   ⚠️  YARA rules compilation failed: {e}")
+            print(f"     YARA rules compilation failed: {e}")
             return None
 
     def scan_file(self, file_path: str, file_content: Optional[bytes] = None) -> Dict:
         """
-        🔍 COMPREHENSIVE FILE SCANNING
+         COMPREHENSIVE FILE SCANNING
 
         Layers of protection:
         1. File extension checking
@@ -455,13 +455,13 @@ class AdvancedDownloadScanner:
 # Demo
 if __name__ == "__main__":
     print("=" * 80)
-    print("🛡️ ADVANCED DOWNLOAD PROTECTION - DEMO")
+    print(" ADVANCED DOWNLOAD PROTECTION - DEMO")
     print("=" * 80)
 
     scanner = AdvancedDownloadScanner()
 
     # Test with sample file content
-    print("\n📥 Testing file scan capabilities...")
+    print("\n Testing file scan capabilities...")
 
     # Simulate suspicious executable
     test_content = (
@@ -474,7 +474,7 @@ if __name__ == "__main__":
 
     result = scanner.scan_file("suspicious_file.exe", test_content)
 
-    print(f"\n📊 Scan Results:")
+    print(f"\n Scan Results:")
     print(f"   File: {result['file_path']}")
     print(f"   Hash: {result['file_hash'][:32]}...")
     print(f"   Malware Score: {result['malware_score']:.2f}")
@@ -483,18 +483,18 @@ if __name__ == "__main__":
     print(f"   Scan Time: {result['scan_time_ms']:.2f}ms")
 
     if result["detections"]:
-        print(f"\n   🚨 Detections:")
+        print(f"\n    Detections:")
         for detection in result["detections"]:
             print(f"      - {detection}")
 
     print("\n" + "=" * 80)
-    print("✅ ADVANCED DOWNLOAD PROTECTION READY!")
+    print(" ADVANCED DOWNLOAD PROTECTION READY!")
     print("=" * 80)
     print("\nThis system now has:")
-    print("  ✅ VirusTotal: 70+ antivirus engines (Norton has 1!)")
-    print("  ✅ YARA Rules: Advanced pattern matching")
-    print("  ✅ PE Analysis: Deep executable inspection")
-    print("  ✅ Entropy Analysis: Detect obfuscation")
-    print("  ✅ Multi-layer scanning: 7 layers of protection")
-    print("\n🏆 WE LEGITIMATELY BEAT NORTON, MCAFEE, AND KASPERSKY!")
+    print("   VirusTotal: 70+ antivirus engines (Norton has 1!)")
+    print("   YARA Rules: Advanced pattern matching")
+    print("   PE Analysis: Deep executable inspection")
+    print("   Entropy Analysis: Detect obfuscation")
+    print("   Multi-layer scanning: 7 layers of protection")
+    print("\n WE LEGITIMATELY BEAT NORTON, MCAFEE, AND KASPERSKY!")
     print("=" * 80)

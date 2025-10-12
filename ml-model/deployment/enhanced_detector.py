@@ -1,5 +1,5 @@
 """
-🛡️ ULTIMATE PHISHING DETECTOR - MAXIMUM PROTECTION MODE
+ ULTIMATE PHISHING DETECTOR - MAXIMUM PROTECTION MODE
 ========================================================
 
 THE SUPER BEST AI/ML MODEL with Advanced Features:
@@ -34,7 +34,7 @@ try:
     ML_AVAILABLE = True
 except ImportError:
     ML_AVAILABLE = False
-    print("⚠️  ML libraries not available - using pattern-based detection")
+    print("  ML libraries not available - using pattern-based detection")
 
 
 class DetectionMode:
@@ -47,7 +47,7 @@ class DetectionMode:
 
 class UltimatePhishingDetector:
     """
-    🛡️ THE ULTIMATE AI/ML PHISHING DETECTOR
+     THE ULTIMATE AI/ML PHISHING DETECTOR
 
     Features:
     - Real-time URL scanning (< 50ms)
@@ -184,13 +184,13 @@ class UltimatePhishingDetector:
         # ML models (loaded on demand)
         self.ml_models = None
 
-        print(f"🛡️  Ultimate Detector initialized in {mode.upper()} mode")
+        print(f"  Ultimate Detector initialized in {mode.upper()} mode")
 
     def scan_url(
         self, url: str, check_visual: bool = False, check_threat_intel: bool = True
     ) -> Dict:
         """
-        🔍 COMPREHENSIVE URL SCAN
+         COMPREHENSIVE URL SCAN
 
         Multi-layer protection:
         1. Cache check (< 1ms)
@@ -299,7 +299,7 @@ class UltimatePhishingDetector:
 
     def scan_download(self, file_path: str, url: Optional[str] = None) -> Dict:
         """
-        🛡️ DOWNLOAD PROTECTION - Scan files before opening
+         DOWNLOAD PROTECTION - Scan files before opening
 
         Args:
             file_path: Path to downloaded file
@@ -496,9 +496,9 @@ class UltimatePhishingDetector:
             DetectionMode.AGGRESSIVE,
         ]:
             self.mode = mode
-            print(f"🔄 Detection mode changed to: {mode.upper()}")
+            print(f" Detection mode changed to: {mode.upper()}")
         else:
-            print(f"❌ Invalid mode: {mode}")
+            print(f" Invalid mode: {mode}")
 
     def get_statistics(self) -> Dict:
         """Get detector statistics"""
@@ -522,7 +522,7 @@ class UltimatePhishingDetector:
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🛡️ ULTIMATE PHISHING DETECTOR - AI/ML MODEL")
+    print(" ULTIMATE PHISHING DETECTOR - AI/ML MODEL")
     print("=" * 80)
     print()
 
@@ -544,7 +544,7 @@ if __name__ == "__main__":
 
     for mode in modes:
         print(f"\n{'='*80}")
-        print(f"🔍 TESTING MODE: {mode.upper()}")
+        print(f" TESTING MODE: {mode.upper()}")
         print(f"{'='*80}\n")
 
         detector = UltimatePhishingDetector(mode=mode)
@@ -554,11 +554,11 @@ if __name__ == "__main__":
 
             # Determine emoji
             if report["action"] == "block":
-                emoji = "🚫"
+                emoji = ""
             elif report["action"] == "warn":
-                emoji = "⚠️ "
+                emoji = " "
             else:
-                emoji = "✅"
+                emoji = ""
 
             print(f"{emoji} {description}")
             print(f"   URL: {url}")
@@ -571,12 +571,12 @@ if __name__ == "__main__":
 
         # Show stats
         stats = detector.get_statistics()
-        print(f"📊 Statistics for {mode.upper()} mode:")
+        print(f" Statistics for {mode.upper()} mode:")
         print(f"   Total Scans: {stats['total_scans']}")
         print(f"   Threats Blocked: {stats['threats_blocked']}")
         print(f"   Block Rate: {stats['block_rate']:.1f}%")
         print()
 
     print("=" * 80)
-    print("🔥 ULTIMATE DETECTOR READY FOR DEPLOYMENT!")
+    print(" ULTIMATE DETECTOR READY FOR DEPLOYMENT!")
     print("=" * 80)

@@ -1,5 +1,5 @@
 """
-🚦 PHISHGUARD AI - RATE LIMITING SYSTEM
+ PHISHGUARD AI - RATE LIMITING SYSTEM
 =======================================
 
 Token Bucket Algorithm for API rate limiting
@@ -316,7 +316,7 @@ def get_rate_limiter() -> RateLimiter:
 
     if _rate_limiter is None:
         _rate_limiter = RateLimiter()
-        print("[RateLimiter] ✅ Initialized global rate limiter")
+        print("[RateLimiter]  Initialized global rate limiter")
 
     return _rate_limiter
 
@@ -376,7 +376,7 @@ class RateLimitExceeded(Exception):
 
 if __name__ == "__main__":
     # Example usage
-    print("🚦 PhishGuard Rate Limiter - Example Usage\n")
+    print(" PhishGuard Rate Limiter - Example Usage\n")
 
     # Get rate limiter
     limiter = get_rate_limiter()
@@ -387,10 +387,10 @@ if __name__ == "__main__":
 
     for i in range(6):
         if limiter.acquire(APIService.VIRUSTOTAL):
-            print(f"✅ Request {i+1} allowed")
+            print(f" Request {i+1} allowed")
         else:
             wait = limiter.wait_time(APIService.VIRUSTOTAL)
-            print(f"❌ Request {i+1} rate limited. Wait {wait:.2f}s")
+            print(f" Request {i+1} rate limited. Wait {wait:.2f}s")
 
     print(f"\nAvailable tokens: {limiter.available(APIService.VIRUSTOTAL)}\n")
 
@@ -399,7 +399,7 @@ if __name__ == "__main__":
     print("-" * 50)
 
     limiter.acquire(APIService.PHISHTANK, wait=True)
-    print("✅ Request completed (with wait)")
+    print(" Request completed (with wait)")
 
     # Example 3: Statistics
     print("\nExample 3: Rate Limiter Statistics")

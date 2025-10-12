@@ -1,5 +1,5 @@
 """
-🚀 ADVANCED ML TRAINING WITH 150+ FEATURES
+ ADVANCED ML TRAINING WITH 150+ FEATURES
 ===========================================
 
 This script uses ALL available features from every module:
@@ -50,7 +50,7 @@ class AdvancedTrainer:
 
     def __init__(self):
         print("=" * 80)
-        print("🚀 ADVANCED TRAINING WITH 150+ FEATURES")
+        print(" ADVANCED TRAINING WITH 150+ FEATURES")
         print("=" * 80)
 
         self.url_extractor = URLFeatureExtractor()
@@ -64,7 +64,7 @@ class AdvancedTrainer:
 
     def generate_data(self, n_samples=2000):
         """Generate comprehensive URLs"""
-        print("\n📊 Generating training data...")
+        print("\n Generating training data...")
 
         phishing_patterns = [
             "http://paypa1-verify.{tld}/secure/login",
@@ -124,14 +124,14 @@ class AdvancedTrainer:
             url = pattern.format(i=i)
             all_legitimate.append(url)
 
-        print(f"   ✅ Generated {len(all_phishing)} phishing URLs")
-        print(f"   ✅ Generated {len(all_legitimate)} legitimate URLs")
+        print(f"    Generated {len(all_phishing)} phishing URLs")
+        print(f"    Generated {len(all_legitimate)} legitimate URLs")
 
         return all_phishing, all_legitimate
 
     def extract_all_features(self, urls, labels):
         """Extract ALL 150+ features from every module"""
-        print("\n🔍 Extracting ALL 150+ features...")
+        print("\n Extracting ALL 150+ features...")
         print("   This may take a few minutes...")
 
         features_list = []
@@ -182,7 +182,7 @@ class AdvancedTrainer:
                 continue
 
         print(
-            f"\n   ✅ Extracted {len(feature_vector)} features from {len(features_list)} URLs"
+            f"\n    Extracted {len(feature_vector)} features from {len(features_list)} URLs"
         )
 
         return np.array(features_list), np.array(valid_labels), valid_urls
@@ -380,11 +380,11 @@ class AdvancedTrainer:
 
     def train_models(self, X_train, y_train, X_test, y_test):
         """Train with 150+ features"""
-        print("\n🧠 Training with 150+ features...")
+        print("\n Training with 150+ features...")
         print("=" * 80)
 
         # Random Forest
-        print("\n📊 Training Random Forest...")
+        print("\n Training Random Forest...")
         rf_model = RandomForestClassifier(
             n_estimators=300,
             max_depth=20,
@@ -400,11 +400,11 @@ class AdvancedTrainer:
 
         self.models["random_forest"] = rf_model
         accuracy = accuracy_score(y_test, rf_pred)
-        print(f"   ✅ Accuracy: {accuracy*100:.2f}%")
+        print(f"    Accuracy: {accuracy*100:.2f}%")
 
         # XGBoost
         if XGBOOST_AVAILABLE:
-            print("\n📊 Training XGBoost...")
+            print("\n Training XGBoost...")
             xgb_model = xgb.XGBClassifier(
                 n_estimators=300,
                 max_depth=10,
@@ -417,11 +417,11 @@ class AdvancedTrainer:
 
             self.models["xgboost"] = xgb_model
             accuracy = accuracy_score(y_test, xgb_pred)
-            print(f"   ✅ Accuracy: {accuracy*100:.2f}%")
+            print(f"    Accuracy: {accuracy*100:.2f}%")
 
         # LightGBM
         if LIGHTGBM_AVAILABLE:
-            print("\n📊 Training LightGBM...")
+            print("\n Training LightGBM...")
             lgb_model = lgb.LGBMClassifier(
                 n_estimators=300,
                 max_depth=10,
@@ -435,26 +435,26 @@ class AdvancedTrainer:
 
             self.models["lightgbm"] = lgb_model
             accuracy = accuracy_score(y_test, lgb_pred)
-            print(f"   ✅ Accuracy: {accuracy*100:.2f}%")
+            print(f"    Accuracy: {accuracy*100:.2f}%")
 
         print("\n" + "=" * 80)
-        print(f"✅ Trained {len(self.models)} models with 150+ features!")
+        print(f" Trained {len(self.models)} models with 150+ features!")
 
     def save_models(self):
         """Save models"""
         os.makedirs("models_advanced", exist_ok=True)
 
-        print("\n💾 Saving advanced models...")
+        print("\n Saving advanced models...")
         for name, model in self.models.items():
             path = f"models_advanced/{name}_150features.pkl"
             joblib.dump(model, path)
             size = os.path.getsize(path) / 1024
-            print(f"   ✅ Saved {name} ({size:.1f} KB)")
+            print(f"    Saved {name} ({size:.1f} KB)")
 
 
 def main():
     print("\n" + "=" * 80)
-    print("🎯 TRAINING WITH ALL 150+ FEATURES")
+    print(" TRAINING WITH ALL 150+ FEATURES")
     print("=" * 80)
 
     trainer = AdvancedTrainer()
@@ -472,7 +472,7 @@ def main():
     # Extract ALL features
     X, y, valid_urls = trainer.extract_all_features(all_urls, all_labels)
 
-    print(f"\n📊 Dataset with 150+ Features:")
+    print(f"\n Dataset with 150+ Features:")
     print(f"   URLs: {len(valid_urls)}")
     print(f"   Features: {X.shape[1]}")
     print(f"   Phishing: {sum(y)} ({sum(y)/len(y)*100:.1f}%)")
@@ -490,10 +490,10 @@ def main():
     trainer.save_models()
 
     print("\n" + "=" * 80)
-    print("🎉 TRAINING COMPLETE WITH 150+ FEATURES!")
+    print(" TRAINING COMPLETE WITH 150+ FEATURES!")
     print("=" * 80)
-    print("\n✅ Now we legitimately extract MORE features than Kaspersky!")
-    print("✅ Features: 150+ (vs Kaspersky's ~60)")
+    print("\n Now we legitimately extract MORE features than Kaspersky!")
+    print(" Features: 150+ (vs Kaspersky's ~60)")
     print("=" * 80)
 
 

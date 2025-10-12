@@ -1,5 +1,5 @@
 """
-🔍 BROWSER FINGERPRINTING SYSTEM
+ BROWSER FINGERPRINTING SYSTEM
 =================================
 
 Advanced threat detection via device and browser identification
@@ -87,7 +87,7 @@ class BrowserFingerprint:
         ctx.fillStyle = '#f60';
         ctx.fillRect(125, 1, 62, 20);
         ctx.fillStyle = '#069';
-        ctx.fillText('PhishGuard Security 🛡️', 2, 15);
+        ctx.fillText('PhishGuard Security ', 2, 15);
         ctx.fillStyle = 'rgba(102, 204, 0, 0.7)';
         ctx.fillText('Canvas Fingerprint', 4, 17);
 
@@ -287,18 +287,18 @@ window.addEventListener('load', function() {{
 def demo_fingerprinting():
     """Demonstrate browser fingerprinting"""
     print("=" * 80)
-    print("🔍 BROWSER FINGERPRINTING SYSTEM DEMO")
+    print(" BROWSER FINGERPRINTING SYSTEM DEMO")
     print("=" * 80)
 
     fp = BrowserFingerprint()
 
     # Generate JavaScript collector
-    print("\n1️⃣ Generating JavaScript fingerprint collector...")
+    print("\n1⃣ Generating JavaScript fingerprint collector...")
     js_code = fp.generate_javascript_collector()
-    print(f"   ✅ Generated {len(js_code)} bytes of JavaScript code")
+    print(f"    Generated {len(js_code)} bytes of JavaScript code")
 
     # Simulate fingerprint data
-    print("\n2️⃣ Processing sample fingerprint...")
+    print("\n2⃣ Processing sample fingerprint...")
     sample_fingerprint = {
         "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0",
         "platform": "Win32",
@@ -320,20 +320,20 @@ def demo_fingerprinting():
 
     processed = fp.process_fingerprint(sample_fingerprint)
 
-    print(f"\n   📊 Fingerprint Analysis:")
+    print(f"\n    Fingerprint Analysis:")
     print(f"      Fingerprint ID: {processed['fingerprint_id']}")
     print(f"      Overall Risk: {processed['risk_indicators']['overall_risk']:.2f}")
     print(f"      Trust Score: {processed['risk_indicators']['trust_score']:.1f}/100")
 
     if processed["risk_indicators"]["suspicious_indicators"]:
-        print(f"\n      ⚠️ Suspicious Indicators:")
+        print(f"\n       Suspicious Indicators:")
         for indicator in processed["risk_indicators"]["suspicious_indicators"]:
             print(f"         - {indicator}")
     else:
-        print(f"\n      ✅ No suspicious indicators detected")
+        print(f"\n       No suspicious indicators detected")
 
     # Test suspicious fingerprint
-    print("\n3️⃣ Testing suspicious fingerprint (headless browser)...")
+    print("\n3⃣ Testing suspicious fingerprint (headless browser)...")
     suspicious_fingerprint = {
         **sample_fingerprint,
         "webglVendor": "Brian Paul",  # SwiftShader - headless
@@ -345,43 +345,43 @@ def demo_fingerprinting():
 
     suspicious_processed = fp.process_fingerprint(suspicious_fingerprint)
 
-    print(f"\n   📊 Suspicious Fingerprint Analysis:")
+    print(f"\n    Suspicious Fingerprint Analysis:")
     print(
         f"      Overall Risk: {suspicious_processed['risk_indicators']['overall_risk']:.2f}"
     )
     print(
         f"      Trust Score: {suspicious_processed['risk_indicators']['trust_score']:.1f}/100"
     )
-    print(f"\n      ⚠️ Suspicious Indicators:")
+    print(f"\n       Suspicious Indicators:")
     for indicator in suspicious_processed["risk_indicators"]["suspicious_indicators"]:
         print(f"         - {indicator}")
 
     is_spoofed = fp.detect_fingerprint_spoofing(suspicious_fingerprint)
-    print(f"\n      🚨 Spoofing Detected: {is_spoofed}")
+    print(f"\n       Spoofing Detected: {is_spoofed}")
 
     # Generate content script
-    print("\n4️⃣ Generating Chrome extension content script...")
+    print("\n4⃣ Generating Chrome extension content script...")
     content_script = fp.generate_content_script()
-    print(f"   ✅ Generated {len(content_script)} bytes of content script")
+    print(f"    Generated {len(content_script)} bytes of content script")
 
     # Save content script
     output_file = "browser_fingerprint_collector.js"
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(content_script)
-    print(f"   💾 Saved to: {output_file}")
+    print(f"    Saved to: {output_file}")
 
     print("\n" + "=" * 80)
-    print("✅ BROWSER FINGERPRINTING READY")
+    print(" BROWSER FINGERPRINTING READY")
     print("=" * 80)
-    print("\n🔍 Features:")
-    print("   ✅ Browser/OS detection")
-    print("   ✅ Screen & hardware profiling")
-    print("   ✅ Canvas & WebGL fingerprints")
-    print("   ✅ Audio context fingerprints")
-    print("   ✅ Bot/automation detection")
-    print("   ✅ Spoofing detection")
-    print("   ✅ Privacy tool detection")
-    print("\n📊 Use Cases:")
+    print("\n Features:")
+    print("    Browser/OS detection")
+    print("    Screen & hardware profiling")
+    print("    Canvas & WebGL fingerprints")
+    print("    Audio context fingerprints")
+    print("    Bot/automation detection")
+    print("    Spoofing detection")
+    print("    Privacy tool detection")
+    print("\n Use Cases:")
     print("   • Detect headless browsers (bots)")
     print("   • Identify fingerprint spoofing")
     print("   • Track suspicious device patterns")

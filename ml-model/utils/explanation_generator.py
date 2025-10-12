@@ -1,5 +1,5 @@
 """
-📝 PHISHGUARD AI - EXPLANATION GENERATOR
+ PHISHGUARD AI - EXPLANATION GENERATOR
 =========================================
 
 Converts technical ML features into human-readable explanations
@@ -53,7 +53,7 @@ class ExplanationGenerator:
         self.feature_explanations = self._initialize_feature_explanations()
         self.category_descriptions = self._initialize_category_descriptions()
 
-        logger.info(f"✅ ExplanationGenerator initialized (language: {language})")
+        logger.info(f" ExplanationGenerator initialized (language: {language})")
 
     def _initialize_feature_explanations(self) -> Dict[str, Dict[str, Any]]:
         """
@@ -70,7 +70,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Unusually long URL ({value} characters). Phishers often use long URLs to hide suspicious domains.",
                 "safe_text": "URL length is normal ({value} characters).",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "📏",
+                "icon": "",
             },
             "has_ip": {
                 "name": "IP Address in URL",
@@ -78,7 +78,7 @@ class ExplanationGenerator:
                 "suspicious_text": "URL uses IP address instead of domain name. Legitimate sites use domain names.",
                 "safe_text": "URL uses proper domain name.",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "🔢",
+                "icon": "",
             },
             "num_dots": {
                 "name": "Subdomain Count",
@@ -86,7 +86,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Excessive subdomains ({value} dots). May be hiding the real domain.",
                 "safe_text": "Normal subdomain structure ({value} dots).",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🔗",
+                "icon": "",
             },
             "url_entropy": {
                 "name": "URL Randomness",
@@ -94,7 +94,7 @@ class ExplanationGenerator:
                 "suspicious_text": "High URL randomness (score: {value:.2f}). URL appears obfuscated or auto-generated.",
                 "safe_text": "URL structure looks normal (randomness: {value:.2f}).",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "🎲",
+                "icon": "",
             },
             "has_@": {
                 "name": "Username in URL",
@@ -102,7 +102,7 @@ class ExplanationGenerator:
                 "suspicious_text": "URL contains @ symbol. Common phishing technique to trick users about the real domain.",
                 "safe_text": "No suspicious symbols in URL.",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "⚠️",
+                "icon": "",
             },
             # Domain Security
             "domain_age_days": {
@@ -111,7 +111,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Very new domain (only {value:.0f} days old). Phishing sites often use newly registered domains.",
                 "safe_text": "Established domain ({value:.0f} days old).",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "📅",
+                "icon": "",
             },
             "ssl_validity": {
                 "name": "SSL Certificate",
@@ -119,7 +119,7 @@ class ExplanationGenerator:
                 "suspicious_text": "No valid SSL certificate. Your connection is NOT secure.",
                 "safe_text": "Valid SSL certificate present.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🔒",
+                "icon": "",
             },
             "is_https": {
                 "name": "HTTPS Protocol",
@@ -127,7 +127,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Site uses unencrypted HTTP. Your data can be intercepted.",
                 "safe_text": "Site uses encrypted HTTPS.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🔐",
+                "icon": "",
             },
             "typosquatting_detected": {
                 "name": "Typosquatting",
@@ -135,7 +135,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Domain is similar to a known brand (typosquatting). May be impersonating a legitimate site.",
                 "safe_text": "No typosquatting detected.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🎭",
+                "icon": "",
             },
             "homograph_attack": {
                 "name": "Homograph Attack",
@@ -143,7 +143,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Uses look-alike characters (е vs e). Advanced phishing technique.",
                 "safe_text": "No look-alike character substitution.",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "👁️",
+                "icon": "",
             },
             "suspicious_tld": {
                 "name": "Suspicious Domain Extension",
@@ -151,7 +151,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Uses suspicious top-level domain (.tk, .ml, etc.). Often used by phishers.",
                 "safe_text": "Uses standard domain extension.",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🌐",
+                "icon": "",
             },
             # Content Analysis
             "has_password_field": {
@@ -160,7 +160,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Page requests password. Be cautious about entering credentials.",
                 "safe_text": "No password fields detected.",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🔑",
+                "icon": "",
             },
             "num_forms": {
                 "name": "Form Count",
@@ -168,7 +168,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Excessive forms ({value:.0f} forms). May be collecting user data.",
                 "safe_text": "Normal number of forms ({value:.0f}).",
                 "risk_level": RiskLevel.LOW,
-                "icon": "📋",
+                "icon": "",
             },
             "num_iframes": {
                 "name": "Hidden Frames",
@@ -176,7 +176,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Multiple hidden frames ({value:.0f} iframes). May be loading malicious content.",
                 "safe_text": "Normal iframe usage ({value:.0f}).",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🖼️",
+                "icon": "",
             },
             "num_external_links": {
                 "name": "External Links",
@@ -184,7 +184,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Excessive external links ({value:.0f} links). Unusual for legitimate sites.",
                 "safe_text": "Normal number of external links ({value:.0f}).",
                 "risk_level": RiskLevel.LOW,
-                "icon": "🔗",
+                "icon": "",
             },
             "suspicious_keywords_count": {
                 "name": "Suspicious Keywords",
@@ -192,7 +192,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Contains {value:.0f} phishing keywords (urgent, verify, suspend, etc.).",
                 "safe_text": "No suspicious keywords detected.",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🚩",
+                "icon": "",
             },
             "brand_impersonation": {
                 "name": "Brand Impersonation",
@@ -200,7 +200,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Appears to impersonate a well-known brand. High phishing risk.",
                 "safe_text": "No brand impersonation detected.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🎯",
+                "icon": "",
             },
             # URL Patterns
             "has_double_slash": {
@@ -209,7 +209,7 @@ class ExplanationGenerator:
                 "suspicious_text": "URL contains suspicious double slashes. May be a redirect trick.",
                 "safe_text": "URL structure is clean.",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "➿",
+                "icon": "",
             },
             "url_shortening": {
                 "name": "URL Shortener",
@@ -217,7 +217,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Uses URL shortening service. Real destination is hidden.",
                 "safe_text": "Direct URL (no shortener).",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🔗",
+                "icon": "",
             },
             "obfuscation_detected": {
                 "name": "URL Obfuscation",
@@ -225,7 +225,7 @@ class ExplanationGenerator:
                 "suspicious_text": "URL is obfuscated (hex encoding, etc.). Trying to hide real destination.",
                 "safe_text": "URL is clear and readable.",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "🎭",
+                "icon": "",
             },
             "redirect_count": {
                 "name": "Redirect Chain",
@@ -233,32 +233,32 @@ class ExplanationGenerator:
                 "suspicious_text": "Multiple redirects ({value:.0f} redirects). May be evading detection.",
                 "safe_text": "Direct navigation (no redirects).",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "↪️",
+                "icon": "↪",
             },
             # Threat Intelligence
             "phishtank_match": {
                 "name": "PhishTank Database",
                 "suspicious_condition": lambda v: v == 1,
-                "suspicious_text": "⚠️ CONFIRMED PHISHING: Found in PhishTank database of known phishing sites.",
+                "suspicious_text": " CONFIRMED PHISHING: Found in PhishTank database of known phishing sites.",
                 "safe_text": "Not in PhishTank phishing database.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🎣",
+                "icon": "",
             },
             "virustotal_detections": {
                 "name": "VirusTotal Detections",
                 "suspicious_condition": lambda v: v > 5,
-                "suspicious_text": "⚠️ Flagged by {value:.0f} security vendors on VirusTotal.",
+                "suspicious_text": " Flagged by {value:.0f} security vendors on VirusTotal.",
                 "safe_text": "Clean scan on VirusTotal (0 detections).",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🛡️",
+                "icon": "",
             },
             "google_safebrowsing": {
                 "name": "Google Safe Browsing",
                 "suspicious_condition": lambda v: v == 1,
-                "suspicious_text": "⚠️ Flagged by Google Safe Browsing as dangerous.",
+                "suspicious_text": " Flagged by Google Safe Browsing as dangerous.",
                 "safe_text": "Passed Google Safe Browsing check.",
                 "risk_level": RiskLevel.CRITICAL,
-                "icon": "🔍",
+                "icon": "",
             },
             "reputation_score": {
                 "name": "Reputation Score",
@@ -266,7 +266,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Low reputation score ({value:.0f}/100). Site has poor security standing.",
                 "safe_text": "Good reputation score ({value:.0f}/100).",
                 "risk_level": RiskLevel.HIGH,
-                "icon": "⭐",
+                "icon": "",
             },
             # Behavioral Signals
             "popup_count": {
@@ -275,7 +275,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Excessive popups ({value:.0f} popups). Common phishing tactic.",
                 "safe_text": "No suspicious popups.",
                 "risk_level": RiskLevel.MEDIUM,
-                "icon": "🪟",
+                "icon": "",
             },
             "login_form": {
                 "name": "Login Form",
@@ -283,7 +283,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Page has login form. Verify this is the correct site before entering credentials.",
                 "safe_text": "No login form detected.",
                 "risk_level": RiskLevel.INFO,
-                "icon": "🔐",
+                "icon": "",
             },
             "external_favicon": {
                 "name": "External Favicon",
@@ -291,7 +291,7 @@ class ExplanationGenerator:
                 "suspicious_text": "Favicon loaded from external site. May be impersonating another brand.",
                 "safe_text": "Favicon is hosted on same domain.",
                 "risk_level": RiskLevel.LOW,
-                "icon": "🖼️",
+                "icon": "",
             },
         }
 
@@ -300,31 +300,31 @@ class ExplanationGenerator:
         return {
             "URL Structure": {
                 "description": "Analysis of URL format and structure",
-                "icon": "🔗",
+                "icon": "",
             },
             "Domain Security": {
                 "description": "Domain registration and security checks",
-                "icon": "🔒",
+                "icon": "",
             },
             "Content Analysis": {
                 "description": "Page content and embedded elements",
-                "icon": "📄",
+                "icon": "",
             },
             "URL Patterns": {
                 "description": "Detection of suspicious URL patterns",
-                "icon": "🎯",
+                "icon": "",
             },
             "Threat Intelligence": {
                 "description": "Cross-reference with known threat databases",
-                "icon": "🛡️",
+                "icon": "",
             },
             "Behavioral Signals": {
                 "description": "Real-time behavioral analysis",
-                "icon": "👁️",
+                "icon": "",
             },
             "Technical Indicators": {
                 "description": "DNS, WHOIS, and network analysis",
-                "icon": "⚙️",
+                "icon": "",
             },
         }
 
@@ -386,24 +386,24 @@ class ExplanationGenerator:
             )
 
             messages = {
-                "CRITICAL": "🚨 DANGER: This is almost certainly a phishing site!",
-                "HIGH": "⚠️ WARNING: This site shows strong phishing indicators.",
-                "MEDIUM": "⚠️ CAUTION: This site has suspicious characteristics.",
+                "CRITICAL": " DANGER: This is almost certainly a phishing site!",
+                "HIGH": " WARNING: This site shows strong phishing indicators.",
+                "MEDIUM": " CAUTION: This site has suspicious characteristics.",
             }
 
             return {
                 "message": messages[severity],
                 "severity": severity,
                 "confidence": confidence,
-                "icon": "🚨" if severity == "CRITICAL" else "⚠️",
+                "icon": "" if severity == "CRITICAL" else "",
                 "action": "BLOCK" if confidence > 0.7 else "WARN",
             }
         else:
             return {
-                "message": "✅ This site appears to be legitimate.",
+                "message": " This site appears to be legitimate.",
                 "severity": "SAFE",
                 "confidence": confidence,
-                "icon": "✅",
+                "icon": "",
                 "action": "ALLOW",
             }
 
@@ -431,7 +431,7 @@ class ExplanationGenerator:
                 elif not is_phishing and not is_suspicious and shap_value < 0:
                     text = template["safe_text"].format(value=feature_value)
                     risk_level = RiskLevel.INFO.value
-                    icon = "✅"
+                    icon = ""
                 else:
                     # Feature contributes differently than expected
                     continue
@@ -467,7 +467,7 @@ class ExplanationGenerator:
 
             # Get category info
             category_info = self.category_descriptions.get(
-                category, {"description": category, "icon": "📊"}
+                category, {"description": category, "icon": ""}
             )
 
             # Determine status
@@ -507,17 +507,17 @@ class ExplanationGenerator:
         if is_phishing:
             recommendations = [
                 {
-                    "icon": "🚫",
+                    "icon": "",
                     "text": "DO NOT enter any passwords or personal information",
                     "priority": "CRITICAL",
                 },
                 {
-                    "icon": "🔙",
+                    "icon": "",
                     "text": "Close this page immediately and return to safety",
                     "priority": "CRITICAL",
                 },
                 {
-                    "icon": "🔒",
+                    "icon": "",
                     "text": "If you entered credentials, change your password immediately",
                     "priority": "HIGH",
                 },
@@ -529,7 +529,7 @@ class ExplanationGenerator:
             if any("ssl" in name or "https" in name for name in feature_names):
                 recommendations.append(
                     {
-                        "icon": "🔐",
+                        "icon": "",
                         "text": "Always verify the padlock icon and HTTPS before entering sensitive data",
                         "priority": "MEDIUM",
                     }
@@ -538,7 +538,7 @@ class ExplanationGenerator:
             if any("domain_age" in name for name in feature_names):
                 recommendations.append(
                     {
-                        "icon": "📅",
+                        "icon": "",
                         "text": "Be extra cautious with newly registered domains",
                         "priority": "MEDIUM",
                     }
@@ -548,12 +548,12 @@ class ExplanationGenerator:
         else:
             return [
                 {
-                    "icon": "✅",
+                    "icon": "",
                     "text": "This site appears safe, but always verify URLs before entering sensitive data",
                     "priority": "INFO",
                 },
                 {
-                    "icon": "🔒",
+                    "icon": "",
                     "text": "Check for the padlock icon to ensure secure connection",
                     "priority": "INFO",
                 },
@@ -707,7 +707,7 @@ RECOMMENDATIONS:
 # ============================================================================
 
 if __name__ == "__main__":
-    print("📝 PhishGuard AI - Explanation Generator")
+    print(" PhishGuard AI - Explanation Generator")
     print("=" * 50)
 
     generator = ExplanationGenerator()
@@ -733,11 +733,11 @@ if __name__ == "__main__":
         categorized_features={"Threat Intelligence": test_features[:2]},
     )
 
-    print("\n✅ Explanation generated!")
+    print("\n Explanation generated!")
     print(f"\nVerdict: {explanation['verdict']['message']}")
     print(f"Risk Score: {explanation['risk_breakdown']['score']:.0f}/100")
     print(f"\nTop Reasons:")
     for reason in explanation["reasons"][:3]:
         print(f"  {reason['icon']} {reason['text']}")
 
-    print("\n✅ Module working correctly!")
+    print("\n Module working correctly!")

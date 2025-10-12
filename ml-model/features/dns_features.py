@@ -285,10 +285,10 @@ if __name__ == "__main__":
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n🌐 URL: {url}")
+        print(f"\n URL: {url}")
         features = extractor.extract_all_features(url)
 
-        print(f"\n📊 Key DNS Features:")
+        print(f"\n Key DNS Features:")
         print(f"   Domain Age: {features['domain_age_days']} days")
         print(f"   Days Until Expiration: {features['days_until_expiration']}")
         print(

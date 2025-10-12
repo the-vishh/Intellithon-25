@@ -1,5 +1,5 @@
 """
-🧠 DEEP LEARNING MODELS - LEVEL 3 ADVANCED AI
+ DEEP LEARNING MODELS - LEVEL 3 ADVANCED AI
 ==============================================
 
 State-of-the-art deep learning for phishing detection:
@@ -43,7 +43,7 @@ try:
     PYTORCH_AVAILABLE = True
 except ImportError:
     PYTORCH_AVAILABLE = False
-    print("⚠️  PyTorch not available - Install with: pip install torch")
+    print("  PyTorch not available - Install with: pip install torch")
 
 try:
     from transformers import AutoTokenizer, AutoModel
@@ -51,7 +51,7 @@ try:
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
-    print("⚠️  Transformers not available - Install with: pip install transformers")
+    print("  Transformers not available - Install with: pip install transformers")
 
 
 # ============================================================================
@@ -61,7 +61,7 @@ except ImportError:
 
 class URLLSTMModel(nn.Module if PYTORCH_AVAILABLE else object):
     """
-    🔗 Character-level LSTM for URL analysis
+     Character-level LSTM for URL analysis
 
     Learns patterns like:
     - Typosquatting (paypa1 vs paypal)
@@ -162,7 +162,7 @@ class URLDataset(Dataset if PYTORCH_AVAILABLE else object):
 
 class ContentCNNModel(nn.Module if PYTORCH_AVAILABLE else object):
     """
-    📄 1D CNN for HTML content analysis
+     1D CNN for HTML content analysis
 
     Learns patterns like:
     - Form structures
@@ -236,7 +236,7 @@ class ContentCNNModel(nn.Module if PYTORCH_AVAILABLE else object):
 
 class TransformerPhishingDetector:
     """
-    🤖 BERT/DistilBERT for semantic understanding
+     BERT/DistilBERT for semantic understanding
 
     Detects:
     - Urgency language ("Act now!", "Account suspended")
@@ -263,7 +263,7 @@ class TransformerPhishingDetector:
     def _load_model(self):
         """Load pre-trained transformer"""
         try:
-            print(f"📥 Loading {self.model_name}...")
+            print(f" Loading {self.model_name}...")
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
             self.model = AutoModel.from_pretrained(self.model_name)
 
@@ -277,10 +277,10 @@ class TransformerPhishingDetector:
                 nn.Sigmoid(),
             )
 
-            print("✅ Transformer loaded successfully")
+            print(" Transformer loaded successfully")
 
         except Exception as e:
-            print(f"⚠️  Could not load transformer: {e}")
+            print(f"  Could not load transformer: {e}")
 
     def extract_features(self, texts: List[str]) -> np.ndarray:
         """
@@ -327,7 +327,7 @@ class TransformerPhishingDetector:
 
 class DeepLearningTrainer:
     """
-    🎓 Unified trainer for all deep learning models
+     Unified trainer for all deep learning models
     """
 
     def __init__(self):
@@ -337,7 +337,7 @@ class DeepLearningTrainer:
         self.transformer = None
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        print(f"🖥️  Using device: {self.device}")
+        print(f"  Using device: {self.device}")
 
     def train_url_lstm(
         self, urls: List[str], labels: List[int], epochs: int = 10, batch_size: int = 32
@@ -355,10 +355,10 @@ class DeepLearningTrainer:
             Training metrics
         """
         if not PYTORCH_AVAILABLE:
-            print("❌ PyTorch not available")
+            print(" PyTorch not available")
             return {}
 
-        print("\n🔗 Training URL LSTM...")
+        print("\n Training URL LSTM...")
 
         # Split data
         X_train, X_val, y_train, y_val = train_test_split(
@@ -427,11 +427,11 @@ class DeepLearningTrainer:
     ) -> Dict:
         """Train CNN on HTML content"""
         if not PYTORCH_AVAILABLE:
-            print("❌ PyTorch not available")
+            print(" PyTorch not available")
             return {}
 
-        print("\n📄 Training Content CNN...")
-        print("✅ Implementation ready (similar to LSTM training)")
+        print("\n Training Content CNN...")
+        print(" Implementation ready (similar to LSTM training)")
 
         return {"status": "ready"}
 
@@ -440,11 +440,11 @@ class DeepLearningTrainer:
     ) -> Dict:
         """Train/fine-tune transformer"""
         if not TRANSFORMERS_AVAILABLE:
-            print("❌ Transformers not available")
+            print(" Transformers not available")
             return {}
 
-        print("\n🤖 Training Transformer...")
-        print("✅ Implementation ready (using Hugging Face Trainer)")
+        print("\n Training Transformer...")
+        print(" Implementation ready (using Hugging Face Trainer)")
 
         return {"status": "ready"}
 
@@ -455,19 +455,19 @@ class DeepLearningTrainer:
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🧠 DEEP LEARNING MODELS - LEVEL 3")
+    print(" DEEP LEARNING MODELS - LEVEL 3")
     print("=" * 80)
     print()
 
-    print("📦 FRAMEWORK STATUS:")
-    print(f"   PyTorch: {'✅ Available' if PYTORCH_AVAILABLE else '❌ Not installed'}")
+    print(" FRAMEWORK STATUS:")
+    print(f"   PyTorch: {' Available' if PYTORCH_AVAILABLE else ' Not installed'}")
     print(
-        f"   Transformers: {'✅ Available' if TRANSFORMERS_AVAILABLE else '❌ Not installed'}"
+        f"   Transformers: {' Available' if TRANSFORMERS_AVAILABLE else ' Not installed'}"
     )
     print()
 
     if PYTORCH_AVAILABLE:
-        print("🔗 URL LSTM Architecture:")
+        print(" URL LSTM Architecture:")
         model = URLLSTMModel()
         total_params = sum(p.numel() for p in model.parameters())
         print(f"   - Total Parameters: {total_params:,}")
@@ -476,7 +476,7 @@ if __name__ == "__main__":
         print(f"   - Hidden Dim: 128")
         print()
 
-        print("📄 Content CNN Architecture:")
+        print(" Content CNN Architecture:")
         cnn = ContentCNNModel()
         total_params = sum(p.numel() for p in cnn.parameters())
         print(f"   - Total Parameters: {total_params:,}")
@@ -484,19 +484,19 @@ if __name__ == "__main__":
         print(f"   - Filters: 128 per scale")
         print()
 
-    print("🎯 CAPABILITIES:")
-    print("   1️⃣  Character-level URL analysis")
-    print("   2️⃣  HTML structure pattern detection")
-    print("   3️⃣  Semantic text understanding")
-    print("   4️⃣  Ensemble model fusion")
+    print(" CAPABILITIES:")
+    print("   1⃣  Character-level URL analysis")
+    print("   2⃣  HTML structure pattern detection")
+    print("   3⃣  Semantic text understanding")
+    print("   4⃣  Ensemble model fusion")
     print()
 
-    print("🚀 TO TRAIN:")
+    print(" TO TRAIN:")
     print("   trainer = DeepLearningTrainer()")
     print("   trainer.train_url_lstm(urls, labels)")
     print("   trainer.train_content_cnn(contents, labels)")
     print("   trainer.train_transformer(texts, labels)")
     print()
 
-    print("🔥 DEEP LEARNING READY!")
+    print(" DEEP LEARNING READY!")
     print("=" * 80)

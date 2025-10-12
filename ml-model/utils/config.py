@@ -363,8 +363,8 @@ BENCHMARK_CONFIG = {
     "parallel_requests": 10,
 }
 
-print(f"✅ Configuration loaded successfully!")
-print(f"📊 Total Features: {TOTAL_FEATURES}")
+print(f" Configuration loaded successfully!")
+print(f" Total Features: {TOTAL_FEATURES}")
 print(
-    f"🎯 Performance Targets: {PERFORMANCE_TARGETS['accuracy']*100}% accuracy, <{PERFORMANCE_TARGETS['total_latency_ms']}ms latency"
+    f" Performance Targets: {PERFORMANCE_TARGETS['accuracy']*100}% accuracy, <{PERFORMANCE_TARGETS['total_latency_ms']}ms latency"
 )

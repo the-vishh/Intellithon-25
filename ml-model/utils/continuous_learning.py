@@ -1,5 +1,5 @@
 """
-🔄 CONTINUOUS LEARNING SYSTEM
+ CONTINUOUS LEARNING SYSTEM
 =============================
 
 Automatic model improvement through user feedback
@@ -100,7 +100,7 @@ class ContinuousLearning:
         with open(self.feedback_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(feedback_entry) + "\n")
 
-        print(f"✅ Feedback collected: {feedback_id}")
+        print(f" Feedback collected: {feedback_id}")
 
         # Check if retraining is needed
         self._check_retrain_trigger()
@@ -113,7 +113,7 @@ class ContinuousLearning:
 
         if feedback_count >= self.RETRAIN_THRESHOLD:
             print(
-                f"\n🔔 Retraining trigger: {feedback_count} feedback samples collected"
+                f"\n Retraining trigger: {feedback_count} feedback samples collected"
             )
             print("   Automatic retraining recommended!")
             # In production, this would trigger async retraining
@@ -145,7 +145,7 @@ class ContinuousLearning:
                 feedback_list.append(json.loads(line))
 
         df = pd.DataFrame(feedback_list)
-        print(f"📊 Loaded {len(df)} feedback samples")
+        print(f" Loaded {len(df)} feedback samples")
 
         return df
 
@@ -161,21 +161,21 @@ class ContinuousLearning:
             metrics: Performance metrics
         """
         print("\n" + "=" * 80)
-        print("🔄 STARTING CONTINUOUS LEARNING - MODEL RETRAINING")
+        print(" STARTING CONTINUOUS LEARNING - MODEL RETRAINING")
         print("=" * 80)
 
         # Load feedback data
         feedback_df = self.load_feedback_data()
 
         if len(feedback_df) == 0:
-            print("⚠️ No feedback data available for retraining")
+            print(" No feedback data available for retraining")
             return None, None
 
         # Extract features and labels
         X_feedback = np.array([f for f in feedback_df["features"].values])
         y_feedback = feedback_df["actual_label"].values
 
-        print(f"\n📈 Training data:")
+        print(f"\n Training data:")
         print(f"   Feedback samples: {len(X_feedback)}")
         print(f"   Features: {X_feedback.shape[1]}")
         print(f"   Phishing: {sum(y_feedback == 1)}")
@@ -189,7 +189,7 @@ class ContinuousLearning:
         )
 
         # Train new model
-        print(f"\n🔨 Training new model...")
+        print(f"\n Training new model...")
         new_model = RandomForestClassifier(
             n_estimators=200,
             max_depth=20,
@@ -205,12 +205,12 @@ class ContinuousLearning:
         y_pred = new_model.predict(X_val)
         accuracy = (y_pred == y_val).mean()
 
-        print(f"\n📊 New model performance:")
+        print(f"\n New model performance:")
         print(f"   Validation accuracy: {accuracy:.4f}")
 
         # Check if new model is better
         if accuracy >= self.MIN_ACCURACY:
-            print(f"✅ New model meets quality threshold ({self.MIN_ACCURACY:.2f})")
+            print(f" New model meets quality threshold ({self.MIN_ACCURACY:.2f})")
 
             # Save new model version
             version_id = self._save_model_version(new_model, accuracy)
@@ -228,7 +228,7 @@ class ContinuousLearning:
             }
         else:
             print(
-                f"⚠️ New model below quality threshold ({accuracy:.4f} < {self.MIN_ACCURACY:.2f})"
+                f" New model below quality threshold ({accuracy:.4f} < {self.MIN_ACCURACY:.2f})"
             )
             print("   Keeping current model")
             return None, None
@@ -255,7 +255,7 @@ class ContinuousLearning:
         with open(metadata_path, "w") as f:
             json.dump(metadata, f, indent=2)
 
-        print(f"💾 Saved model version: {version_id}")
+        print(f" Saved model version: {version_id}")
 
         return version_id
 
@@ -264,7 +264,7 @@ class ContinuousLearning:
         model_path = os.path.join(self.models_dir, "random_forest.pkl")
         joblib.dump(model, model_path)
 
-        print(f"🚀 Deployed model version {version_id} to production")
+        print(f" Deployed model version {version_id} to production")
 
         self.model = model
 
@@ -311,7 +311,7 @@ class ContinuousLearning:
         version_dir = os.path.join(self.versions_dir, version_id)
 
         if not os.path.exists(version_dir):
-            print(f"❌ Version {version_id} not found")
+            print(f" Version {version_id} not found")
             return False
 
         # Load versioned model
@@ -328,13 +328,13 @@ class ContinuousLearning:
 def demo_continuous_learning():
     """Demonstrate continuous learning system"""
     print("=" * 80)
-    print("🔄 CONTINUOUS LEARNING SYSTEM DEMO")
+    print(" CONTINUOUS LEARNING SYSTEM DEMO")
     print("=" * 80)
 
     cl = ContinuousLearning()
 
     # Simulate user feedback
-    print("\n1️⃣ Simulating user feedback...")
+    print("\n1⃣ Simulating user feedback...")
 
     # False positive (legitimate site marked as phishing)
     features_fp = np.random.rand(150)
@@ -359,12 +359,12 @@ def demo_continuous_learning():
     )
 
     # Get statistics
-    print("\n2️⃣ Learning statistics:")
+    print("\n2⃣ Learning statistics:")
     stats = cl.get_learning_stats()
     for key, value in stats.items():
         print(f"   {key}: {value}")
 
-    print("\n3️⃣ Feedback summary:")
+    print("\n3⃣ Feedback summary:")
     feedback_df = cl.load_feedback_data()
     if len(feedback_df) > 0:
         print(f"   Total feedback: {len(feedback_df)}")
@@ -372,11 +372,11 @@ def demo_continuous_learning():
         print(f"   False negatives: {feedback_df['is_false_negative'].sum()}")
 
     print("\n" + "=" * 80)
-    print("✅ CONTINUOUS LEARNING SYSTEM READY")
+    print(" CONTINUOUS LEARNING SYSTEM READY")
     print("=" * 80)
-    print("\n📝 System will automatically retrain after 100 feedback samples")
-    print("📈 Each retraining improves model accuracy")
-    print("🔄 Models can be rolled back if needed")
+    print("\n System will automatically retrain after 100 feedback samples")
+    print(" Each retraining improves model accuracy")
+    print(" Models can be rolled back if needed")
     print("=" * 80)
 
 

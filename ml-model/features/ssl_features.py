@@ -317,10 +317,10 @@ if __name__ == "__main__":
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n🔒 URL: {url}")
+        print(f"\n URL: {url}")
         features = extractor.extract_all_features(url)
 
-        print(f"\n📊 Key SSL Features:")
+        print(f"\n Key SSL Features:")
         print(f"   Has SSL: {'Yes' if features['has_ssl'] else 'No'}")
         print(f"   Valid Certificate: {'Yes' if features['cert_is_valid'] else 'No'}")
         print(f"   Trusted CA: {'Yes' if features['is_trusted_ca'] else 'No'}")

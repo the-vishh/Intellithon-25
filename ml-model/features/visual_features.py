@@ -1,5 +1,5 @@
 """
-🎨 VISUAL/LOGO DETECTION - LEVEL 2 ADVANCED FEATURES
+ VISUAL/LOGO DETECTION - LEVEL 2 ADVANCED FEATURES
 =====================================================
 
 This module detects phishing through visual analysis:
@@ -30,12 +30,12 @@ try:
     TESSERACT_AVAILABLE = True
 except ImportError:
     TESSERACT_AVAILABLE = False
-    print("⚠️  pytesseract not available - OCR features disabled")
+    print("  pytesseract not available - OCR features disabled")
 
 
 class VisualPhishingDetector:
     """
-    🔍 Advanced Visual Phishing Detection
+     Advanced Visual Phishing Detection
 
     Detects phishing through:
     - Logo similarity matching
@@ -83,7 +83,7 @@ class VisualPhishingDetector:
 
     def _initialize_brand_database(self):
         """Load or create brand logo database"""
-        print("🎨 Initializing visual brand database...")
+        print(" Initializing visual brand database...")
 
         # Create directory if needed
         os.makedirs(self.brand_logos_dir, exist_ok=True)
@@ -96,9 +96,9 @@ class VisualPhishingDetector:
                 self.brand_hashes = {
                     k: imagehash.hex_to_hash(v) for k, v in cached.items()
                 }
-                print(f"✅ Loaded {len(self.brand_hashes)} brand signatures")
+                print(f" Loaded {len(self.brand_hashes)} brand signatures")
         else:
-            print("💡 Brand database will be built on first use")
+            print(" Brand database will be built on first use")
 
     def extract_visual_features(
         self,
@@ -107,7 +107,7 @@ class VisualPhishingDetector:
         url: Optional[str] = None,
     ) -> Dict:
         """
-        🎯 Extract comprehensive visual features
+         Extract comprehensive visual features
 
         Args:
             screenshot_path: Path to page screenshot
@@ -203,7 +203,7 @@ class VisualPhishingDetector:
             features["layout_similarity"] = self._analyze_layout(img)
 
         except Exception as e:
-            print(f"⚠️  Visual analysis error: {e}")
+            print(f"  Visual analysis error: {e}")
 
         return features
 
@@ -213,7 +213,7 @@ class VisualPhishingDetector:
             text = pytesseract.image_to_string(img)
             return text.strip()
         except Exception as e:
-            print(f"⚠️  OCR error: {e}")
+            print(f"  OCR error: {e}")
             return ""
 
     def _analyze_colors(self, img: Image.Image, brand: Optional[str]) -> float:
@@ -308,13 +308,13 @@ class VisualPhishingDetector:
                 "dhash": str(dhash),
             }
 
-            print(f"✅ Added {brand_name} to visual database")
+            print(f" Added {brand_name} to visual database")
 
             # Save to cache
             self._save_brand_cache()
 
         except Exception as e:
-            print(f"❌ Error adding {brand_name}: {e}")
+            print(f" Error adding {brand_name}: {e}")
 
     def _save_brand_cache(self):
         """Save brand hashes to cache file"""
@@ -326,7 +326,7 @@ class VisualPhishingDetector:
                 json.dump(cache_data, f, indent=2)
 
         except Exception as e:
-            print(f"⚠️  Could not save cache: {e}")
+            print(f"  Could not save cache: {e}")
 
     def is_visual_clone(self, features: Dict, threshold: float = 0.7) -> bool:
         """
@@ -357,33 +357,33 @@ class VisualPhishingDetector:
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🎨 VISUAL/LOGO DETECTION - LEVEL 2")
+    print(" VISUAL/LOGO DETECTION - LEVEL 2")
     print("=" * 80)
     print()
 
     # Initialize detector
     detector = VisualPhishingDetector()
 
-    print("✅ Visual detection system initialized!")
+    print(" Visual detection system initialized!")
     print()
-    print("📊 CAPABILITIES:")
-    print("   🎨 Perceptual hashing for visual similarity")
-    print("   🔍 Logo detection and brand matching")
+    print(" CAPABILITIES:")
+    print("    Perceptual hashing for visual similarity")
+    print("    Logo detection and brand matching")
     print(
-        "   📝 OCR text extraction",
+        "    OCR text extraction",
         "(Available)" if TESSERACT_AVAILABLE else "(Disabled)",
     )
-    print("   🌈 Color palette analysis")
-    print("   📐 Layout pattern detection")
+    print("    Color palette analysis")
+    print("    Layout pattern detection")
     print()
-    print("🛡️  PROTECTED BRANDS:")
+    print("  PROTECTED BRANDS:")
     for i, brand in enumerate(detector.protected_brands, 1):
         print(f"   {i}. {brand.title()}")
     print()
-    print("💡 To use:")
+    print(" To use:")
     print("   1. Take screenshot of suspicious page")
     print("   2. Call: detector.extract_visual_features(screenshot_path)")
     print("   3. Check: detector.is_visual_clone(features)")
     print()
-    print("🔥 VISUAL DETECTION READY!")
+    print(" VISUAL DETECTION READY!")
     print("=" * 80)

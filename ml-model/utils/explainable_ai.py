@@ -1,5 +1,5 @@
 """
-🧠 PHISHGUARD AI - EXPLAINABLE AI MODULE
+ PHISHGUARD AI - EXPLAINABLE AI MODULE
 ========================================
 
 Provides human-interpretable explanations for ML predictions using SHAP
@@ -77,17 +77,17 @@ class ExplainableAI:
         # Feature category mapping
         self.feature_categories = self._initialize_feature_categories()
 
-        logger.info(f"✅ ExplainableAI initialized with model: {self.model_path.name}")
+        logger.info(f" ExplainableAI initialized with model: {self.model_path.name}")
 
     def _load_model(self):
         """Load trained ML model"""
         try:
             with open(self.model_path, "rb") as f:
                 model = pickle.load(f)
-            logger.info(f"✅ Model loaded: {self.model_path.name}")
+            logger.info(f" Model loaded: {self.model_path.name}")
             return model
         except Exception as e:
-            logger.error(f"❌ Failed to load model: {e}")
+            logger.error(f" Failed to load model: {e}")
             raise
 
     def _initialize_feature_categories(self) -> Dict[str, List[str]]:
@@ -196,7 +196,7 @@ class ExplainableAI:
                     data=self.background_data,
                     feature_names=self.feature_names,
                 )
-                logger.info("✅ SHAP TreeExplainer initialized")
+                logger.info(" SHAP TreeExplainer initialized")
             else:
                 # Fallback to KernelExplainer
                 self.explainer = shap.KernelExplainer(
@@ -204,10 +204,10 @@ class ExplainableAI:
                     self.background_data,
                     feature_names=self.feature_names,
                 )
-                logger.info("✅ SHAP KernelExplainer initialized")
+                logger.info(" SHAP KernelExplainer initialized")
 
         except Exception as e:
-            logger.error(f"❌ Failed to initialize SHAP explainer: {e}")
+            logger.error(f" Failed to initialize SHAP explainer: {e}")
             raise
 
     def explain_prediction(
@@ -231,7 +231,7 @@ class ExplainableAI:
 
             # Check if cache is still valid
             if datetime.now() - timestamp < timedelta(hours=self.cache_ttl_hours):
-                logger.info(f"📦 Using cached explanation for {url}")
+                logger.info(f" Using cached explanation for {url}")
                 return cached_explanation
             else:
                 # Remove expired cache entry
@@ -303,12 +303,12 @@ class ExplainableAI:
                 self._cache_explanation(url_hash, explanation)
 
             logger.info(
-                f"✅ Generated explanation for {url} - {explanation['prediction']} ({confidence:.2%})"
+                f" Generated explanation for {url} - {explanation['prediction']} ({confidence:.2%})"
             )
             return explanation
 
         except Exception as e:
-            logger.error(f"❌ Failed to generate explanation: {e}")
+            logger.error(f" Failed to generate explanation: {e}")
             raise
 
     def _get_top_features(
@@ -403,7 +403,7 @@ class ExplainableAI:
         """
         if prediction == 1:
             # Phishing explanation
-            explanation = f"🚨 **This website was identified as PHISHING with {confidence:.1%} confidence.**\n\n"
+            explanation = f" **This website was identified as PHISHING with {confidence:.1%} confidence.**\n\n"
             explanation += "**Why this site was blocked:**\n\n"
 
             for category, features in categorized_features.items():
@@ -414,7 +414,7 @@ class ExplainableAI:
                     explanation += "\n"
         else:
             # Legitimate explanation
-            explanation = f"✅ **This website appears LEGITIMATE with {confidence:.1%} confidence.**\n\n"
+            explanation = f" **This website appears LEGITIMATE with {confidence:.1%} confidence.**\n\n"
             explanation += "**Factors supporting legitimacy:**\n\n"
 
             for category, features in categorized_features.items():
@@ -505,7 +505,7 @@ class ExplainableAI:
                 explanation = self.explain_prediction(features, url)
                 explanations.append(explanation)
             except Exception as e:
-                logger.error(f"❌ Failed to explain {url}: {e}")
+                logger.error(f" Failed to explain {url}: {e}")
                 explanations.append(
                     {
                         "url": url,
@@ -582,7 +582,7 @@ Analysis performed: {explanation['timestamp']}
     def clear_cache(self):
         """Clear explanation cache"""
         self.explanation_cache.clear()
-        logger.info("🗑️ Explanation cache cleared")
+        logger.info(" Explanation cache cleared")
 
 
 # ============================================================================
@@ -624,7 +624,7 @@ def create_explainable_ai(
 
 if __name__ == "__main__":
     # Example usage
-    print("🧠 PhishGuard AI - Explainable AI Module")
+    print(" PhishGuard AI - Explainable AI Module")
     print("=" * 50)
 
     # This would be replaced with actual paths
@@ -646,7 +646,7 @@ if __name__ == "__main__":
 
         explanation = explainer.explain_prediction(test_features, test_url)
 
-        print("\n✅ Explanation generated successfully!")
+        print("\n Explanation generated successfully!")
         print(f"Prediction: {explanation['prediction']}")
         print(f"Confidence: {explanation['confidence']:.2%}")
         print(f"\nTop Features:")
@@ -654,5 +654,5 @@ if __name__ == "__main__":
             print(f"  - {feature['name']}: {feature['shap_value']:.4f}")
 
     except FileNotFoundError:
-        print("\n⚠️ Model file not found (this is expected in testing)")
-        print("✅ Module structure is correct!")
+        print("\n Model file not found (this is expected in testing)")
+        print(" Module structure is correct!")

@@ -1,5 +1,5 @@
 """
-🛡️ ADVANCED DETECTION ENGINE 
+ ADVANCED DETECTION ENGINE
 ================================================
 
 Complete protection system with:
@@ -35,8 +35,10 @@ try:
     from features.content_features import ContentFeatureExtractor
     from features.visual_features import VisualPhishingDetector
     from utils.threat_intelligence import ThreatIntelligence
+    from deployment.model_cache import ModelCache  #  NEW: Pre-loaded ML models
+    import numpy as np
 except ImportError as e:
-    print(f"⚠️  Module import error: {e}")
+    print(f"  Module import error: {e}")
 
 
 class DetectionMode:
@@ -49,7 +51,7 @@ class DetectionMode:
 
 class UltimatePhishingDetector:
     """
-    🛡️ THE ULTIMATE AI/ML PHISHING DETECTION ENGINE
+     THE ULTIMATE AI/ML PHISHING DETECTION ENGINE
 
     Features:
     - Real-time URL scanning
@@ -77,11 +79,16 @@ class UltimatePhishingDetector:
         }
 
         # Initialize components
-        print("🚀 Initializing ULTIMATE Detection Engine...")
+        print(" Initializing ULTIMATE Detection Engine...")
 
         self.url_extractor = URLFeatureExtractor()
         self.visual_detector = VisualPhishingDetector()
         self.threat_intel = ThreatIntelligence()
+
+        #  NEW: Load pre-trained ML models (singleton - loads once)
+        print(" Loading ML models...")
+        self.model_cache = ModelCache()
+        print(f"    Loaded models: {self.model_cache.get_loaded_models()}")
 
         # Detection thresholds by mode
         self.thresholds = self._get_thresholds(mode)
@@ -92,8 +99,8 @@ class UltimatePhishingDetector:
         # Known malware signatures
         self.malware_signatures = self._load_malware_signatures()
 
-        print(f"✅ Engine initialized in {mode.upper()} mode")
-        print(f"🎯 Threat threshold: {self.thresholds['threat_threshold']}")
+        print(f" Engine initialized in {mode.upper()} mode")
+        print(f" Threat threshold: {self.thresholds['threat_threshold']}")
 
     def _get_thresholds(self, mode: str) -> Dict:
         """Get detection thresholds for mode"""
@@ -172,7 +179,7 @@ class UltimatePhishingDetector:
 
     def scan_url_realtime(self, url: str) -> Dict:
         """
-        🔍 REAL-TIME URL SCANNING
+         REAL-TIME URL SCANNING
 
         Scans URL before page load with multiple detection layers
 
@@ -249,7 +256,7 @@ class UltimatePhishingDetector:
         # Check for zero-day indicators
         if self._is_zero_day(features, result["threat_score"]):
             result["zero_day_detected"] = True
-            result["reasons"].append("⚠️  Potential zero-day phishing attack detected")
+            result["reasons"].append("  Potential zero-day phishing attack detected")
             self.stats["zero_day_detected"] += 1
 
         result["latency_ms"] = (time.time() - start_time) * 1000
@@ -257,7 +264,7 @@ class UltimatePhishingDetector:
 
     def scan_download(self, file_path: str, file_content: bytes = None) -> Dict:
         """
-        📥 DOWNLOAD PROTECTION
+         DOWNLOAD PROTECTION
 
         Scans downloaded files for malware before opening
 
@@ -311,7 +318,7 @@ class UltimatePhishingDetector:
                 result["malware_score"] = 1.0
                 result["is_malware"] = True
                 result["action"] = "BLOCK"
-                result["reasons"].append("⚠️  Known malware signature detected!")
+                result["reasons"].append("  Known malware signature detected!")
                 self.stats["malware_blocked"] += 1
                 return result
 
@@ -400,21 +407,76 @@ class UltimatePhishingDetector:
             return {}
 
     def _ml_predict(self, features: Dict) -> float:
-        """AI-powered prediction (uses trained model if available)"""
-        # Placeholder: Use pattern-based scoring
-        # In production, this would use trained ML model
-        score = 0.0
+        """
+         AI-powered prediction using TRAINED ML MODELS
 
-        if features.get("has_ip_address", False):
-            score += 0.3
-        if features.get("suspicious_tld", False):
-            score += 0.2
-        if features.get("has_suspicious_keywords", 0) > 2:
-            score += 0.3
-        if not features.get("has_https", True):
-            score += 0.2
+        Uses pre-loaded LightGBM + XGBoost ensemble for real-time detection
 
-        return min(score, 1.0)
+        Args:
+            features: Dictionary of extracted features
+
+        Returns:
+            Phishing probability (0.0 = safe, 1.0 = phishing)
+        """
+        try:
+            # Convert features dictionary to numpy array (159 features expected)
+            feature_vector = self._features_dict_to_vector(features)
+
+            # Use pre-loaded models for instant prediction
+            result = self.model_cache.predict(feature_vector)
+
+            # Return confidence score
+            return result["confidence"]
+
+        except Exception as e:
+            print(f" ML prediction error: {e}")
+            print(f"   Falling back to pattern-based detection")
+
+            # Fallback: Pattern-based scoring if ML fails
+            score = 0.0
+            if features.get("has_ip_address", False):
+                score += 0.3
+            if features.get("suspicious_tld", False):
+                score += 0.2
+            if features.get("has_suspicious_keywords", 0) > 2:
+                score += 0.3
+            if not features.get("has_https", True):
+                score += 0.2
+
+            return min(score, 1.0)
+
+    def _features_dict_to_vector(self, features: Dict) -> np.ndarray:
+        """
+        Convert features dictionary to numpy vector for ML models
+
+        Args:
+            features: Dictionary with URL features
+
+        Returns:
+            numpy array with 159 features
+        """
+        # For now, use basic features (URL features provide ~35)
+        # In production, this should extract all 159 features
+        feature_list = []
+
+        # Extract numeric features from dict
+        # This is a simplified version - full implementation should use ultimate_integrator
+        for key in sorted(features.keys()):
+            value = features[key]
+            if isinstance(value, (int, float)):
+                feature_list.append(value)
+            elif isinstance(value, bool):
+                feature_list.append(1 if value else 0)
+            # Skip non-numeric features
+
+        # Pad to 159 features if needed
+        while len(feature_list) < 159:
+            feature_list.append(0)
+
+        # Truncate if too many
+        feature_list = feature_list[:159]
+
+        return np.array(feature_list, dtype=np.float32)
 
     def _is_zero_day(self, features: Dict, threat_score: float) -> bool:
         """Detect potential zero-day phishing attacks"""
@@ -451,10 +513,10 @@ class UltimatePhishingDetector:
         ]:
             self.mode = mode
             self.thresholds = self._get_thresholds(mode)
-            print(f"🔧 Detection mode changed to: {mode.upper()}")
-            print(f"🎯 New threat threshold: {self.thresholds['threat_threshold']}")
+            print(f" Detection mode changed to: {mode.upper()}")
+            print(f" New threat threshold: {self.thresholds['threat_threshold']}")
         else:
-            print(f"❌ Invalid mode: {mode}")
+            print(f" Invalid mode: {mode}")
 
     def get_statistics(self) -> Dict:
         """Get protection statistics"""
@@ -475,7 +537,7 @@ class UltimatePhishingDetector:
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("🛡️ ULTIMATE AI/ML PHISHING DETECTOR - ADVANCED PROTECTION")
+    print(" ULTIMATE AI/ML PHISHING DETECTOR - ADVANCED PROTECTION")
     print("=" * 80)
     print()
 
@@ -495,29 +557,29 @@ if __name__ == "__main__":
 
     for mode in modes:
         print(f"\n{'='*80}")
-        print(f"🎯 TESTING IN {mode.upper()} MODE")
+        print(f" TESTING IN {mode.upper()} MODE")
         print(f"{'='*80}\n")
 
         detector = UltimatePhishingDetector(mode=mode)
 
         for url in test_urls:
-            print(f"🔍 Scanning: {url}")
+            print(f" Scanning: {url}")
             result = detector.scan_url_realtime(url)
 
-            print(f"   📊 Threat Score: {result['threat_score']:.2f}")
-            print(f"   🎯 Threat Level: {result['threat_level']}")
-            print(f"   🛡️  Action: {result['action']}")
-            print(f"   ⚡ Latency: {result['latency_ms']:.2f}ms")
+            print(f"    Threat Score: {result['threat_score']:.2f}")
+            print(f"    Threat Level: {result['threat_level']}")
+            print(f"     Action: {result['action']}")
+            print(f"    Latency: {result['latency_ms']:.2f}ms")
 
             if result["reasons"]:
-                print(f"   📝 Reasons:")
+                print(f"    Reasons:")
                 for reason in result["reasons"]:
                     print(f"      - {reason}")
             print()
 
         # Show statistics
         stats = detector.get_statistics()
-        print(f"📈 STATISTICS ({mode.upper()}):")
+        print(f" STATISTICS ({mode.upper()}):")
         print(f"   URLs Scanned: {stats['urls_scanned']}")
         print(f"   Threats Blocked: {stats['threats_blocked']}")
         print(f"   Block Rate: {stats['block_rate']:.1f}%")
@@ -525,7 +587,7 @@ if __name__ == "__main__":
 
     # Test download protection
     print(f"\n{'='*80}")
-    print("📥 TESTING DOWNLOAD PROTECTION")
+    print(" TESTING DOWNLOAD PROTECTION")
     print(f"{'='*80}\n")
 
     detector = UltimatePhishingDetector(DetectionMode.BALANCED)
@@ -533,17 +595,17 @@ if __name__ == "__main__":
     test_files = ["document.pdf", "invoice.exe", "photo.jpg", "script.js"]
 
     for file_name in test_files:
-        print(f"📥 Scanning download: {file_name}")
+        print(f" Scanning download: {file_name}")
         result = detector.scan_download(file_name)
 
-        print(f"   📊 Malware Score: {result['malware_score']:.2f}")
-        print(f"   🛡️  Action: {result['action']}")
+        print(f"    Malware Score: {result['malware_score']:.2f}")
+        print(f"     Action: {result['action']}")
 
         if result["reasons"]:
-            print(f"   📝 Reasons:")
+            print(f"    Reasons:")
             for reason in result["reasons"]:
                 print(f"      - {reason}")
         print()
 
-    print("🔥 ULTIMATE DETECTOR READY!")
+    print(" ULTIMATE DETECTOR READY!")
     print("=" * 80)

@@ -395,10 +395,10 @@ if __name__ == "__main__":
     print("=" * 80)
 
     for url in test_urls:
-        print(f"\n📄 URL: {url}")
+        print(f"\n URL: {url}")
         features = extractor.extract_all_features(url)
 
-        print(f"\n📊 Key Content Features:")
+        print(f"\n Key Content Features:")
         print(f"   HTML Length: {features['html_length']} bytes")
         print(f"   Forms: {features['form_count']}")
         print(f"   Password Fields: {features['password_field_count']}")
