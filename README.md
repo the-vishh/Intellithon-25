@@ -14,7 +14,7 @@
 
 ## 📖 About This Project
 
-**PhishGuard AI** was developed for **Intellithon 2025**, a prestigious hackathon focused on innovative cybersecurity solutions. This project represents a complete, production-ready phishing detection system that combines cutting-edge machine learning, real-time behavioral analysis, and comprehensive threat intelligence to protect users from sophisticated phishing attacks.
+**PhishGuard AI** was developed for **Intellithon 2025**, a prestigious hackathon where our team focused on innovative cybersecurity solutions. This project represents a complete, production-ready phishing detection system that combines cutting-edge machine learning, real-time behavioral analysis, and comprehensive threat intelligence to protect users from sophisticated phishing attacks.
 
 The system goes beyond traditional URL blacklisting by employing advanced ML models trained on 159 engineered features, providing real-time protection with sub-100ms latency while maintaining 95%+ accuracy.
 
@@ -87,7 +87,7 @@ The system goes beyond traditional URL blacklisting by employing advanced ML mod
 │         └──────────┴──────┬───────┘                             │
 └────────────────────────────┼────────────────────────────────────┘
                              │
-                   HTTPS REST API
+                       HTTPS REST API
                              │
 ┌────────────────────────────▼───────────────────────────────────┐
 │               RUST API GATEWAY (Port 8080)                     │
